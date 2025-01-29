@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&display=swap');
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 150px;
+}
+  
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+  
+.logo {
+    width: 70px;
+    margin-right: 10px;
+}
+  
+.brand {
+    color: white;
+    font-family: "DM Sans", serif;
+    font-size: 18px;
+}
+  
+.divider {
+    width: 1px;
+    height: 30px;
+    background-color: #444;
+    margin: 0 20px;
+}
+  
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+  
+.nav-links li {
+    display: inline;
+}
+  
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-family: "DM Sans", serif;
+    font-size: 14px;
+}
+  
+.nav-links a:hover {
+    text-decoration: underline;
+}
+  
+.spotify-btn {
+    background-color: #88B702;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-family: "DM Sans", serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-right: 20px;
+}
