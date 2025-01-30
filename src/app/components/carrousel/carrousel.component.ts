@@ -44,7 +44,7 @@ export class CarrouselComponent {
     { image: 'https://avatars.githubusercontent.com/u/105254896?v=4', alt: 'Imagem 3', title: 'Márcio José',feedback:"O ambiente é muito positivo e o compartilhamento de músicas e partituras é uma ótima maneira de aprender e explorar diferentes estilos musicais." },
     { image: 'https://avatars.githubusercontent.com/u/101995776?v=4', alt: 'Imagem 4', title: 'Juliana The Front',feedback:"Apenas senti falta de uma área mais organizada para a troca de recursos, como links úteis e materiais de estudo, para facilitar a navegação entre os membros." },
     { image: 'https://avatars.githubusercontent.com/u/102380570?v=4', alt: 'Imagem 4', title: 'João Marcos',feedback:"Seria interessante ter mais sessões ao vivo, como webinars ou discussões com profissionais da música. Isso ajudaria a trazer um aprendizado mais direto e prático para todos os membros." },
-    { image: 'https://avatars.githubusercontent.com/u/105940717?v=4', alt: 'Imagem 4', title: 'Ricardo Luiz',feedback:"A diversidade de membros e gêneros musicais é incrível. Sempre aprendo algo novo, seja sobre teoria musical, produção ou novos estilos. É uma comunidade que realmente enriquece minha jornada musical!" }
+    { image: 'https://avatars.githubusercontent.com/u/105940717?v=4', alt: 'Imagem 4', title: 'Ricardo Luiz',feedback:"A diversidade de membros e gêneros musicais é incrível. Sempre aprendo algo novo, seja sobre teoria musical, produção ou novos estilos." }
 
   ];
 }
