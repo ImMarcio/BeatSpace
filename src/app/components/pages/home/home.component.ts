@@ -20,6 +20,13 @@ export class HomeComponent {
   
   ];
 
+  coments = [
+    { image: 'https://avatars.githubusercontent.com/u/101995776?v=4', alt: 'Imagem 2', title: 'Juliana The Front',feedback:"Seria ótimo se houvesse mais atividades interativas, como desafios musicais mensais, para engajar ainda mais os membros e estimular a criatividade" },
+    { image: 'https://avatars.githubusercontent.com/u/101995776?v=4', alt: 'Imagem 3', title: 'Juliana The Front',feedback:"O ambiente é muito positivo e o compartilhamento de músicas e partituras é uma ótima maneira de aprender e explorar diferentes estilos musicais." },
+    { image: 'https://avatars.githubusercontent.com/u/101995776?v=4', alt: 'Imagem 4', title: 'Juliana The Front',feedback:"Apenas senti falta de uma área mais organizada para a troca de recursos, como links úteis e materiais de estudo, para facilitar a navegação entre os membros." },
+  
+  ]
+
   console(){
     console.log("string")
   }

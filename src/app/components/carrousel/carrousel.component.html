@@ -1,5 +1,5 @@
-<h1>O que nossos usuários estão dizendo?</h1>
-<p-carousel [value]="items" [numVisible]="3" [numScroll]="1" [circular]="true" autoplayInterval="3000" class="">
+<h1>{{title}}</h1>
+<p-carousel [value]="items" [numVisible]="3" [numScroll]="1" [circular]="true"  class="">
     <ng-template pTemplate="item" let-item>
         <div class="div-carrossel  text-center p-10 cards max-w-xl h-56 justify-between ">
             <p class="paragrafo text-left font-DM ">{{ item.feedback }}</p>
