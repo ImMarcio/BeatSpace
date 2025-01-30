@@ -5,10 +5,11 @@ import { MainComponent } from './components/main/main.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 import { CarrouselComponent } from './components/carrousel/carrousel.component';
+import { ContatosComponent } from './components/contatos/contatos.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, MainComponent, FooterComponent, ContatosComponent, CarrouselComponent],
+  imports: [RouterOutlet, NavbarComponent, MainComponent, FooterComponent, CarrouselComponent, ContatosComponent],
 
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
