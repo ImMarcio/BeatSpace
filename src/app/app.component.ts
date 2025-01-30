@@ -3,11 +3,13 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MainComponent } from './components/main/main.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { ContatosComponent } from './components/contatos/contatos.component';
+
+import { CarrouselComponent } from './components/carrousel/carrousel.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, MainComponent, FooterComponent, ContatosComponent],
+  imports: [RouterOutlet, NavbarComponent, MainComponent, FooterComponent, ContatosComponent, CarrouselComponent],
+
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
