@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
+
 import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
+
+import { ContatosComponent } from '../contatos/contatos.component';
+
 @Component({
   selector: 'app-main',
-  imports: [CarouselModule,TagModule,ButtonModule,FormsModule, ],
+  imports: [CarouselModule,TagModule,ButtonModule,FormsModule,ContatosComponent ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'
 })
