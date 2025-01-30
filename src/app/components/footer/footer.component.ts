@@ -1,11 +1,56 @@
 import { Component } from '@angular/core';
-
+import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { CarouselModule } from 'primeng/carousel';
+import { TagModule } from 'primeng/tag';
 @Component({
   selector: 'app-footer',
-  imports: [],
+  imports: [ButtonModule,FloatLabelModule,FormsModule,CarouselModule,TagModule ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
+value: any;
+
+responsiveOptions: any[];
+
+constructor() {
+  this.responsiveOptions = [
+    {
+        breakpoint: '1400px',
+        numVisible: 2,
+        numScroll: 1
+    },
+    {
+        breakpoint: '1199px',
+        numVisible: 3,
+        numScroll: 1
+    },
+    {
+        breakpoint: '767px',
+        numVisible: 2,
+        numScroll: 1
+    },
+    {
+        breakpoint: '575px',
+        numVisible: 1,
+        numScroll: 1
+    }
+  ];
+}
+
+getSeverity(status: string) {
+  switch (status) {
+      case 'INSTOCK':
+          return 'success';
+      case 'LOWSTOCK':
+          return 'warn';
+      case 'OUTOFSTOCK':
+          return 'danger';
+      default:
+          return 'unknown';
+  }
+}
 
 }
