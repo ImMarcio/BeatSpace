@@ -24,3 +24,7 @@
     font-family: "DM Sans", serif;
     color: white;
 }
+
+ng:host .p-carrousel  .p-carousel-indicator-button-highlight{
+    background-color: red !important;
+}

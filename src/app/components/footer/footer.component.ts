@@ -4,9 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
+import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-footer',
-  imports: [ButtonModule,FloatLabelModule,FormsModule,CarouselModule,TagModule ],
+  imports: [ButtonModule,FloatLabelModule,FormsModule,CarouselModule,TagModule,RouterModule ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
@@ -15,7 +18,9 @@ value: any;
 
 responsiveOptions: any[];
 
-constructor() {
+
+
+constructor(private router: Router) {
   this.responsiveOptions = [
     {
         breakpoint: '1400px',
@@ -38,6 +43,9 @@ constructor() {
         numScroll: 1
     }
   ];
+}
+goToHome() {
+  this.router.navigate(['/home']);
 }
 
 getSeverity(status: string) {
