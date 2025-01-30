@@ -29,6 +29,10 @@ h1 {
     color: white;
 }
 
+ng:host .p-carrousel  .p-carousel-indicator-button-highlight{
+    background-color: red !important;
+}
+
 .div-carrossel {
     margin-left: 15px;
     margin-right: 15px;

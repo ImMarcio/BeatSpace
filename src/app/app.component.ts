@@ -9,7 +9,7 @@ import { ContatosComponent } from './components/contatos/contatos.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, MainComponent, FooterComponent, CarrouselComponent, ContatosComponent],
+  imports: [RouterOutlet],
 
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

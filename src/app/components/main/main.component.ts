@@ -9,7 +9,7 @@ import { ContatosComponent } from '../contatos/contatos.component';
 
 @Component({
   selector: 'app-main',
-  imports: [CarouselModule,TagModule,ButtonModule,FormsModule,ContatosComponent ],
+  imports: [CarouselModule,TagModule,ButtonModule,FormsModule ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'
 })
