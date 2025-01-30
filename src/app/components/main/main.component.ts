@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ContatosComponent } from '../contatos/contatos.component';
 
 @Component({
   selector: 'app-main',
