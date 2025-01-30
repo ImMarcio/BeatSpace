@@ -3,12 +3,14 @@ import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-carrousel',
   imports: [ CarouselModule,TagModule,ButtonModule, FormsModule ],
   templateUrl: './carrousel.component.html',
   styleUrl: './carrousel.component.scss'
 })
+
 export class CarrouselComponent {
   responsiveOptions: any[];
 
