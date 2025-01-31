@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { NavbarComponent } from "../../navbar/navbar.component";
 import { CommonModule } from '@angular/common';
 import { CarrouselComponent } from "../../carrousel/carrousel.component";
 import { FooterComponent } from "../../footer/footer.component";
+import { NavbarLogadoComponent } from '../../navbar-logado/navbar-logado.component';
 
 @Component({
   selector: 'app-home',
-  imports: [NavbarComponent, CommonModule, CarrouselComponent, FooterComponent],
+  imports: [CommonModule, CarrouselComponent, FooterComponent, NavbarLogadoComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

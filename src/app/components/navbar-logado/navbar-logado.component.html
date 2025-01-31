@@ -1,0 +1,21 @@
+<nav class="navbar">
+    <div class="navbar-left">
+        <img src="assets/logo.svg" alt="Logo" class="logo" />
+        <span class="brand">BeatSpace</span>
+        <div class="divider"></div>
+        <ul class="nav-links">
+            <li><a href="#home">HOME</a></li>
+            <li><a href="#">COMENTÁRIOS</a></li>
+            <li><a href="#contato">CONTATO</a></li>
+        </ul>
+    </div>
+    <div class="flex">
+        <div class="flex flex-col justify-center mr-4">
+            <p id="nome">NOME</p>
+            <button (click)="goToProfile()">
+                <p id="perfil">Acessar Perfil</p>
+            </button>
+        </div>
+        <img src="assets/profile.png" />
+    </div>
+</nav>
