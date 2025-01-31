@@ -23,6 +23,7 @@
     "@angular/ssr": "^19.1.5",
     "@primeng/themes": "^19.0.5",
     "@tailwindcss/postcss": "^4.0.0",
+    "beat-space": "file:",
     "express": "^4.18.2",
     "postcss": "^8.5.1",
     "primeicons": "^7.0.0",
