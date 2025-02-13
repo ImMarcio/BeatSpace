@@ -18,7 +18,7 @@ export class NavbarComponent {
   onLogin() {
     const clientId = 'b104f3a1e82d4fcfbaf5f4f8fcb5f8d5';
     const redirectUri = 'http://localhost:4200/home';
-    const scope = 'user-read-private user-read-email';
+    const scope = 'user-read-private user-read-email user-top-read';
     const state =  generaterandomstring(16); // Optional, but recommended for security
     
    

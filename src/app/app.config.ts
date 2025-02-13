@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withFetch, with
 import { SpotifyService } from './shared/services/spotify.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { tokenInterceptor } from './shared/interceptors/token.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
@@ -19,7 +20,7 @@ export const appConfig: ApplicationConfig = {
         preset: Aura
     }
 })
-,provideRouter(routes), provideClientHydration(withEventReplay()),provideHttpClient(withFetch()),
+,provideRouter(routes), provideClientHydration(withEventReplay()),provideHttpClient(withFetch(),withInterceptors([tokenInterceptor])),
 importProvidersFrom(ReactiveFormsModule),provideAnimationsAsync()
 ]
 };

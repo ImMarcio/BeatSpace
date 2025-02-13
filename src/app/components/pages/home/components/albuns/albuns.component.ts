@@ -1,0 +1,47 @@
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { SpotifyService } from '../../../../../shared/services/spotify.service';
+import { Track } from '../../../../../shared/models/Track';
+import { CommonModule } from '@angular/common';
+import { Album } from '../../../../../shared/models/Album';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { ResponseSearchAlbum } from '../../../../../shared/models/ResponseSearchAlbum';
+
+@Component({
+  selector: 'app-albuns',
+  imports: [CommonModule,ReactiveFormsModule,ButtonModule],
+  templateUrl: './albuns.component.html',
+  styleUrl: './albuns.component.scss'
+})
+export class AlbunsComponent {
+
+albuns : Album[] = []
+loading: boolean = false;
+FormGroup? : FormGroup
+
+constructor(private spotifyService : SpotifyService, private fb : FormBuilder,private cd : ChangeDetectorRef){
+  this.FormGroup = this.fb.group(
+    {"query" : ["",Validators.required]}
+  )
+}
+
+search() {
+  this.loading = true;
+  this.spotifyService.search(this.FormGroup?.get("query")?.value,"album").subscribe({
+    next : (albuns)=>{
+      console.log(albuns)
+      this.albuns = (albuns as ResponseSearchAlbum).albums.items;
+    },
+    error : ()=>{
+      this.loading = false;
+    },
+    complete : ()=>{
+      this.loading = false;
+      this.FormGroup?.reset();
+      this.cd.detectChanges();
+    }
+  })
+}
+
+
+}

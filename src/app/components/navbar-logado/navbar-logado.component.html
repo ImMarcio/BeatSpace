@@ -1,21 +1,27 @@
 <nav class="navbar">
     <div class="navbar-left">
         <img src="assets/logo.svg" alt="Logo" class="logo" />
-        <span class="brand">BeatSpace</span>
+        <span class="brand"><a href="/home">BeatSpace</a></span>
         <div class="divider"></div>
         <ul class="nav-links">
-            <li><a href="#home">HOME</a></li>
-            <li><a href="#">COMENTÁRIOS</a></li>
-            <li><a href="#contato">CONTATO</a></li>
+            <li><a routerLink="/home/musicas">MÚSICAS</a></li>
+            <li><a routerLink="/home/albuns">ÁLBUNS</a></li>
+            <li><a >PLAYLISTS</a></li>
         </ul>
     </div>
     <div class="flex">
         <div class="flex flex-col justify-center mr-4">
-            <p id="nome">NOME</p>
-            <button (click)="goToProfile()">
-                <p id="perfil">Acessar Perfil</p>
-            </button>
+            <p id="nome" class="text-white" *ngIf="user"  >{{user.display_name}}</p>
+            <div class="flex flex-row items-center justify-center gap-4 mt-2">
+                <button (click)="goToProfile()">
+                    <p id="perfil">Acessar Perfil</p>
+                </button>
+                <button (click)="logout()">
+                    <p id="perfil">Sair da Conta</p>
+                </button>
+            </div>
+            
         </div>
-        <img src="assets/profile.png" />
+        <img [src]="user.images[1].url" *ngIf="user"  />
     </div>
 </nav>
