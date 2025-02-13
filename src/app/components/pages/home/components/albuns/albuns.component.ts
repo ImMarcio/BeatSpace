@@ -25,6 +25,10 @@ constructor(private spotifyService : SpotifyService, private fb : FormBuilder,pr
   )
 }
 
+get query(){
+  return this.FormGroup?.get("query")?.value;
+}
+
 search() {
   this.loading = true;
   this.spotifyService.search(this.FormGroup?.get("query")?.value,"album").subscribe({
@@ -37,7 +41,6 @@ search() {
     },
     complete : ()=>{
       this.loading = false;
-      this.FormGroup?.reset();
       this.cd.detectChanges();
     }
   })

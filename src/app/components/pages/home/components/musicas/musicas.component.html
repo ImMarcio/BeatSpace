@@ -10,6 +10,7 @@
 
 <section class="w-full mb-30">
     <h1 class="text-3xl font-DM text-white p-4 text-center">Músicas</h1>
+    <p class="text-white text-center" *ngIf="tracks.length>0"> Resultados para a pesquisa {{query}} - {{tracks.length}} resultados</p>
     <div class="flex flex-wrap gap-5 mt-10 justify-evenly mr-16 ml-16">
        <div *ngFor="let track of tracks">
           <div class=" rounded-xl w-[380px]   text-center p-4 cards max-w-xl justify-between">

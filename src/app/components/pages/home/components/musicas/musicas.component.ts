@@ -20,10 +20,15 @@ export class MusicasComponent {
   loading: boolean = false;
   FormGroup? : FormGroup
 
+
 constructor(private spotifyService : SpotifyService, private cd : ChangeDetectorRef, private fb : FormBuilder){
    this.FormGroup = this.fb.group(
       {"query" : ["",Validators.required]}
     )
+}
+
+get query(){
+  return this.FormGroup?.get("query")?.value;
 }
 
 
@@ -38,7 +43,6 @@ search() {
     },
     complete : ()=>{
       this.loading = false;
-      this.FormGroup?.reset();
       this.cd.detectChanges();
     }
   })
