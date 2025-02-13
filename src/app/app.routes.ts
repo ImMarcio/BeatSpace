@@ -6,6 +6,8 @@ import { ProfileComponent } from './components/pages/profile/profile.component';
 import { homeGuard } from './shared/guards/home.guard';
 import { InitialComponent } from './components/pages/home/components/initial/initial.component';
 import { MusicaComponent } from './components/pages/home/components/musica/musica.component';
+import { MusicasComponent } from './components/pages/home/components/musicas/musicas.component';
+import { AlbunsComponent } from './components/pages/home/components/albuns/albuns.component';
 
 export const routes: Routes = [
 
@@ -13,7 +15,9 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent, canActivate : [homeGuard],
         children: [ // Definindo rotas aninhadas
             { path: '', component: InitialComponent },
-            { path: 'musicas/:id', component: MusicaComponent }
+            { path: 'musica/:id', component: MusicaComponent },
+            {path : "musicas", component : MusicasComponent},
+            {path : "albuns", component : AlbunsComponent}
           ]
     },
     { path: 'profile', component: ProfileComponent }

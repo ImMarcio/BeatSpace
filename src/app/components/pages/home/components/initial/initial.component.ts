@@ -1,15 +1,23 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CarrouselComponent } from '../../../../carrousel/carrousel.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { SpotifyService } from '../../../../../shared/services/spotify.service';
+import { Album } from '../../../../../shared/models/Album';
+import { CarouselModule } from 'primeng/carousel';
+import { Track } from '../../../../../shared/models/Track';
 
 @Component({
   selector: 'app-initial',
-  imports: [CarrouselComponent,CommonModule,RouterModule],
+  imports: [CommonModule,RouterModule,CarouselModule],
   templateUrl: './initial.component.html',
   styleUrl: './initial.component.scss'
 })
-export class InitialComponent {
+export class InitialComponent implements OnInit {
+
+  albuns : Album[] = []
+
+  constructor(private spotifyService : SpotifyService, private cd : ChangeDetectorRef){}
 
   items = [
     { id:"1", image: '../../../../assets/BK-Icarus.jpeg', alt: 'Imagem 2', title: 'Icarus',feedback:"Seria ótimo se houvesse mais atividades interativas, como desafios musicais mensais, para engajar ainda mais os membros e estimular a criatividade" },
@@ -23,4 +31,23 @@ export class InitialComponent {
     { image: 'https://avatars.githubusercontent.com/u/101995776?v=4', alt: 'Imagem 4', title: 'Juliana The Front',feedback:"Apenas senti falta de uma área mais organizada para a troca de recursos, como links úteis e materiais de estudo, para facilitar a navegação entre os membros." },
   
   ]
+
+
+  ngOnInit(): void {
+    this.spotifyService.getAlbumReleases().subscribe({
+      next:(response)=>{
+          this.albuns = response.albums.items;
+      },
+      error : (error)=>{
+        console.error(error)
+      },
+      complete : ()=>{
+        this.cd.detectChanges();
+      }
+    }
+  )
+
+  
+  }
+
 }

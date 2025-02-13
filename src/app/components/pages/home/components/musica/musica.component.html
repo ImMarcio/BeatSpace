@@ -24,10 +24,10 @@
         
         <div *ngFor="let comentario of comentarios">
 
-            <div class="div-carrossel  text-center p-10 cards max-w-xl h-56 justify-between ">
+            <div class="div-carrossel  text-center p-4 cards w-100 h-30 justify-between ">
                 <p class="paragrafo text-left font-DM ">{{ comentario.texto }}</p>
                 <div class="profile flex flex-row space-x-2 align-center mt-8 ">
-                    <h3 class="text-sm font-semibold font-DM">{{comentario.autor}}</h3>
+                    <h3 class="text-sm font-semibold font-DM">{{"- "+comentario.autor}}</h3>
                 </div>
             </div>
 
