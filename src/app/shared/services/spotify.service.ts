@@ -25,6 +25,10 @@ export class SpotifyService {
     return this.http.post(`http://localhost:8081/api/spotify/token`, { code });
   }
 
+  getRefreshToken(refresh_token:string): Observable<any>{
+    return this.http.post(this.server_url + '/refresh-token',{refresh_token})
+  }
+
 
   getCurrentUser() : Observable<User>{
     return this.http.get<User>('http://localhost:8081/api/spotify/user/me')
