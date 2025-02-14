@@ -5,11 +5,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { ResponseSearchTrack } from '../../../../../shared/models/ResponseSearchTrack';
 import { ButtonModule } from 'primeng/button';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-musicas',
   standalone : true,
-  imports: [CommonModule, ReactiveFormsModule,ButtonModule],
+  imports: [CommonModule, ReactiveFormsModule,ButtonModule,RouterModule],
   templateUrl: './musicas.component.html',
   styleUrl: './musicas.component.scss'
 })

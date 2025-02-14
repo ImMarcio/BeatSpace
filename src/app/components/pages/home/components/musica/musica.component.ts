@@ -8,6 +8,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ComentarioService } from '../../../../../shared/services/comentario.service';
 import { Toast, ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Track } from '../../../../../shared/models/Track';
+import { SpotifyService } from '../../../../../shared/services/spotify.service';
 
 @Component({
   selector: 'app-musica',
@@ -26,21 +28,35 @@ export class MusicaComponent implements OnInit {
     {id:"3", image: '../../../../assets/ab67616d0000b273bbd45c8d36e0e045ef640411.jpeg', alt: 'Debí Tirar Más Fotos', title: 'Debí Tirar Más Fotos',feedback:"Apenas senti falta de uma área mais organizada para a troca de recursos, como links úteis e materiais de estudo, para facilitar a navegação entre os membros." },
   
   ];
-  id : any
+  track ?: Track;
+  trackId? : string
   musicaSelecionada? : {id:string,image:string,alt:string,title:String,feedback:string}
   meuFormulario = new FormGroup({
     texto: new FormControl('', [Validators.required])
   });
   comentarios : {texto : string,autor:string}[] = []
 
-  constructor(private route :ActivatedRoute,private comentarioService : ComentarioService, private cd : ChangeDetectorRef, private messageService : MessageService){
-    this.route.paramMap.subscribe(params => {
-      this.id = params.get('id'); // Obtém o parâmetro "id" da URL
-      this.musicaSelecionada = this.items.find(x=>x.id === this.id)
-    });
-  }
+    constructor(private route :ActivatedRoute,private comentarioService : ComentarioService, private cd : ChangeDetectorRef, private messageService : MessageService, private spotifyService : SpotifyService){
+      this.trackId = this.route.snapshot.paramMap.get("id")?.toString();
+    }
 
   ngOnInit(): void {
+
+    if(this.trackId){
+      this.spotifyService.getTrack(this.trackId).subscribe({
+        next : (track)=>{
+          this.track = track;
+        },
+        error:(error)=>{
+
+        },
+        complete : ()=>{
+            this.cd.detectChanges();
+        }
+    })
+    }
+  
+
      this.comentarioService.GetAll().subscribe({
       next: (comentarios)=>{
         this.comentarios = comentarios;

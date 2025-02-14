@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&display=swap');
+
+h1 {
+    font-family: "DM Sans", serif;
+    color: white;
+    font-weight: bold;
+}
+
+.barra-pesquisa {
+    background-color: rgba(255, 255, 255, 0.10);
+}
+
+.cards {
+    background-color: rgba(255, 255, 255, 0.10);
+}
+
+.font-DM {
+    font-family: 'DM Sans',sans-serif
+}
+
+textarea {
+    background-color: white;
+    color: black; /* Opcional: Define a cor do texto */
+  }
+
+.divider {
+    width: 100%;
+    height: 1px;
+    background-color: #444;
+    margin-bottom: 20px;
+}
+
+.margin-right {
+    margin-right: 150px;
+}
+
+.p-email {
+    font-size: 25px;
+    padding-left: 20px;
+    line-height: 30px;
+}
+
+
+
+.cards{
+    background-color: rgba(255, 255, 255, 0.10);
+    border-radius: 20px;
+}
+
+.cards:hover{
+    background-color: #88B702;
+}
+
+.paragrafo{
+    font-size: 15px;
+    justify-content: start;
+}
+
+.font-DM{
+    font-family: "DM Sans", serif;
+    color: white;
+}
+
+ng:host .p-carrousel  .p-carousel-indicator-button-highlight{
+    background-color: red !important;
+}
+
+.div-carrossel {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

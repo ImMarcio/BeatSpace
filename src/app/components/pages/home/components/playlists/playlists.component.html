@@ -1,0 +1,29 @@
+
+<main class=" flex flex-col justify-center items-center space-y-8 mb-10">
+   
+    
+ 
+    
+    <section class="w-full mb-30">
+        <h1 class="text-center text-white font-xl">Minhas Playlists</h1>
+        <div class="flex flex-wrap gap-5 mt-10 justify-evenly mr-16 ml-16">
+            
+           <div *ngFor="let playlist of playlists">
+             <a [routerLink]="['/home/playlist',playlist.id]">
+                <div class=" rounded-xl w-[380px]   text-center p-4 cards max-w-xl justify-between">
+                   <div class="flex flex-col space-x-2 align-center mt-8">
+                   <img  [src]="playlist.images[0].url" class=" object-cover rounded-lg shadow-lg ">
+                   <h3 class="mt-4 text-sm font-medium font-DM text-left text-white">{{playlist.name}}</h3>
+                   <p class="font-normal text-left text-xs uppercase text-white"> AUTOR DA PLAYLIST : {{playlist.owner.display_name}}</p>
+                   <p class="font-normal text-left text-xs uppercase text-white"> Público ? {{playlist.public}}</p>
+                   <p class="font-normal text-left text-xs uppercase text-white">{{playlist.description}}</p>
+                   <p class="font-normal text-left text-xs uppercase text-white"> Total: {{playlist.tracks.total}} músicas</p>
+                  </div>
+                </div>
+             </a>
+              
+           </div>
+        </div>
+     </section>
+ 
+ </main>
