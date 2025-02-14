@@ -4,7 +4,7 @@
    
    <section class="pt-10 w-full">
       <nav class="flex flex-row justify-between">
-         <h1 class="text-4xl font-DM">Lançamentos Recentes</h1>
+         <h1 class="text-4xl font-DM">Lançamentos Recentes - Albuns</h1>
          <div class="flex flex-column space-x-4 margin-right">
          </div>
       </nav>
@@ -13,6 +13,7 @@
    <section class="bg-green flex flex-row space-x-4 ">
       <div class="flex flex-wrap gap-5 mt-10 justify-evenly mr-16 ml-16">
          <div *ngFor="let album of albuns">
+            <a [routerLink]="['/home/album',album.id]">
                <div class=" rounded-xl w-[380px]   text-center p-4 cards max-w-xl justify-between">
                   <div class="flex flex-col space-x-2 align-center mt-8">
                   <img  [src]="album.images[0].url" class=" object-cover rounded-lg shadow-lg ">
@@ -20,6 +21,7 @@
                   <p class="font-normal text-left text-xs uppercase text-white">{{album.artists[0].name}}</p>
                </div>
             </div>
+            </a>
          </div>
       </div>
    </section>

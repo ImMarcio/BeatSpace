@@ -1,11 +1,13 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { ResponseTopTracks } from '../models/Track';
+import { ResponseTopTracks, Track } from '../models/Track';
 import { TopArtistsResponse } from '../models/Artist';
 import { User } from '../models/User';
 import { ResponseSearchAlbum } from '../models/ResponseSearchAlbum';
 import { ResponseSearchTrack } from '../models/ResponseSearchTrack';
+import { Album } from '../models/Album';
+import { Playlist, PlaylistsResponse } from '../models/Playlist';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,7 @@ import { ResponseSearchTrack } from '../models/ResponseSearchTrack';
 export class SpotifyService {
   base_url = 'https://accounts.spotify.com/api/';
   api_url = 'https://api.spotify.com/v1/';
+  server_url : string = 'http://localhost:8081/api/spotify'
   
 
   constructor(private http : HttpClient) { }
@@ -24,7 +27,7 @@ export class SpotifyService {
 
 
   getCurrentUser() : Observable<User>{
-    return this.http.get<User>('http://localhost:8081/api/spotify/user/current')
+    return this.http.get<User>('http://localhost:8081/api/spotify/user/me')
   }
 
 
@@ -65,5 +68,19 @@ export class SpotifyService {
       }
      
   }
+
+  getCurrentUserPlaylists(): Observable<PlaylistsResponse>{
+    return this.http.get<PlaylistsResponse>("http://localhost:8081/api/spotify/user/me/playlists")
+  }
+
+
+  getAlbum(id:string):Observable<Album>{
+    return this.http.get<Album>(`http://localhost:8081/api/spotify/albums/${id}`)
+  }
+
+  getTrack(id:string): Observable<Track>{
+    return this.http.get<Track>(`http://localhost:8081/api/spotify/tracks/${id}`)
+  }
+
 
 }

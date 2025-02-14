@@ -15,5 +15,4 @@ import { ContatosComponent } from './components/contatos/contatos.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'BeatSpace';
 }

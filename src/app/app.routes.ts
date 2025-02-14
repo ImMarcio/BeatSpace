@@ -8,6 +8,8 @@ import { InitialComponent } from './components/pages/home/components/initial/ini
 import { MusicaComponent } from './components/pages/home/components/musica/musica.component';
 import { MusicasComponent } from './components/pages/home/components/musicas/musicas.component';
 import { AlbunsComponent } from './components/pages/home/components/albuns/albuns.component';
+import { AlbumComponent } from './components/pages/home/components/album/album.component';
+import { PlaylistsComponent } from './components/pages/home/components/playlists/playlists.component';
 
 export const routes: Routes = [
 
@@ -17,7 +19,10 @@ export const routes: Routes = [
             { path: '', component: InitialComponent },
             { path: 'musica/:id', component: MusicaComponent },
             {path : "musicas", component : MusicasComponent},
-            {path : "albuns", component : AlbunsComponent}
+            {path : "albuns", component : AlbunsComponent},
+            {path: "album/:id",component : AlbumComponent},
+            {path : "playlists", component : PlaylistsComponent},
+            {path : "playlist/:id", component : PlaylistsComponent},
           ]
     },
     { path: 'profile', component: ProfileComponent }

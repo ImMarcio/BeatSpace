@@ -6,10 +6,11 @@ import { Album } from '../../../../../shared/models/Album';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ResponseSearchAlbum } from '../../../../../shared/models/ResponseSearchAlbum';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-albuns',
-  imports: [CommonModule,ReactiveFormsModule,ButtonModule],
+  imports: [CommonModule,ReactiveFormsModule,ButtonModule,RouterModule],
   templateUrl: './albuns.component.html',
   styleUrl: './albuns.component.scss'
 })
