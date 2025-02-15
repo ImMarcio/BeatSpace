@@ -32,7 +32,7 @@ export class AlbumComponent implements OnInit {
     });
     comentarios : {texto : string,autor:string}[] = []
     favoritos: string[] = [];
-    usuarioId = "usuario123";
+    usuarioId = "marciojsilva159@gmail.com";
     user ? : User
   
 
@@ -41,7 +41,7 @@ constructor(private cd : ChangeDetectorRef ,
   private activatedRoute : ActivatedRoute, private favoritoService : FavoritoService, private cdr: ChangeDetectorRef
 ){
   this.albumId = this.activatedRoute.snapshot.paramMap.get("id")?.toString();
-  this.user =  JSON.parse(localStorage.getItem("current_user") ?? "") as User;
+ 
 
 }
 
@@ -150,10 +150,8 @@ OnSubmit(){
     });
   }
 
-  currentUser(){
-    console.log(this.user)
-    console.log(this.user?.email)
-  }
+ 
+  
   getEmailCurrentUser(){
     if(this.user){
       this.usuarioId = this.user.email

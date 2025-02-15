@@ -16,9 +16,32 @@
             <div class="text-white"> Seguidores : {{user?.followers?.total}}</div>
             <div class="text-white">Email : {{user?.email}}</div>
             <div class="text-white"> Nacionalidade : {{user?.country}}</div>
-            <div></div>
+   
         </div>
         <a [href]="user?.uri" class="uppercase bg-[#88B702] rounded-full py-4 px-8 font-main mt-5">Acessar perfil no sportify</a>
+    </section>
+
+    <section class="flex flex-col justify-center items-center ">
+            <h1 class="text-3xl font-main font-bold mt-7 mb-4 text-white">
+                Meu albums favoritos
+            </h1>
+        <div class="flex flex-wrap  space-x-4 justify-center items-center ">
+        
+            <div *ngFor="let album of albums" class="album-card ">
+                <div class="relative inline-block">
+                <img class="w-64 h-64 rounded-lg"  [src]="album.images[0].url" alt="Album image" />
+
+                    <button (click)="favoritarAlbum(album!.id)" class="absolute top-6 left-6 transform -translate-x-1/2 -translate-y-1/2 px-4 py-2 bg-transparent bg-opacity-50 text-white border-none cursor-pointer text-lg hover:bg-opacity-70">
+                        <img class="w-8 h-8" *ngIf="!isFavorito(album!.id)" src="/assets/favorite-white.png" alt="Favoritar"> 
+                        <img class="w-8 h-8" *ngIf="isFavorito(album!.id)" src="/assets/favorite-fill.png" alt="Favoritado">
+                      </button>
+                </div>
+                <h3>{{ album.name }}</h3>
+                <p>{{ album.artists[0].name }}</p>
+            
+            
+            </div>
+        </div>
     </section>
     <section class="section-artists flex flex-col justify-center items-center mt-16 mx-24 rounded-3xl mb-16">
         <h1 class="text-3xl font-main font-bold mt-7 text-white">

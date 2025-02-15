@@ -10,6 +10,7 @@ import { MusicasComponent } from './components/pages/home/components/musicas/mus
 import { AlbunsComponent } from './components/pages/home/components/albuns/albuns.component';
 import { AlbumComponent } from './components/pages/home/components/album/album.component';
 import { PlaylistsComponent } from './components/pages/home/components/playlists/playlists.component';
+import { AlbumsFavoritosComponent } from './components/albums-favoritos/albums-favoritos.component';
 
 export const routes: Routes = [
 
@@ -25,6 +26,8 @@ export const routes: Routes = [
             {path : "playlist/:id", component : PlaylistsComponent},
           ]
     },
-    { path: 'profile', component: ProfileComponent }
+    { path: 'profile', component: ProfileComponent },
+    
+    { path: 'albums-favoritos', component: AlbumsFavoritosComponent }
 
 ];
