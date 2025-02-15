@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { Album } from '../../../../../shared/models/Album';
 import { FavoritoService } from '../../../../../shared/services/favorito.service';
+import { User } from '../../../../../shared/models/User';
 
 @Component({
   selector: 'app-album',
@@ -30,17 +31,19 @@ export class AlbumComponent implements OnInit {
       texto: new FormControl('', [Validators.required])
     });
     comentarios : {texto : string,autor:string}[] = []
-    favoritos: Set<string> = new Set(); 
+    favoritos: string[] = [];
     usuarioId = "usuario123";
+    user ? : User
   
 
 constructor(private cd : ChangeDetectorRef , 
   private spotifyService : SpotifyService, private comentarioService : ComentarioService, private messageService : MessageService,
-  private activatedRoute : ActivatedRoute, private favoritoService : FavoritoService
+  private activatedRoute : ActivatedRoute, private favoritoService : FavoritoService, private cdr: ChangeDetectorRef
 ){
   this.albumId = this.activatedRoute.snapshot.paramMap.get("id")?.toString();
-}
+  this.user =  JSON.parse(localStorage.getItem("current_user") ?? "") as User;
 
+}
 
 ngOnInit(): void {
 
@@ -59,7 +62,7 @@ ngOnInit(): void {
 
   }
 
-  this.carregarFavoritos();
+  this.atualizarFavoritos();
 
   
 
@@ -99,32 +102,69 @@ OnSubmit(){
 }
 
 
+  // Método para verificar se o álbum está favoritado
+  isFavorito(albumId: string = ""): boolean {
+    return this.favoritos.includes(albumId);
+  }
 
-carregarFavoritos(): void {
-  this.favoritoService.listarFavoritos(this.usuarioId).subscribe(favoritos => {
-    this.favoritos = new Set(favoritos); // Converte para Set para facilitar a busca
-  });
-}
-
-isFavorito(albumId: string | undefined): boolean {
-  return albumId ? this.favoritos.has(albumId) : false;
-}
-
-
-favoritarAlbum(albumId: string | undefined): void {
-  if (!albumId) return;
-
-  if (this.isFavorito(albumId)) {
-    this.favoritoService.desfavoritarAlbum(this.usuarioId, albumId).subscribe(() => {
-      this.favoritos.delete(albumId);
-    });
-  } else {
-    this.favoritoService.favoritarAlbum(this.usuarioId, albumId).subscribe(() => {
-      this.favoritos.add(albumId);
+  favoritarAlbum(albumId: string): void {
+    this.getEmailCurrentUser()
+    if (this.isFavorito(albumId)) {
+      this.desfavoritarAlbum(albumId);
+    } else {
+      this.favoritoService.favoritarAlbum(this.usuarioId, albumId).subscribe({
+        next: () => {
+          console.log("Atualizando...")
+          this.atualizarFavoritos(); // Atualiza a lista de favoritos após favoritar
+        },
+        error: (error) => {
+          console.error('Erro ao favoritar álbum:', error);
+        }
+      });
+    }
+  }
+  
+  desfavoritarAlbum(albumId: string): void {
+    this.getEmailCurrentUser()
+    this.favoritoService.desfavoritarAlbum(this.usuarioId, albumId).subscribe({
+      next: () => {
+        console.log("Atualizando...")
+        this.atualizarFavoritos(); // Atualiza a lista de favoritos após desfavoritar
+      },
+      error: (error) => {
+        console.error('Erro ao desfavoritar álbum:', error);
+      }
     });
   }
-}
+  
+  atualizarFavoritos(): void {
+    this.getEmailCurrentUser()
+    this.favoritoService.listarFavoritos(this.usuarioId).subscribe({
+      next: (favoritos) => {
+        this.favoritos = favoritos;
+        console.log("Atualizando...")
+      },
+      error: (error) => {
+        console.error('Erro ao listar favoritos:', error);
+      }
+    });
+  }
 
+  currentUser(){
+    console.log(this.user)
+    console.log(this.user?.email)
+  }
+  getEmailCurrentUser(){
+    if(this.user){
+      this.usuarioId = this.user.email
+      console.log(this.usuarioId)
+      return this.user.email;
+    } else {
+      console.log("User inválido");
+      return null;
+    }
+
+  }
 
 
 
