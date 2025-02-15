@@ -17,7 +17,8 @@
             <p class="text-white">Artista : {{album!.artists[0].name}}</p>
             <p class="text-white">Data de Lançamento : {{album?.release_date | date}}</p>
             <p class="text-white">Músicas Totais : {{album?.total_tracks}}</p>
-            <button (click)="favorite(album?.id)" class="flex flex-row space-x-4">
+            
+            <button (click)="favoritarAlbum(album?.id)" class="flex flex-row space-x-4">
                 <img class="w-8 h-8" *ngIf="!isFavorito(album?.id)" src="/assets/favorite-white.png" alt="Favoritar"> 
                 <img class="w-8 h-8" *ngIf="isFavorito(album?.id)" src="/assets/favorite-fill.png" alt="Favoritado">
                 <p>{{ isFavorito(album?.id) ? 'Favoritado' : 'Favoritar' }}</p>

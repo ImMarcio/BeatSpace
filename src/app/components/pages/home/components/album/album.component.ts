@@ -9,6 +9,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { Album } from '../../../../../shared/models/Album';
+import { FavoritoService } from '../../../../../shared/services/favorito.service';
 
 @Component({
   selector: 'app-album',
@@ -29,13 +30,13 @@ export class AlbumComponent implements OnInit {
       texto: new FormControl('', [Validators.required])
     });
     comentarios : {texto : string,autor:string}[] = []
-    favoritos : string[] = []
-
+    favoritos: Set<string> = new Set(); 
+    usuarioId = "usuario123";
   
 
 constructor(private cd : ChangeDetectorRef , 
   private spotifyService : SpotifyService, private comentarioService : ComentarioService, private messageService : MessageService,
-  private activatedRoute : ActivatedRoute
+  private activatedRoute : ActivatedRoute, private favoritoService : FavoritoService
 ){
   this.albumId = this.activatedRoute.snapshot.paramMap.get("id")?.toString();
 }
@@ -55,7 +56,11 @@ ngOnInit(): void {
         this.cd.detectChanges();
       }
     })
+
   }
+
+  this.carregarFavoritos();
+
   
 
   this.comentarioService.GetAll().subscribe({
@@ -93,21 +98,35 @@ OnSubmit(){
  
 }
 
-favorite(id:string = ""){
-  console.log("aq")
-  if(this.favoritos.includes(id)){
-    this.favoritos = this.favoritos.filter(favId => favId !== id)
 
-  } else{
-    this.favoritos.push(id)
+
+carregarFavoritos(): void {
+  this.favoritoService.listarFavoritos(this.usuarioId).subscribe(favoritos => {
+    this.favoritos = new Set(favoritos); // Converte para Set para facilitar a busca
+  });
+}
+
+isFavorito(albumId: string | undefined): boolean {
+  return albumId ? this.favoritos.has(albumId) : false;
+}
+
+
+favoritarAlbum(albumId: string | undefined): void {
+  if (!albumId) return;
+
+  if (this.isFavorito(albumId)) {
+    this.favoritoService.desfavoritarAlbum(this.usuarioId, albumId).subscribe(() => {
+      this.favoritos.delete(albumId);
+    });
+  } else {
+    this.favoritoService.favoritarAlbum(this.usuarioId, albumId).subscribe(() => {
+      this.favoritos.add(albumId);
+    });
   }
-  console.log(this.favoritos);
-
 }
 
-isFavorito(id: string ="") : boolean {
-  return this.favoritos.includes(id);
-}
+
+
 
 
 }
