@@ -29,6 +29,8 @@ export class AlbumComponent implements OnInit {
       texto: new FormControl('', [Validators.required])
     });
     comentarios : {texto : string,autor:string}[] = []
+    favoritos : string[] = []
+
   
 
 constructor(private cd : ChangeDetectorRef , 
@@ -91,6 +93,21 @@ OnSubmit(){
  
 }
 
+favorite(id:string = ""){
+  console.log("aq")
+  if(this.favoritos.includes(id)){
+    this.favoritos = this.favoritos.filter(favId => favId !== id)
+
+  } else{
+    this.favoritos.push(id)
+  }
+  console.log(this.favoritos);
+
+}
+
+isFavorito(id: string ="") : boolean {
+  return this.favoritos.includes(id);
+}
 
 
 }
