@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit{
 tracks : Track[] = []
 artists : Artist[] = []
 user ? : User
-usuarioId: string = "marciojsilva159@gmail.com";  // Substitua pelo ID real do usuário
+usuarioId: string = "";  // Substitua pelo ID real do usuário
 favoritosIds: string[] = [];
 albums: Album[] = [];
 
@@ -59,6 +59,7 @@ constructor(private router: Router, private cd : ChangeDetectorRef, private spot
    
       
 
+    this.getEmailCurrentUser()
       // Passo 1: Listar os álbuns favoritos
       this.favoritoService.listarFavoritos(this.usuarioId).subscribe((ids) => {
         this.favoritosIds = ids;
@@ -129,10 +130,9 @@ constructor(private router: Router, private cd : ChangeDetectorRef, private spot
 getEmailCurrentUser(){
   if(this.user){
     this.usuarioId = this.user.email
-    console.log(this.usuarioId)
     return this.user.email;
   } else {
-    console.log("User inválido");
+   
     return null;
   }
 }
