@@ -21,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     }
 })
 ,provideRouter(routes), provideClientHydration(withEventReplay()),provideHttpClient(withFetch(),withInterceptors([tokenInterceptor])),
-importProvidersFrom(ReactiveFormsModule),provideAnimationsAsync()
+importProvidersFrom(ReactiveFormsModule),provideAnimationsAsync(), provideAnimationsAsync()
 ]
 };
 

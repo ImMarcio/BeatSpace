@@ -7,12 +7,13 @@ import { Artist } from '../../../shared/models/Artist';
 import { Track } from '../../../shared/models/Track';
 import { NavbarLogadoComponent } from '../../navbar-logado/navbar-logado.component';
 import { User } from '../../../shared/models/User';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-profile',
-  imports: [CommonModule,NavbarLogadoComponent],
-  templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss'
+    selector: 'app-profile',
+    imports: [CommonModule,NavbarLogadoComponent, MatIconModule],
+    templateUrl: './profile.component.html',
+    styleUrl: './profile.component.scss'
 })
 export class ProfileComponent implements OnInit{
 
@@ -22,30 +23,41 @@ artists : Artist[] = []
 user ? : User
 
 constructor(private router: Router, private cd : ChangeDetectorRef, private spotifyService : SpotifyService){
- this.user =  JSON.parse(localStorage.getItem("current_user") ?? "") as User;
+    this.user =  JSON.parse(localStorage.getItem("current_user") ?? "") as User;
 }
 
-  goToHome() {
-    this.router.navigate(['/home']);
-  }
-  
+    isOpen = false;
 
-  ngOnInit(): void {
-    this.spotifyService.getTopTracks().subscribe({
-      next:(tracks)=>{
-        this.tracks = tracks.items;
-      },
-      complete : ()=>{
-        this.cd.detectChanges();
-      }
-    })
+    toggleDropdown() {
+        this.isOpen = !this.isOpen;
+    }
 
-    this.spotifyService.getTopArtists().subscribe({
-      next :(artists)=>{
-        this.artists = artists.items;
-      }
-    })
+    goToHome() {
+        this.router.navigate(['/home']);
+    }
 
-  }
+    ngOnInit(): void {
+        this.spotifyService.getTopTracks().subscribe({
+            next:(tracks)=>{
+                this.tracks = tracks.items;
+            },
+            complete : ()=>{
+                this.cd.detectChanges();
+            }
+        })
+
+        this.spotifyService.getTopArtists().subscribe({
+            next :(artists)=>{
+                this.artists = artists.items;
+            }
+        })
+    }
+
+    logout(){
+        localStorage.removeItem("token");
+        localStorage.removeItem("current_user");
+        localStorage.removeItem("code");
+        window.location.href = "/"
+    }
 
 }

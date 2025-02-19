@@ -12,16 +12,12 @@
     <div class="flex">
         <div class="flex flex-col justify-center mr-4">
             <p id="nome" class="text-white" *ngIf="user"  >{{user.display_name}}</p>
-            <div class="flex flex-row items-center justify-center gap-4 mt-2">
+            <div class="flex flex-row items-center justify-center gap-4">
                 <button (click)="goToProfile()">
                     <p id="perfil" class=" font-DM">Acessar Perfil</p>
                 </button>
-                <button (click)="logout()">
-                    <p id="perfil" class="font-DM">Sair da Conta</p>
-                </button>
             </div>
-            
         </div>
-        <img [src]="user.images[1].url" *ngIf="user"  />
+        <img [src]="user.images[1].url" *ngIf="user" class="user-img" />
     </div>
 </nav>

@@ -1,15 +1,57 @@
 <app-navbar-logado></app-navbar-logado>
 
 <main class="space-y-4">
-    <nav class="flex flex-row  justify-between px-16 mt-8">
+    <!-- <nav class="flex flex-row  justify-between px-16 mt-8">
         <div class="flex flex-row items-center">
             <button (click)="goToHome()" class="text-2xl font-main button-voltar">
                 ← Voltar
             </button>
-     </div>    
-      
+        </div>    
+    </nav> -->
+    <section class="profile mt-5">
+        <div class="flex">
+            <img [src]="user!.images[0].url" class="profile-img">
+            <div class="profile-infos">
+                <h1 class="ml-10 m-5">{{user?.display_name}}</h1>
+                <button class="profile-btn m-2">
+                    <a [href]="user?.uri">Acessar perfil no sportify</a>
+                </button>
+                <div class="dropdown">
+                    <button (click)="toggleDropdown()" class="profile-btn m-2">•••</button>
+                    <div *ngIf="isOpen" class="dropdown-content">
+                        <div class="profile-menu-div">
+                            <mat-icon>share</mat-icon>
+                            <p>Compartilhar perfil</p>
+                        </div>
+                        <div class="divider-up"></div>
+                        <div class="profile-menu-div" (click)="logout()">
+                            <mat-icon>logout</mat-icon>
+                            <p>Sair da conta</p>
+                        </div>
+                    </div>
+                </div>                  
+            </div>
+        </div>
+        <div class="profile-followers">
+            <div>
+                <p class="profile-followers-text">{{user?.followers?.total}}</p>
+                <p class="text-xs">Seguidores</p>
+            </div>
+            <div class="divider-down"></div>
+            <div>
+                <p class="profile-followers-text">0</p>
+                <p class="text-xs">Seguindo</p>
+            </div>
+        </div>
+    </section>
+    <nav>
+        <ul>
+            <li>Meu Top Artistas</li>
+            <li>Meu Top Músicas</li>
+        </ul>
+        <div class="divider-up"></div>
     </nav>
-    <section class="flex flex-col justify-center items-center space-y-4">
+    <!-- <section class="flex flex-col justify-center items-center space-y-4">
         <img [src]="user!.images[0].url" alt="" class="w-2xs rounded-full">
         <h1 class="text-2xl font-main text-white">{{user?.display_name}}</h1>
         <div class="flex flex-row gap-4">
@@ -19,7 +61,7 @@
             <div></div>
         </div>
         <a [href]="user?.uri" class="uppercase bg-[#88B702] rounded-full py-4 px-8 font-main mt-5">Acessar perfil no sportify</a>
-    </section>
+    </section> -->
     <section class="section-artists flex flex-col justify-center items-center mt-16 mx-24 rounded-3xl mb-16">
         <h1 class="text-3xl font-main font-bold mt-7 text-white">
             Meu top artistas
@@ -32,7 +74,6 @@
             </div>
         </div>
     </section>
-
     <section class="w-full mb-30">
         <h1 class="text-3xl font-DM text-white p-4 text-center">Meu Top Músicas</h1>
         <div class="flex flex-wrap gap-5 mt-10 justify-evenly mr-16 ml-16">

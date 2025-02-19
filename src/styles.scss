@@ -9,6 +9,8 @@ html {
     scroll-behavior: smooth;
 }
 
-.font-main{
+* {
     font-family: 'DM Sans',serif;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

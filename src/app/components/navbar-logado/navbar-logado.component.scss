@@ -71,8 +71,15 @@
 
 #perfil {
     color: #88B702;
-    text-decoration: underline;
     text-align: right;
     cursor: pointer;
-    
+}
+
+#perfil:hover {
+    text-decoration: underline;
+}
+
+.user-img {
+    border-radius: 50%;
+    width: 55px;
 }
