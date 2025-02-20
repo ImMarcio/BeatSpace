@@ -44,48 +44,18 @@
             </div>
         </div>
     </section>
-    <nav>
-        <ul>
-            <li>Meu Top Artistas</li>
-            <li>Meu Top Músicas</li>
-        </ul>
-        <div class="divider-up"></div>
-    </nav>
-    <!-- <section class="flex flex-col justify-center items-center space-y-4">
-        <img [src]="user!.images[0].url" alt="" class="w-2xs rounded-full">
-        <h1 class="text-2xl font-main text-white">{{user?.display_name}}</h1>
-        <div class="flex flex-row gap-4">
-            <div class="text-white"> Seguidores : {{user?.followers?.total}}</div>
-            <div class="text-white">Email : {{user?.email}}</div>
-            <div class="text-white"> Nacionalidade : {{user?.country}}</div>
-            <div></div>
-        </div>
-        <a [href]="user?.uri" class="uppercase bg-[#88B702] rounded-full py-4 px-8 font-main mt-5">Acessar perfil no sportify</a>
-    </section> -->
-    <section class="section-artists flex flex-col justify-center items-center mt-16 mx-24 rounded-3xl mb-16">
-        <h1 class="text-3xl font-main font-bold mt-7 text-white">
-            Meu top artistas
-        </h1>
-        <div class="flex flex-wrap space-x-4 p-8 items-center">
-            <div *ngFor="let item of artists" class="  items-center flex flex-col space-y-2">
-                <img [src]="item.images[0].url" alt="" class="w-48 h-48 rounded-xl">
-                <p class=" mb-4 text-sm font-medium font-DM text-left text-white">{{item.name}}</p>
-                <!-- <p class="font-bold font-main text-small text-white">{{item.genres[0]}}</p> -->
-            </div>
-        </div>
-    </section>
-    <section class="w-full mb-30">
-        <h1 class="text-3xl font-DM text-white p-4 text-center">Meu Top Músicas</h1>
-        <div class="flex flex-wrap gap-5 mt-10 justify-evenly mr-16 ml-16">
-           <div *ngFor="let track of tracks">
-              <div class=" rounded-xl w-[380px]   text-center p-4 cards max-w-xl justify-between">
-                 <div class="flex flex-col space-x-2 align-center mt-8">
-                 <img  [src]="track.album.images[0].url" class=" object-cover rounded-lg shadow-lg ">
-                 <h3 class="mt-4 text-sm font-medium font-DM text-left text-white">{{ track.name }}</h3>
-                 <p class="font-normal text-left text-xs uppercase text-white">{{track.artists[0].name}}</p>
-              </div>
-              </div>
-           </div>
-        </div>
-     </section>
+    <p-tabs value="0">
+        <p-tablist>
+            <p-tab value="0">Meu Top Artistas</p-tab>
+            <p-tab value="1">Meu Top Músicas</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+            <p-tabpanel value="0">
+                <app-top-artistas></app-top-artistas>
+            </p-tabpanel>
+            <p-tabpanel value="1">
+                <app-top-musicas></app-top-musicas>
+            </p-tabpanel>
+        </p-tabpanels>
+    </p-tabs>
 </main>
