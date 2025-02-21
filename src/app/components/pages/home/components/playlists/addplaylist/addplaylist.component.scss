@@ -1,0 +1,28 @@
+/* Altera a cor de fundo do item selecionado */
+::ng-deep .p-selectbutton .p-button.p-highlight {
+    background-color: #4caf50 !important;  /* Cor verde */
+    border-color: #388e3c !important;     /* Cor da borda */
+  }
+  
+  /* Alterando a cor do texto no item selecionado */
+  ::ng-deep .p-selectbutton .p-button.p-highlight .p-button-label {
+    color: white !important;
+  }
+  
+  /* Estilo de hover (quando o mouse passa sobre o item) */
+  ::ng-deep .p-selectbutton .p-button:hover {
+    background-color: #333 !important; /* Cor escura no hover */
+  }
+
+  ::ng-deep .p-fileupload .p-fileupload-text {
+    color: white !important;
+}
+
+::ng-deep .p-fileupload .p-fileupload-label {
+    color: white !important;
+}
+
+::ng-deep .p-fileupload .p-fileupload-text, 
+::ng-deep .p-fileupload .p-fileupload-label {
+    color: white !important;
+}

@@ -55,40 +55,11 @@ export class MusicaComponent implements OnInit {
         }
     })
     }
-  
 
-     this.comentarioService.GetAll().subscribe({
-      next: (comentarios)=>{
-        this.comentarios = comentarios;
-      },
-      complete : ()=>{
-        this.cd.detectChanges();
-      }
-     })
   }
 
   OnSubmit(){
-    if(this.meuFormulario.valid){
-      const texto = this.meuFormulario.get("texto")?.value ?? "";
-      this.showSpinner=true;
-      this.comentarioService.Add({texto:texto,autor : "João Marcos"}).subscribe({
-        next :()=>{
-          this.showSpinner = false;
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Mensagem Adicionada!' });
-          this.meuFormulario.get("texto")?.reset();
-        },
-        error :()=>{
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Ocorreu um erro inesperado!' });
-        },
-        complete : ()=>{
-          this.ngOnInit()
-          this.cd.detectChanges();
-        }
-      })
-    }
-    else{
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Preencha os campos obrigatórios' });
-    }
+   
     
   }
 }

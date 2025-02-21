@@ -1,3 +1,5 @@
+import { ResponseTracksPlaylist } from "./Track";
+
 export interface  PlaylistsResponse {
     href: string;
     limit: number;
@@ -19,7 +21,7 @@ export interface  PlaylistsResponse {
     owner: PlaylistOwner;
     public: boolean | null;
     snapshot_id: string;
-    tracks: PlaylistTracks;
+    tracks : ResponseTracksPlaylist
     type: string;
     uri: string;
   }

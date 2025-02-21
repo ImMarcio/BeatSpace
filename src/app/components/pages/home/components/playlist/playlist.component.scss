@@ -1,0 +1,55 @@
+dark-theme {
+    background-color: #1e1e1e;
+    color: #ffffff;
+  }
+  
+  /* Cabeçalho da tabela */
+  .dark-theme .p-datatable-header {
+    background-color: #252526;
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  /* Corpo da tabela */
+  .dark-theme .p-datatable-tbody tr {
+    background-color: #2a2a2a;
+    color: #ffffff;
+  }
+  
+  /* Alternância de cores entre linhas pares e ímpares */
+  .dark-theme .p-datatable-tbody tr:nth-child(even) {
+    background-color: #333333; /* Tom mais escuro */
+  }
+  
+  .dark-theme .p-datatable-tbody tr:nth-child(odd) {
+    background-color: #2a2a2a; /* Tom mais claro */
+  }
+  
+  /* Efeito hover */
+  .dark-theme .p-datatable-tbody tr:hover {
+    background-color: #444444;
+  }
+  
+  .font-DM {
+    font-family: 'DM Sans',sans-serif
+}
+
+
+
+  /* Ícones e links */
+  .dark-theme a {
+    color: #1db954; /* Verde do Spotify */
+  }
+  
+  .dark-theme .pi {
+    color: #1db954;
+  }
+
+  /* Estilo para o fundo do dialog */
+::ng-deep .p-dialog {
+    border-radius: 10px; /* Optional: para bordas arredondadas */
+    background-color: #050605;
+  }
+  
+
+  

@@ -11,11 +11,11 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-profile',
-    imports: [CommonModule,NavbarLogadoComponent, MatIconModule],
+    imports: [CommonModule,NavbarLogadoComponent, MatIconModule,RouterModule],
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.scss'
 })
-export class ProfileComponent implements OnInit{
+export class ProfileComponent{
 
 
 tracks : Track[] = []
@@ -36,22 +36,7 @@ constructor(private router: Router, private cd : ChangeDetectorRef, private spot
         this.router.navigate(['/home']);
     }
 
-    ngOnInit(): void {
-        this.spotifyService.getTopTracks().subscribe({
-            next:(tracks)=>{
-                this.tracks = tracks.items;
-            },
-            complete : ()=>{
-                this.cd.detectChanges();
-            }
-        })
-
-        this.spotifyService.getTopArtists().subscribe({
-            next :(artists)=>{
-                this.artists = artists.items;
-            }
-        })
-    }
+    
 
     logout(){
         localStorage.removeItem("token");

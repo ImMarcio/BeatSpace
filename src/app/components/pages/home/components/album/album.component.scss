@@ -75,3 +75,16 @@ ng:host .p-carrousel  .p-carousel-indicator-button-highlight{
     flex-direction: row;
     align-items: center;
 }
+
+
+::ng-deep .p-dialog {
+    border-radius: 10px; /* Optional: para bordas arredondadas */
+    background-color: #050605 !important;
+  }
+  
+
+  .divider-up {
+    height: 1px;
+    width: 100%;
+    background-color: #444;
+}

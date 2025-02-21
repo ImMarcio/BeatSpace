@@ -1,3 +1,5 @@
+import { User } from "./User";
+
 export interface Track {
     album: {
       album_type: string;
@@ -41,7 +43,7 @@ export interface Track {
     uri: string;
   }
   
-  export interface ResponseTopTracks {
+  export interface ResponseTracks {
     href: string;
     items: Track[];
     limit: number;
@@ -49,4 +51,22 @@ export interface Track {
     offset: number;
     previous: string | null;
     total: number;
+  }
+
+
+export interface ResponseTracksPlaylist{
+  href: string;
+  items: TracksInPlaylist[];
+  limit: number;
+  next: string | null;
+  offset: number;
+  previous: string | null;
+  total: number;
+}
+  
+  export interface TracksInPlaylist{
+    added_at :string;
+    added_by : User;
+    is_local : boolean;
+    track : Track
   }
