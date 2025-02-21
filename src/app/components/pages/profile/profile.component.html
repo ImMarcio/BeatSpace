@@ -12,11 +12,6 @@
         <div class="flex">
             <img [src]="user!.images[0].url" class="profile-img">
             <div class="profile-infos">
-                <h1 class="ml-10 m-5 text-white">{{user?.display_name}}</h1>
-                <div>
-                    <h4 class="ml-10 m-5 text-white"> Seguidores : {{user?.followers?.total}}</h4>
-                    <h4 class="ml-10 m-5 text-white"> Email : {{user?.email}}</h4>
-                </div>
                 
                 <button class="profile-btn m-2">
                     <a [href]="user?.uri" class="text-white">Acessar perfil no sportify</a>

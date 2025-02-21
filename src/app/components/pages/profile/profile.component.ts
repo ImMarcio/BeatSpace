@@ -8,6 +8,9 @@ import { Track } from '../../../shared/models/Track';
 import { NavbarLogadoComponent } from '../../navbar-logado/navbar-logado.component';
 import { User } from '../../../shared/models/User';
 import { MatIconModule } from '@angular/material/icon';
+import { TabsModule } from 'primeng/tabs';
+import { TopArtistasComponent } from "../../top-artistas/top-artistas.component";
+import { TopMusicasComponent } from "../../top-musicas/top-musicas.component";
 
 @Component({
     selector: 'app-profile',
