@@ -10,6 +10,13 @@ import { MusicasComponent } from './components/pages/home/components/musicas/mus
 import { AlbunsComponent } from './components/pages/home/components/albuns/albuns.component';
 import { AlbumComponent } from './components/pages/home/components/album/album.component';
 import { PlaylistsComponent } from './components/pages/home/components/playlists/playlists.component';
+import { PlaylistComponent } from './components/pages/home/components/playlist/playlist.component';
+import { firstValueFrom } from 'rxjs';
+import { FavoritasComponent } from './components/pages/home/components/playlists/favoritas/favoritas.component';
+import { AddplaylistComponent } from './components/pages/home/components/playlists/addplaylist/addplaylist.component';
+import { TopartistasComponent } from './components/pages/profile/topartistas/topartistas.component';
+import { TopmusicasComponent } from './components/pages/profile/topmusicas/topmusicas.component';
+import { AlbunssalvosComponent } from './components/pages/profile/albunssalvos/albunssalvos.component';
 
 export const routes: Routes = [
 
@@ -21,10 +28,17 @@ export const routes: Routes = [
             {path : "musicas", component : MusicasComponent},
             {path : "albuns", component : AlbunsComponent},
             {path: "album/:id",component : AlbumComponent},
-            {path : "playlists", component : PlaylistsComponent},
-            {path : "playlist/:id", component : PlaylistsComponent},
+            {path : "playlists", component : PlaylistsComponent,children : [
+                {path : "", component : FavoritasComponent},
+                {path : "add",component : AddplaylistComponent}
+            ]},
+            {path : "playlist/:id", component : PlaylistComponent},
           ]
     },
-    { path: 'profile', component: ProfileComponent }
+    { path: 'profile', component: ProfileComponent,children : [
+        {path : "", component : TopartistasComponent},
+        {path : "top-musicas", component : TopmusicasComponent},
+        {path : "albuns-salvos", component : AlbunssalvosComponent }
+    ] }
 
 ];

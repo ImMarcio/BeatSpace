@@ -1,0 +1,47 @@
+<p-toast></p-toast>
+<div class="flex flex-wrap gap-5 mt-10 justify-evenly mr-16 ml-16 flex flex-col items-center justify-center">
+            <h1 class="text-2xl text-center text-white">Criar Playlist</h1>
+            <form [formGroup]="Form!">
+
+                <div class="flex flex-col gap-2">
+                    <label for="username" class="text-white">Nome da Playlist *</label>
+                    <input pInputText placeholder="Nome" aria-describedby="username-help" formControlName="name" />
+                    <small id="username-help">Insira o nome da sua playlist.</small>
+                </div>
+               
+
+                <div class="flex flex-col gap-2">
+                    <label for="username" class="text-white">Descrição</label>
+                <p-iftalabel>
+                    <textarea pTextarea id="description" formControlName="description" rows="5" cols="30" style="resize: none"></textarea>
+                    <label for="description">Descrição *</label>
+                </p-iftalabel>
+                </div>
+
+                <div class="flex flex-col gap-4 mt-10">
+                    <label for="username" class="text-white">Imagem de capa</label>
+                    <p-fileupload 
+                    mode="basic"
+                    chooseLabel="Selecione um arquivo"
+                    chooseIcon="pi pi-upload"
+                    accept="image/*"
+                    maxFileSize="262144"
+                    [showUploadButton]="true"
+                    [showCancelButton]="true"
+                    (onSelect)="onFileSelect($event)">
+                </p-fileupload>
+
+                </div>
+
+                <div class="flex flex-col gap-2 mt-5">
+                    <label  class="text-white">Tipo da Playlist *</label>
+                    <p-selectbutton class="" [options]="stateOptions" formControlName="public" optionLabel="label" optionValue="value" />
+                </div>
+               
+                <div class="flex justify-center items-center mt-10">
+                    <p-button  label="Criar Playlist" severity="success" icon="pi pi-check" [loading]="loading" (onClick)="create()" />
+                </div>
+
+            </form>
+    
+ </div>

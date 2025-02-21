@@ -31,7 +31,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
           if (
             !(!req.url.includes("/spotify") || req.url.includes("/api/spotify/token") || req.url.includes('api/spotify/refresh-token')) && // <- this will avoid an infinite loop when the accessToken expires.
             err.status === 401) {
-              return handleUnauthorizedError(req,next,token,spotifyService,router)
+              return handleUnauthorizedError(req,next,JSON.parse(token),spotifyService,router)
           }
         }
         return throwError(() => err);

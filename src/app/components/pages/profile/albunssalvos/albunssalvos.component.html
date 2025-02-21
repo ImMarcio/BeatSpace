@@ -1,0 +1,16 @@
+<section class="section-artists flex flex-col justify-center items-center mt-16 mx-24 rounded-3xl mb-16">
+    <h1 class="text-3xl font-main font-bold mt-7 text-white">
+        Meus Álbuns Salvos
+    </h1>
+    <div class="flex flex-wrap space-x-4 p-8 items-center">
+        <div *ngFor="let album of albuns" class="  items-center flex flex-col space-y-2">
+            <a [routerLink]="['/home/album',album.album.id]">
+            <img [src]="album.album.images[0].url" alt="" class="w-48 h-48 rounded-xl">
+            <p class=" mb-4 text-sm font-medium font-DM text-left text-white">{{album.album.name}}</p>
+            <p class=" mb-4 text-sm font-medium font-DM text-left text-white">Salvo em : {{album.added_at | date}}</p>
+            </a>
+        </div>
+    </div>
+
+   
+</section>

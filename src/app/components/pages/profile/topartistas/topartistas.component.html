@@ -1,0 +1,12 @@
+<section class="section-artists flex flex-col justify-center items-center mt-16 mx-24 rounded-3xl mb-16">
+    <h1 class="text-3xl font-main font-bold mt-7 text-white">
+        Meu top artistas
+    </h1>
+    <div class="flex flex-wrap space-x-4 p-8 items-center">
+        <div *ngFor="let artist of artists" class="  items-center flex flex-col space-y-2">
+            <img [src]="artist.images[0].url" alt="" class="w-48 h-48 rounded-xl">
+            <p class=" mb-4 text-sm font-medium font-DM text-left text-white">{{artist.name}}</p>
+            <!-- <p class="font-bold font-main text-small text-white">{{item.genres[0]}}</p> -->
+        </div>
+    </div>
+</section>
