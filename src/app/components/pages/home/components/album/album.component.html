@@ -17,35 +17,91 @@
             <p class="text-white">Artista : {{album!.artists[0].name}}</p>
             <p class="text-white">Data de Lançamento : {{album?.release_date | date}}</p>
             <p class="text-white">Músicas Totais : {{album?.total_tracks}}</p>
-            <a [href]="album?.uri" class="uppercase bg-[#88B702] rounded-full py-4 px-8 font-main mt-5">Acessar álbum no Spotify</a>
+            <a [href]="album?.uri" class="uppercase bg-[#88B702] rounded-full py-4 px-4 font-main mt-5 text-center">Acessar álbum no Spotify</a>
             
         </div>
         
         </div>
     </section>
 
-    <section class="pt-10 w-full  flex flex-col items-center gap-10" *ngIf="!this.showSpinner">
-        <h2 class="text-white text-3xl "> Comentários</h2>
-        <form class="w-90 flex flex-col items-center gap-5" [formGroup]="meuFormulario">
-            <textarea formControlName="texto" id="" class="w-full h-40 background-white p-5 rounded-md" placeholder="Escreva seu comentário aqui..."></textarea>
-            
-        </form>
-        <p-button label="Enviar comentário" severity="success" (onClick)="OnSubmit()"/>
-        
-        <div *ngFor="let comentario of comentarios">
+    <p-button  class="mt-5" (onClick)="toggleDropdown()" >Adicionar Comentário <mat-icon>add</mat-icon></p-button>
+    <p-dialog styleClass=" bg-#050605 !important" [modal]="true" [(visible)]="isOpen" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
+                    
+        <div class="flex flex-col gap-5">
 
-            <div class="div-carrossel  text-center p-4 cards w-100 h-30 justify-between ">
-                <p class="paragrafo text-left font-DM ">{{ comentario.texto }}</p>
-                <div class="profile flex flex-row space-x-2 align-center mt-8 ">
-                    <h3 class="text-sm font-semibold font-DM">{{"- "+comentario.autor}}</h3>
+            <h1 class="text-white text-4xl text-center">Eu escutei...</h1>
+
+            <div class="flex flex-row gap-5 items-center p-5">
+                <div class="flex flex-col gap-4">
+                    <img [src]="album!.images[1].url" alt="">
+                    <div class="text-white text-2xl text-center"> {{album?.name}} </div>
+        
                 </div>
+               
+                <div class="flex flex-col gap-10">
+                    
+
+                    <form [formGroup]="meuFormulario" class="flex flex-col gap-4">
+
+                        
+                    <p-floatLabel>
+                        <textarea class="p-4" formControlName="texto" pTextarea  rows="6" cols="45" style="resize: none" [maxlength]="250"></textarea>
+                        <label for="description">Adicione seu comentário...</label>
+                    </p-floatLabel>
+
+                    <span class="text-white">Nota : </span>
+                    <p-rating formControlName="nota" [stars]="10"></p-rating>
+                    <span class="text-white">Data : </span>
+                    <p-datepicker formControlName="data" dateFormat="dd.mm.yy" [showIcon]="true" showOnFocus="false" />
+                  
+                   
+                    
+                    </form>
+                    <div class="flex flex-row gap-2 items-center">
+                        <span class="text-white" class="flex flex-row items-center "> <span class="text-white">Salvar</span><mat-icon style="text-color:white" class="text-white">bookmark</mat-icon></span> 
+                        <p-checkbox [(ngModel)]="salvar" inputId="size_large" name="size" value="Large" size="large" />
+                    </div>
+                   
+                    <div class="flex flex-row justify-end">
+                        <p-button (onClick)="OnSubmit()" [loading]="loading">Enviar</p-button>
+
+                    </div>
+                </div>
+    
             </div>
 
-        </div>
 
-        <p-progress-spinner ariaLabel="loading" *ngIf="this.showSpinner" />
+        </div>
       
-    </section>
+
+
+    </p-dialog> 
+
+   <p *ngIf="comentarios.length === 0 " class="text-white">Nenhuma Review registrada para este álbum</p>
+
+   <section class="w-1/2" *ngIf="comentarios && comentarios.length>0">
+
+    <h1 class="text-center text-3xl text-center p-4">Reviews Recentes</h1>
+    <div class="divider-up"></div>
+    <div class="flex flex-col gap-2" *ngFor="let comentario of this.comentarios">
+        <div class="flex flex-row items-center gap-4">
+            <img [src]="comentario.userimg" alt="" style="border-radius: 50%;">
+            <div class="flex flex-col gap-4">
+                <div class="flex flex-row items-center gap-2">
+                    <p class="text-white p-2 text-md">Review feito por {{comentario.username}}</p>
+                    <p-rating [(ngModel)]="comentario.nota" [disabled]="true" [stars]="10" />
+                </div>
+                <p class="text-white">
+                    {{comentario.texto}}
+                </p>
+                <div class="text-white text-sm self-end">{{comentario.data | date}}</div>
+            </div>
+        </div>
+        <div class="divider-up"></div>
+    </div>
+    
+
+   </section>
  
    </main> 
 
