@@ -5,3 +5,10 @@
 .barra-pesquisa {
     background-color: rgba(255, 255, 255, 0.10);
 }
+
+:host ::ng-deep .p-button {
+    padding: 16px;
+    padding-right: 21px;
+    text-align: center;
+    border-radius: 500px;
+}

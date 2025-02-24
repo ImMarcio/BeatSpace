@@ -12,21 +12,21 @@
         <div class="flex">
             <img [src]="user!.images[0].url" class="profile-img">
             <div class="profile-infos">
-                
+                <h1 class="ml-10 m-5">{{user?.display_name}}</h1>
                 <button class="profile-btn m-2">
-                    <a [href]="user?.uri" class="text-white">Acessar perfil no sportify</a>
+                    <a id="acessar-perfil-spotify" [href]="user?.uri">Acessar perfil no sportify</a>
                 </button>
                 <div class="dropdown">
                     <button (click)="toggleDropdown()" class="profile-btn m-2">•••</button>
                     <div *ngIf="isOpen" class="dropdown-content">
                         <div class="profile-menu-div">
-                            <mat-icon class="text-center">share</mat-icon>
-                            <p class="text-white">Compartilhar perfil</p>
+                            <mat-icon>share</mat-icon>
+                            <p>Compartilhar perfil</p>
                         </div>
                         <div class="divider-up"></div>
                         <div class="profile-menu-div" (click)="logout()">
-                            <mat-icon class="text-center">logout</mat-icon>
-                            <p class="text-white">Sair da conta</p>
+                            <mat-icon>logout</mat-icon>
+                            <p>Sair da conta</p>
                         </div>
                     </div>
                 </div>                  
@@ -39,29 +39,36 @@
             </div>
             <div class="divider-down"></div>
             <div>
-                <p class="profile-followers-text">0</p>
-                <p class="text-xs">Seguindo</p>
+                <p class="profile-followers-text">{{user?.country}}</p>
+                <p class="text-xs">Nacionalidade</p>
             </div>
         </div>
     </section>
-    <nav>
+    <!-- <nav>
         <ul>
             <li><a routerLink="/profile/">Meu Top Artistas</a></li>
-            <li> <a routerLink="/profile/top-musicas">Meu Top Músicas</a></li>
-            <li class="flex flex-row items-center"> <a routerLink="/profile/albuns-salvos">Álbuns Salvos</a> <mat-icon>bookmark</mat-icon></li>
+            <li><a routerLink="/profile/top-musicas">Meu Top Músicas</a></li>
+            <li><a routerLink="/profile/albuns-salvos">Álbuns Salvos</a></li>
         </ul>
         <div class="divider-up"></div>
     </nav>
-    <!-- <section class="flex flex-col justify-center items-center space-y-4">
-        <img [src]="user!.images[0].url" alt="" class="w-2xs rounded-full">
-        <h1 class="text-2xl font-main text-white">{{user?.display_name}}</h1>
-        <div class="flex flex-row gap-4">
-            <div class="text-white"> Seguidores : {{user?.followers?.total}}</div>
-            <div class="text-white">Email : {{user?.email}}</div>
-            <div class="text-white"> Nacionalidade : {{user?.country}}</div>
-            <div></div>
-        </div>
-        <a [href]="user?.uri" class="uppercase bg-[#88B702] rounded-full py-4 px-8 font-main mt-5">Acessar perfil no sportify</a>
-    </section> -->
-    <router-outlet />
+    <router-outlet /> -->
+    <p-tabs value="0">
+        <p-tablist>
+            <p-tab value="0">Meu Top Artistas</p-tab>
+            <p-tab value="1">Meu Top Músicas</p-tab>
+            <p-tab value="2">Álbuns Salvos</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+            <p-tabpanel value="0">
+                <app-topartistas></app-topartistas>
+            </p-tabpanel>
+            <p-tabpanel value="1">
+                <app-topmusicas></app-topmusicas>
+            </p-tabpanel>
+            <p-tabpanel value="2">
+                <app-albunssalvos></app-albunssalvos>
+            </p-tabpanel>
+        </p-tabpanels>
+    </p-tabs>
 </main>

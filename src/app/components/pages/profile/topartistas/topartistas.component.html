@@ -1,12 +1,10 @@
-<section class="section-artists flex flex-col justify-center items-center mt-16 mx-24 rounded-3xl mb-16">
-    <h1 class="text-3xl font-main font-bold mt-7 text-white">
-        Meu top artistas
-    </h1>
-    <div class="flex flex-wrap space-x-4 p-8 items-center">
-        <div *ngFor="let artist of artists" class="  items-center flex flex-col space-y-2">
-            <img [src]="artist.images[0].url" alt="" class="w-48 h-48 rounded-xl">
-            <p class=" mb-4 text-sm font-medium font-DM text-left text-white">{{artist.name}}</p>
-            <!-- <p class="font-bold font-main text-small text-white">{{item.genres[0]}}</p> -->
+<section class="text-white py-10 px-6 rounded-xl shadow-lg">
+    <h1 class="text-3xl font-bold text-center mb-6">Meu Top Artistas</h1>
+    <div class="flex flex-wrap justify-center gap-6">
+        <div *ngFor="let item of artists; let i = index" class="flex flex-col items-center p-4 shadow-md hover:scale-105 transition min-w-[200px] sm:min-w-[220px]">
+            <img [src]="item.images[0].url" alt="{{ item.name }}" class="w-32 h-32 object-cover">
+            <p class="mt-3 text-lg font-semibold text-center truncate w-full">{{ item.name }}</p>
         </div>
     </div>
 </section>
+  

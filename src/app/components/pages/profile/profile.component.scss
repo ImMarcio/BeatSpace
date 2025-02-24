@@ -24,14 +24,19 @@
 }
 
 .profile-btn {
-    background-color: #88B702;
+    background-color: #34d399;
+    color: black;
     padding: 6px 12px 6px 12px;
     border-radius: 200px;
     cursor: pointer;
 }
 
+#acessar-perfil-spotify {
+    color: black;
+}
+
 .profile-btn:hover {
-    background-color: #698f02;
+    background-color: #2eb382;
 }
 
 .profile-followers {

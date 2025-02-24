@@ -9,12 +9,15 @@ import { NavbarLogadoComponent } from '../../navbar-logado/navbar-logado.compone
 import { User } from '../../../shared/models/User';
 import { MatIconModule } from '@angular/material/icon';
 import { TabsModule } from 'primeng/tabs';
-import { TopArtistasComponent } from "../../top-artistas/top-artistas.component";
-import { TopMusicasComponent } from "../../top-musicas/top-musicas.component";
+import { TopartistasComponent } from "./topartistas/topartistas.component";
+import { TopmusicasComponent } from "./topmusicas/topmusicas.component";
+import { AlbunssalvosComponent } from "./albunssalvos/albunssalvos.component";
+// import { TopArtistasComponent } from "../../top-artistas/top-artistas.component";
+// import { TopMusicasComponent } from "../../top-musicas/top-musicas.component";
 
 @Component({
     selector: 'app-profile',
-    imports: [CommonModule,NavbarLogadoComponent, MatIconModule,RouterModule],
+    imports: [CommonModule, NavbarLogadoComponent, MatIconModule, RouterModule, TabsModule, TopartistasComponent, TopmusicasComponent, AlbunssalvosComponent],
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.scss'
 })
