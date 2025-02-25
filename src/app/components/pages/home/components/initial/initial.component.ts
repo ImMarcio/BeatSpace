@@ -6,6 +6,8 @@ import { SpotifyService } from '../../../../../shared/services/spotify.service';
 import { Album } from '../../../../../shared/models/Album';
 import { CarouselModule } from 'primeng/carousel';
 import { Track } from '../../../../../shared/models/Track';
+import { User } from '../../../../../shared/models/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-initial',
@@ -15,9 +17,11 @@ import { Track } from '../../../../../shared/models/Track';
 })
 export class InitialComponent implements OnInit {
 
+  user ? : User
+
   albuns : Album[] = []
 
-  constructor(private spotifyService : SpotifyService, private cd : ChangeDetectorRef){}
+  constructor(private router: Router, private spotifyService : SpotifyService, private cd : ChangeDetectorRef){}
 
   items = [
     { id:"1", image: '../../../../assets/BK-Icarus.jpeg', alt: 'Imagem 2', title: 'Icarus',feedback:"Seria ótimo se houvesse mais atividades interativas, como desafios musicais mensais, para engajar ainda mais os membros e estimular a criatividade" },
@@ -34,6 +38,15 @@ export class InitialComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.spotifyService.getCurrentUser().subscribe({
+      next : (user)=>{
+        this.user = user;
+        localStorage.setItem("current_user",JSON.stringify(this.user))
+      },
+      complete : ()=>{
+        this.cd.detectChanges();
+      }
+    })
     this.spotifyService.getAlbumReleases().subscribe({
       next:(response)=>{
           this.albuns = response.albums.items;
@@ -48,6 +61,10 @@ export class InitialComponent implements OnInit {
   )
 
   
+  }
+
+  goToProfile() {
+    this.router.navigate(['/profile'])
   }
 
 }

@@ -55,9 +55,10 @@
     <router-outlet /> -->
     <p-tabs value="0">
         <p-tablist>
-            <p-tab value="0">Meu Top Artistas</p-tab>
-            <p-tab value="1">Meu Top Músicas</p-tab>
+            <p-tab value="0">Top Artistas</p-tab>
+            <p-tab value="1">Top Músicas</p-tab>
             <p-tab value="2">Álbuns Salvos</p-tab>
+            <p-tab value="3">Playlists</p-tab>
         </p-tablist>
         <p-tabpanels>
             <p-tabpanel value="0">
@@ -68,6 +69,9 @@
             </p-tabpanel>
             <p-tabpanel value="2">
                 <app-albunssalvos></app-albunssalvos>
+            </p-tabpanel>
+            <p-tabpanel value="3">
+                <app-favoritas></app-favoritas>
             </p-tabpanel>
         </p-tabpanels>
     </p-tabs>

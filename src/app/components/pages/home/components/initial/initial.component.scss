@@ -1,10 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&display=swap');
 
+section > h1 {
+    color: #ffffffbe;
+    margin: 0;
+    margin-top: 30px;
+    font-size: 30px;
+    font-weight: normal;
+}
+
+section > h2 {
+    text-align: center;
+    color: #ffffffbe;
+}
+
+.redirecionar-perfil {
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: #ffffff;
+    text-underline-offset: 4px;
+}
+
 h1 {
     font-family: "DM Sans", serif;
     color: white;
     font-weight: bold;
+    margin-top: 30px;
+    font-size: 25px;
+}
+
+.divider2 {
+    width: 100%;
+    height: 1px;
+    background-color: #444;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+nav {
     margin-left: 150px;
+    margin-right: 150px;
 }
 
 .barra-pesquisa {
@@ -34,4 +70,13 @@ h1 {
     font-size: 25px;
     padding-left: 20px;
     line-height: 30px;
+}
+
+.lancamentos {
+    margin-left: 150px;
+    margin-right: 150px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }

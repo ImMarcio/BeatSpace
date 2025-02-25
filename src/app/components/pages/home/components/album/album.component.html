@@ -2,80 +2,90 @@
 <p-toast />
 <main class=" flex flex-col justify-center items-center space-y-8 mb-10">
 
-    <section class="pt-10 w-full" >
-       <nav class="flex flex-row justify-between">
-          
-          
-       </nav>
-
-       <div class="flex flex-row justify-center items-center gap-5">
-        
-        <img class="w-100 h-60" [src]="album!.images[0].url" alt="">
-        <div class="flex flex-col gap-4">
-            <h1 class="text-4xl font-DM text-white">{{album?.name}}</h1>
-            <p class="text-white bold">Tipo de Álbum : {{album?.album_type}}</p>
-            <p class="text-white">Artista : {{album!.artists[0].name}}</p>
-            <p class="text-white">Data de Lançamento : {{album?.release_date | date}}</p>
-            <p class="text-white">Músicas Totais : {{album?.total_tracks}}</p>
-            <a [href]="album?.uri" class="uppercase bg-[#88B702] rounded-full py-4 px-4 font-main mt-5 text-center">Acessar álbum no Spotify</a>
-            
-        </div>
-        
+    <section class="pt-10 w-full">
+       <div class="musica">
+            <div class="musica-infos">
+                <img class="rounded-xl w-70 h-70" [src]="album!.images[0].url" alt="">
+                <div class="flex flex-col justify-between pl-10">
+                    <h1 class="text-4xl font-DM text-white">{{album?.name}}</h1>
+                    <p class="text-white text-lg">Artista: <b>{{album!.artists[0].name}}</b></p>
+                    <div>
+                        <p class="infos">Tipo de Álbum: {{album?.album_type}}</p>
+                        <p class="infos">Data de Lançamento: {{album?.release_date | date}}</p>
+                        <p class="infos">Músicas Totais: {{album?.total_tracks}}</p>
+                    </div>
+                    <a [href]="album?.uri" class="uppercase bg-[#34d399] rounded-full py-4 font-main mt-5 text-center text-black w-70">Acessar álbum no Spotify</a>
+                </div>
+            </div>
+            <div class="divider"></div>
         </div>
     </section>
 
     <p-button  class="mt-5" (onClick)="toggleDropdown()" >Adicionar Comentário <mat-icon>add</mat-icon></p-button>
-    <p-dialog styleClass=" bg-#050605 !important" [modal]="true" [(visible)]="isOpen" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
+    <p-dialog 
+    styleClass="bg-#050605 !important p-6" 
+    [modal]="true" 
+    [(visible)]="isOpen" 
+    [style]="{ width: '50rem' }" 
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
                     
         <div class="flex flex-col gap-5">
 
-            <h1 class="text-white text-4xl text-center">Eu escutei...</h1>
+            <h1 class="text-white text-4xl text-center eu-escutei">Eu escutei...</h1>
 
-            <div class="flex flex-row gap-5 items-center p-5">
-                <div class="flex flex-col gap-4">
-                    <img [src]="album!.images[1].url" alt="">
-                    <div class="text-white text-2xl text-center"> {{album?.name}} </div>
-        
-                </div>
-               
-                <div class="flex flex-col gap-10">
-                    
+            <div class="flex flex-col gap-10">
+                <form [formGroup]="meuFormulario" class="flex flex-col gap-4">
 
-                    <form [formGroup]="meuFormulario" class="flex flex-col gap-4">
+                    <div class="flex flex-row gap-4">
+                        <img [src]="album!.images[1].url" class="w-36 rounded-xl">
+                        <div class="flex flex-col justify-between py-5">
+                            <h1 class="text-white text-2xl titulo"> {{album?.name}}</h1>
+                            <div class="flex gap-3">
+                                <span class="text-white">Nota</span>
+                                <p-rating formControlName="nota" [stars]="10"></p-rating>
+                            </div>
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="text-white flex flex-row items-center cursor-pointer"(click)="salvar = !salvar">
+                                    <span class="text-white pr-2">Salvar</span>
+                                    <mat-icon [ngStyle]="{ color: salvar ? '#34d399' : '#a1a1aa',fontSize: '1.8rem' }">
+                                        {{ salvar ? 'bookmark' : 'bookmark_border' }}
+                                    </mat-icon>
+                                </span>
+                            </div>                                              
+                        </div>
+                    </div>
 
-                        
-                    <p-floatLabel>
-                        <textarea class="p-4" formControlName="texto" pTextarea  rows="6" cols="45" style="resize: none" [maxlength]="250"></textarea>
-                        <label for="description">Adicione seu comentário...</label>
+                    <p-floatLabel class="w-full flex flex-col items-start gap-2 mt-5">
+                        <textarea 
+                            formControlName="texto" 
+                            pTextarea  
+                            rows="6" 
+                            cols="45" 
+                            class="font-DM rounded-2xl py-4 px-6 w-full bg-transparent placeholder:text-white text-white border border-gray-500 focus:border-green-400 focus:ring-1 focus:ring-green-400 resize-none"
+                            style="outline: none;"
+                            [maxlength]="250">
+                        </textarea>
+                        <label for="description" class="text-white text-lg">Adicione seu comentário...</label>
                     </p-floatLabel>
 
-                    <span class="text-white">Nota : </span>
-                    <p-rating formControlName="nota" [stars]="10"></p-rating>
-                    <span class="text-white">Data : </span>
-                    <p-datepicker formControlName="data" dateFormat="dd.mm.yy" [showIcon]="true" showOnFocus="false" />
-                  
-                   
-                    
-                    </form>
-                    <div class="flex flex-row gap-2 items-center">
-                        <span class="text-white" class="flex flex-row items-center "> <span class="text-white">Salvar</span><mat-icon style="text-color:white" class="text-white">bookmark</mat-icon></span> 
-                        <p-checkbox [(ngModel)]="salvar" inputId="size_large" name="size" value="Large" size="large" />
+                    <div class="w-full">
+                        <span class="text-white pr-3">Data: </span>
+                        <p-datepicker 
+                            formControlName="data" 
+                            dateFormat="dd.mm.yy" 
+                            [showIcon]="true" 
+                            showOnFocus="false" 
+                            class="w-full" />
                     </div>
-                   
-                    <div class="flex flex-row justify-end">
-                        <p-button (onClick)="OnSubmit()" [loading]="loading">Enviar</p-button>
 
+                    <div class="flex flex-row justify-end w-full mt-3">
+                        <p-button (onClick)="OnSubmit()" [loading]="loading" class="w-full">Enviar</p-button>
                     </div>
-                </div>
-    
+                </form>
             </div>
-
-
         </div>
-      
+    </p-dialog>
 
-
-    </p-dialog> 
 
    <p *ngIf="comentarios.length === 0 " class="text-white">Nenhuma Review registrada para este álbum</p>
 

@@ -12,12 +12,13 @@ import { TabsModule } from 'primeng/tabs';
 import { TopartistasComponent } from "./topartistas/topartistas.component";
 import { TopmusicasComponent } from "./topmusicas/topmusicas.component";
 import { AlbunssalvosComponent } from "./albunssalvos/albunssalvos.component";
+import { FavoritasComponent } from "../home/components/playlists/favoritas/favoritas.component";
 // import { TopArtistasComponent } from "../../top-artistas/top-artistas.component";
 // import { TopMusicasComponent } from "../../top-musicas/top-musicas.component";
 
 @Component({
     selector: 'app-profile',
-    imports: [CommonModule, NavbarLogadoComponent, MatIconModule, RouterModule, TabsModule, TopartistasComponent, TopmusicasComponent, AlbunssalvosComponent],
+    imports: [CommonModule, NavbarLogadoComponent, MatIconModule, RouterModule, TabsModule, TopartistasComponent, TopmusicasComponent, AlbunssalvosComponent, FavoritasComponent],
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.scss'
 })
