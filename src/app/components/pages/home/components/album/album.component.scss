@@ -40,8 +40,6 @@ textarea {
     line-height: 30px;
 }
 
-
-
 .cards{
     background-color: rgba(255, 255, 255, 0.10);
     border-radius: 20px;
@@ -76,19 +74,16 @@ ng:host .p-carrousel  .p-carousel-indicator-button-highlight{
     align-items: center;
 }
 
-
 ::ng-deep .p-dialog {
     border-radius: 10px; /* Optional: para bordas arredondadas */
     background-color: #050605 !important;
-  }
+}
   
-
-  .divider-up {
+.divider-up {
     height: 1px;
     width: 100%;
     background-color: #444;
 }
-
 
 .divider {
     width: 100%;
@@ -124,10 +119,32 @@ b {
     width: 100%;
 }
 
+:host ::ng-deep .add-comentario {
+    padding: 16px;
+    text-align: center;
+    border-radius: 500px;
+    padding-left: 20px;
+    width: 450px;
+}
+
 .titulo {
     color: #34d399;
 }
 
 .eu-escutei {
     margin-top: -5px;
+}
+
+.margin {
+    width: calc(100% - 300px);
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
+.text-cinza {
+    color: #777;
+}
+
+.borda {
+    border: 2px solid #34d399;
 }

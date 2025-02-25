@@ -4,11 +4,12 @@ import { MainComponent } from '../../main/main.component';
 import { FooterComponent } from '../../footer/footer.component';
 import { CarrouselComponent } from '../../carrousel/carrousel.component';
 import { ContatosComponent } from '../../contatos/contatos.component';
+import { FooterLandingPageComponent } from "../../footer-landing-page/footer-landing-page.component";
 
 
 @Component({
   selector: 'app-landing-page',
-  imports: [NavbarComponent,MainComponent,FooterComponent, CarrouselComponent, ContatosComponent],
+  imports: [NavbarComponent, MainComponent, CarrouselComponent, ContatosComponent, FooterLandingPageComponent],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss'
 })

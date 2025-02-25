@@ -48,6 +48,10 @@ goToHome() {
   this.router.navigate(['/home']);
 }
 
+scrollToTop(): void {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 getSeverity(status: string) {
   switch (status) {
       case 'INSTOCK':
