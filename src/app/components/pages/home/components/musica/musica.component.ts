@@ -10,10 +10,13 @@ import { Toast, ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { Track } from '../../../../../shared/models/Track';
 import { SpotifyService } from '../../../../../shared/services/spotify.service';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { FormatMsPipe } from "../../../../../shared/pipes/format-ms.pipe";
+import { DateISOPipe } from "../../../../../shared/pipes/date-iso.pipe";
 
 @Component({
   selector: 'app-musica',
-  imports: [CommonModule,ButtonModule,ReactiveFormsModule,TextareaModule,ProgressSpinnerModule,ToastModule],
+  imports: [CommonModule, ButtonModule, ReactiveFormsModule, TextareaModule, ProgressSpinnerModule, ToastModule, ProgressBarModule, FormatMsPipe, DateISOPipe],
   templateUrl: './musica.component.html',
   styleUrl: './musica.component.scss',
   providers: [MessageService]

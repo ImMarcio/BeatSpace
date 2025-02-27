@@ -2,25 +2,49 @@
 <p-toast />
 <main class=" flex flex-col justify-center items-center space-y-8 mb-10">
 
-    <section class="pt-10 w-full" >
-       <nav class="flex flex-row justify-between">
-          
-          
-       </nav>
+    <!-- <section class="pt-10 w-full">
+        <div class="musica">
+             <div class="musica-infos">
+                 <img class="rounded-xl w-70 h-70" [src]="album!.images[0].url" alt="">
+                 <div class="flex flex-col justify-between pl-10">
+                     <h1 class="text-4xl font-DM text-white">{{album?.name}}</h1>
+                     <p class="text-white text-lg">Artista: <b>{{album!.artists[0].name}}</b></p>
+                     <div>
+                         <p class="infos">Tipo de Álbum: {{album?.album_type}}</p>
+                         <p class="infos">Data de Lançamento: {{album?.release_date | date}}</p>
+                         <p class="infos">Músicas Totais: {{album?.total_tracks}}</p>
+                     </div>
+                     <a [href]="album?.uri" class="uppercase bg-[#34d399] rounded-full py-4 font-main mt-5 text-center text-black w-70">Acessar álbum no Spotify</a>
+                 </div>
+             </div>
+             <div class="divider"></div>
+         </div>
+     </section> -->
 
-       <div class="flex flex-col justify-center items-center gap-5">
-        <img class="w-100 h-60" *ngIf="track" [src]="track.album.images[0].url" alt="">
-        <div class="flex flex-col gap-4">
-            <h1 class="text-4xl font-DM text-white">{{track?.name}}</h1>
-            <p class="text-white bold">Data de Lançamento: {{track?.album?.release_date | date}}</p>
-            <p class="text-white bold">Duração: {{track?.duration_ms}} ms</p>
-            <p class="text-white" *ngIf="track">Artista : {{track.artists[0].name}}</p>
-            <p class="text-white">Tipo de Música : {{track?.type }}</p>
-            <p class="text-white">Popularidade: {{track?.popularity}}/100</p>
-            
-            <a [href]="track?.uri" class="uppercase bg-[#88B702] rounded-full py-4 px-8 font-main mt-5">Acessar música no Spotify</a>
-            
-        </div>
+    <section class="pt-10 w-full" >
+        <div class="margin">
+            <div class="flex flex-row">
+                <img class="rounded-xl w-70 h-70" *ngIf="track" [src]="track.album.images[0].url" alt="">
+                <div class="flex flex-col justify-between pl-10">
+                    <h1 class="text-4xl font-DM text-white">{{track?.name}}</h1>
+                    <p class="text-white text-lg" *ngIf="track">Artista: <b>{{track.artists[0].name}}</b></p>
+                    <div>
+                        <p class="infos">Data de Lançamento: {{track!.album!.release_date | dateISO}}</p>
+                        <p class="infos">Duração: {{ track!.duration_ms | formatMs }}</p>
+                        <!-- <p class="infos">Tipo de Música: {{track?.type }}</p> -->
+                    </div>
+                    <div class="flex flex-row items-center gap-3">
+                        <p class="text-white">Popularidade: </p>
+                        <p-progressbar [value]="track?.popularity">
+                            <ng-template #content let-value>
+                                <span>{{value}}/100</span>
+                            </ng-template>
+                        </p-progressbar>
+                    </div>
+                    <a [href]="track?.uri" class="uppercase bg-[#34d399] rounded-full py-4 font-main mt-5 text-center text-black w-70">Acessar música no Spotify</a>
+                </div>
+            </div>
+            <div class="divider"></div>
         </div>
     </section>
 
@@ -47,5 +71,4 @@
       
     </section>
  
-   </main> 
-
+</main>

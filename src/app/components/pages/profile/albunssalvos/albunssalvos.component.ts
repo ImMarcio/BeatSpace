@@ -3,10 +3,11 @@ import { SpotifyService } from '../../../../shared/services/spotify.service';
 import { Album } from '../../../../shared/models/Album';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { DateISOPipe } from "../../../../shared/pipes/date-iso.pipe";
 
 @Component({
   selector: 'app-albunssalvos',
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule, DateISOPipe],
   templateUrl: './albunssalvos.component.html',
   styleUrl: './albunssalvos.component.scss'
 })

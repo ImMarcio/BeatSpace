@@ -18,6 +18,7 @@ import { RatingModule } from 'primeng/rating';
 import { DatePickerModule } from 'primeng/datepicker';
 import { User } from '../../../../../shared/models/User';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DateISOPipe } from "../../../../../shared/pipes/date-iso.pipe";
 
 
 export interface ComentarioDAO{
@@ -26,9 +27,8 @@ export interface ComentarioDAO{
 @Component({
   selector: 'app-album',
   standalone : true,
-  imports: [CommonModule,ToastModule,ButtonModule,ProgressSpinnerModule,ReactiveFormsModule,MatIconModule,ReactiveFormsModule,InputTextModule,DialogModule,IftaLabelModule
-    ,FloatLabelModule,RatingModule,DatePickerModule,MatIconModule,CheckboxModule,FormsModule
-  ],
+  imports: [CommonModule, ToastModule, ButtonModule, ProgressSpinnerModule, ReactiveFormsModule, MatIconModule, ReactiveFormsModule, InputTextModule, DialogModule, IftaLabelModule,
+    FloatLabelModule, RatingModule, DatePickerModule, MatIconModule, CheckboxModule, FormsModule, DateISOPipe],
   providers: [MessageService],
   templateUrl: './album.component.html',
   styleUrl: './album.component.scss'

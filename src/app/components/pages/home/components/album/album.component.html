@@ -11,7 +11,7 @@
                     <p class="text-white text-lg">Artista: <b>{{album!.artists[0].name}}</b></p>
                     <div>
                         <p class="infos">Tipo de Álbum: {{album?.album_type}}</p>
-                        <p class="infos">Data de Lançamento: {{album?.release_date | date}}</p>
+                        <p class="infos">Data de Lançamento: {{album!.release_date | dateISO}}</p>
                         <p class="infos">Músicas Totais: {{album?.total_tracks}}</p>
                     </div>
                     <a [href]="album?.uri" class="uppercase bg-[#34d399] rounded-full py-4 font-main mt-5 text-center text-black w-70">Acessar álbum no Spotify</a>

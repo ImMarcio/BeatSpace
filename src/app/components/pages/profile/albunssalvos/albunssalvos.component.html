@@ -10,7 +10,7 @@
                     {{ album.album.name }}
                 </p>
                 <!-- TODO: ajeitar a formatação da hora -->
-                <p class="text-sm text-gray-500 text-center">Salvo em: {{ album.added_at | date }}</p>
+                <p class="text-sm text-gray-500 text-center">Salvo em: {{ album.added_at | dateISO }}</p>
             </a>
         </div>
     </div>
