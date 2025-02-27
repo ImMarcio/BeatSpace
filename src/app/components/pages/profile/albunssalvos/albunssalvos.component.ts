@@ -32,4 +32,29 @@ ngOnInit(): void {
     })
 }
 
+  // Exemplo de chamada da função
+  onRemoveAlbums(ids: string[]) {
+    const request = { ids };
+    this.spotifyService.removeSavedAlbuns(request).subscribe(
+      response => {
+        this.spotifyService.getSavedAlbuns().subscribe({
+          next : (albuns)=>{
+            console.log(albuns)
+            this.albuns = albuns.items;
+          },
+          complete : ()=>{
+            this.cd.detectChanges();
+          }
+        })
+        console.log('Álbuns removidos com sucesso', response);
+        // Trate a resposta da API, exiba uma mensagem de sucesso, etc.
+      },
+      error => {
+        console.error('Erro ao remover álbuns', error);
+        // Trate erros, exiba mensagens de erro, etc.
+      }
+    );
+  }
+
+
 }

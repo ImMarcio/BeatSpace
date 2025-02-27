@@ -36,10 +36,18 @@ export class SpotifyService {
     return this.http.put<any>(this.server_url + "/albuns/add" , request)
   }
 
+  removeSavedAlbuns(request: { ids: string[] }): Observable<any> {
+    const body = { ids: request.ids };  // Enviando os IDs no corpo da requisição
+    return this.http.request<any>('DELETE', `${this.server_url}/albuns/remove`, { body});
+  }
+  
   getSavedAlbuns() : Observable<any>{
     return this.http.get<any>(this.server_url + "/albuns/saved")
   }
  
+
+ 
+
   getToken(code: string): Observable<any> {
     return this.http.post(`http://localhost:8081/api/spotify/token`, { code });
   }
