@@ -1,16 +1,22 @@
 <section class="text-white py-10 px-6 rounded-xl shadow-lg">
     <h1 class="text-3xl font-bold text-center mb-6">Álbuns Salvos</h1>
     <div class="flex flex-wrap justify-center gap-6">
-        <div *ngFor="let album of albuns" 
-     class="flex flex-col items-center p-6 shadow-lg hover:scale-105 transition w-56 rounded-xl">
-            <a [routerLink]="['/home/album', album.album.id]" class="w-full flex flex-col items-center justify-between h-full">
-                <img [src]="album.album.images[0].url" alt="{{ album.album.name }}" 
+        <div *ngFor="let album of albuns" class="relative flex flex-col items-center p-6 shadow-lg hover:scale-105 transition w-56 rounded-xl group">
+            <!-- Ícone de lixeira (aparece no hover) -->
+            <button class="absolute top-2 right-2 bg-[#34d399] text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                <mat-icon class="text-white">remove_circle</mat-icon>
+            </button>              
+            <a [routerLink]="['/home/album', album.album.id]" 
+                class="w-full flex flex-col items-center justify-between h-full">
+                <img [src]="album.album.images[0].url" 
+                    alt="{{ album.album.name }}" 
                     class="w-40 h-40 object-cover rounded-xl shadow-md">
                 <p class="mt-3 text-lg font-semibold text-center text-white h-12 truncate w-full px-2 pt-3">
-                    {{ album.album.name }}
+                {{ album.album.name }}
                 </p>
-                <!-- TODO: ajeitar a formatação da hora -->
-                <p class="text-sm text-gray-500 text-center">Salvo em: {{ album.added_at | dateISO }}</p>
+                <p class="text-sm text-gray-500 text-center">
+                Salvo em: {{ album.added_at | dateISO }}
+                </p>
             </a>
         </div>
     </div>

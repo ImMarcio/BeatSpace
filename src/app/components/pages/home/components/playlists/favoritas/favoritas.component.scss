@@ -5,25 +5,37 @@
 
 .dropdown-content {
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.10);
+    // background-color: rgba(255, 255, 255, 0.10);
     width: 250px;
     border-radius: 5px;
 }
 
+:host ::ng-deep .p-dialog {
+    border-radius: 10px; /* Optional: para bordas arredondadas */
+    background-color: transparent;
+}
 
 .profile-btn {
-    background-color: #88B702;
+    background-color: #34d399;
     padding: 6px 12px 6px 12px;
     border-radius: 200px;
     cursor: pointer;
 }
 
 .profile-btn:hover {
-    background-color: #698f02;
+    background-color: #2bb381;
 }
 
-::ng-deep .p-dialog {
+:host ::ng-deep .p-dialog {
     border-radius: 10px; /* Optional: para bordas arredondadas */
     background-color: #050605 !important;
-  }
+}
   
+.custom-dialog .p-dialog-content {
+    background-color: #050605 !important; /* Cor de fundo desejada para o conteúdo */
+}
+
+/* Caso queira um fundo semitransparente na sobreposição */
+.custom-dialog .p-dialog-mask {
+    background-color: rgba(0, 0, 0, 0.5); /* Opacidade ajustada conforme necessário */
+}

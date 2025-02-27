@@ -4,10 +4,11 @@ import { Album } from '../../../../shared/models/Album';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DateISOPipe } from "../../../../shared/pipes/date-iso.pipe";
+import {MatIconModule} from '@angular/material/icon'
 
 @Component({
   selector: 'app-albunssalvos',
-  imports: [CommonModule, RouterModule, DateISOPipe],
+  imports: [CommonModule, RouterModule, DateISOPipe, MatIconModule],
   templateUrl: './albunssalvos.component.html',
   styleUrl: './albunssalvos.component.scss'
 })

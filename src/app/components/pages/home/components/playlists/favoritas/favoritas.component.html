@@ -1,76 +1,90 @@
 <p-toast></p-toast>
 
 <div class="flex flex-wrap gap-5 mt-10 justify-evenly mr-16 ml-16">
-            
     <div *ngFor="let playlist of playlists">
-         <div class=" rounded-xl w-[380px]   text-center p-4 cards max-w-xl justify-between">
-          
+        <div class="rounded-xl w-[350px] text-center p-4 cards max-w-xl justify-between">
+            
             <div class="flex flex-col space-x-2 align-center mt-8">
-            <img *ngIf="playlist.images" [src]="playlist.images[0].url" class=" object-cover rounded-lg shadow-lg ">
-            <h3 class="mt-4 text-sm font-medium font-DM text-left text-white">{{playlist.name}}</h3>
-            <p class="font-normal text-left text-xs uppercase text-white"> AUTOR DA PLAYLIST : {{playlist.owner.display_name}}</p>
-            <p class="font-normal text-left text-xs uppercase text-white"> Total: {{playlist.tracks.total}} músicas</p>
-            <div class="flex flex-row gap-5 items-center justify-center">
-              
-              <a *ngIf="playlist" [routerLink]="['/home/playlist',playlist.id]" class="uppercase bg-[#88B702] rounded-full py-4 px-8 font-main mt-5">Ver detalhes da playlist</a>
-              <div class="dropdown">
-                <button *ngIf="playlist.owner.id === userId" (click)="toggleDropdown(playlist)" class="profile-btn m-2">
-                  <mat-icon class="text-center">edit</mat-icon>
-                </button>
-
+                <img *ngIf="playlist.images" [src]="playlist.images[0].url" class="object-cover rounded-lg shadow-lg">
                 
-                <p-dialog styleClass=" bg-#050605 !important" [modal]="true" [(visible)]="isOpen" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
-                    
-                <div class="flex flex-wrap gap-5 mt-10 justify-evenly mr-16 ml-16 flex flex-col items-center justify-center">
-                  <h1 class="text-4xl text-center text-white">Alterar Playlist</h1>
-                  <form [formGroup]="Form!">
+                <h3 class="mt-4 text-xl font-DM text-left text-white pb-2 font-bold">
+                    {{ playlist.name }}
+                </h3>
+                
+                <p class="font-normal text-left text-xs text-[#888]">
+                    Autor da playlist: 
+                    <b class="uppercase text-[#34d399]">{{ playlist.owner.display_name }}</b>
+                </p>
+                
+                <p class="font-normal text-left text-xs text-[#888]">
+                    Total: <b class="uppercase text-[#34d399]">{{ playlist.tracks.total }} músicas</b>
+                </p>
+                
+                <div class="flex flex-row items-center justify-between w-full">
+                    <a *ngIf="playlist" [routerLink]="['/home/playlist', playlist.id]"
+                        [ngClass]="{'w-full': playlist.owner.id !== userId}" 
+                        class="uppercase bg-[#34d399] rounded-full py-4 px-6 font-main mt-5 text-black text-center hover:bg-[#2eb382]">
+                        Ver detalhes da playlist
+                    </a>
+                
+                    <div class="dropdown" *ngIf="playlist.owner.id === userId">
+                        <button (click)="toggleDropdown(playlist)" 
+                                class="w-[56px] h-[56px] bg-[#34d399] rounded-full flex items-center justify-center mt-5 cursor-pointer hover:bg-[#2eb382]">
+                            <mat-icon style="color: black !important;">edit</mat-icon>
+                        </button>
 
-                      <div class="flex flex-col gap-2">
-                          <label for="username" class="text-white">Nome da Playlist *</label>
-                          <input pInputText placeholder="Nome" aria-describedby="username-help" formControlName="name" />
-                          <small id="username-help">Insira o nome da sua playlist.</small>
-                      </div>
-                    
+                        <p-dialog 
+                        styleClass="bg-#050605 !important px-6 pb-6" 
+                        [modal]="true" 
+                        [(visible)]="isOpen" 
+                        [style]="{ width: '50rem' }" 
+                        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+                            <div class="flex flex-wrap gap-5 justify-evenly mr-16 ml-16 flex flex-col items-center justify-center">
 
-                      <div class="flex flex-col gap-2">
-                          <label for="username" class="text-white">Descrição</label>
-                      <p-iftalabel>
-                          <textarea pTextarea id="description" formControlName="description" rows="5" cols="30" style="resize: none"></textarea>
-                          <label for="description">Descrição *</label>
-                      </p-iftalabel>
-                      </div>
+                                <h1 class="text-4xl text-center text-white font-DM font-bold">Alterar Playlist</h1>
 
-                      <div class="flex flex-col gap-4 mt-10">
-                          <label for="username" class="text-white">Imagem de capa (Opcional)</label>
-                          <p-fileupload 
-                          mode="basic"
-                          chooseLabel="Selecione um arquivo"
-                          chooseIcon="pi pi-upload"
-                          accept="image/*"
-                          maxFileSize="262144"
-                          [showUploadButton]="true"
-                          [showCancelButton]="true"
-                          (onSelect)="onFileSelect($event)">
-                      </p-fileupload>
+                                <form [formGroup]="Form!">
+                                    <div class="flex flex-row items-center gap-2">
+                                        <label for="username" class="text-white text-lg font-bold">Nome da Playlist *</label>
+                                        <input pInputText placeholder="Nome" aria-describedby="username-help" formControlName="name">
+                                        <!-- <small id="username-help">Insira o nome da sua playlist.</small> -->
+                                    </div>
 
-                      </div>
+                                    <div class="flex flex-row items-center gap-2">
+                                        <label for="username" class="text-white text-lg font-bold">Descrição (Opcional)</label>
+                                        <p-iftalabel>
+                                            <textarea pTextarea id="description" formControlName="description" rows="5" cols="30" style="resize: none"></textarea>
+                                            <!-- <label for="description">Descrição *</label> -->
+                                        </p-iftalabel>
+                                    </div>
 
-                      <div class="flex flex-col gap-2 mt-5">
-                          <label  class="text-white">Tipo da Playlist *</label>
-                          <p-selectbutton class="w-full" [options]="stateOptions" formControlName="public" optionLabel="label" optionValue="value" />
-                      </div>
-                    
-                      <div class="flex justify-center items-center mt-10">
-                          <p-button  label="Alterar Playlist" severity="success" icon="pi pi-check" [loading]="loading" (onClick)="updatePlaylist()" />
-                      </div>
+                                    <div class="flex flex-row items-center gap-4 mt-10">
+                                        <label for="username" class="text-white text-lg font-bold">Imagem de capa (Opcional)</label>
+                                        <p-fileupload mode="basic" chooseLabel="Selecione um arquivo" chooseIcon="pi pi-upload"
+                                                    accept="image/*" maxFileSize="262144" 
+                                                    [showUploadButton]="true" [showCancelButton]="true" 
+                                                    (onSelect)="onFileSelect($event)">
+                                        </p-fileupload>
+                                    </div>
 
-                  </form>
+                                    <div class="flex flex-row items-center gap-2 mt-5">
+                                        <label class="text-white text-lg font-bold">Tipo da Playlist *</label>
+                                        <p-selectbutton class="w-[150px]" [options]="stateOptions" formControlName="public" 
+                                                        optionLabel="label" optionValue="value">
+                                        </p-selectbutton>
+                                    </div>
 
+                                    <div class="flex justify-center items-center mt-10">
+                                        <p-button label="Alterar Playlist" severity="success" icon="pi pi-check" 
+                                                [loading]="loading" (onClick)="updatePlaylist()">
+                                        </p-button>
+                                    </div>
+                                </form>
+                            </div>
+                        </p-dialog>
+                    </div>
                 </div>
-                 </p-dialog> 
-            </div> 
             </div>
-           </div>
-         </div>
+        </div>
     </div>
- </div>
+</div>
