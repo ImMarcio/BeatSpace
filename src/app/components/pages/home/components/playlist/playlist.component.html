@@ -1,42 +1,45 @@
 <p-toast></p-toast>
 
-<main class=" flex flex-col justify-center items-center space-y-8 mb-10">
-   
-    <section class="w-full mb-30">
-        
-       <div class="flex flex-col justify-center items-center gap-5" *ngIf="playlist">
-        <img class="w-100 h-60" *ngIf="playlist" [src]="playlist.images[0].url" alt="">
-            <div class="flex flex-col gap-4">
-                <h1 class="text-4xl font-DM text-white" *ngIf="playlist">{{playlist.name}}</h1>
-                <p class="text-white bold" *ngIf="playlist?.description">{{playlist.description}}</p>
-                <p class="text-white bold" *ngIf="playlist?.description">Total de Músicas : {{playlist.tracks.total}}</p>
-                <p class="text-white bold">Dono: {{playlist.owner.display_name}}</p>
-                
-                <a *ngIf="playlist" [href]="playlist.uri" class="uppercase bg-[#88B702] rounded-full py-4 px-8 font-main mt-5 text-center">Acessar playlist no Spotify</a>
-                
+<main class="flex flex-col justify-center items-center space-y-8 mb-10">
+
+    <section class="pt-10 w-full">
+        <div class="ml-[150px] mr-[150px]">
+            <div class="flex flex-row justify-center items-center" *ngIf="playlist">
+                <img class="rounded-xl w-70 h-70" *ngIf="playlist" [src]="playlist.images[0].url" alt="">
+                <div class="flex flex-col w-full pl-10 h-70 justify-between">
+                    <h1 class="text-4xl font-DM text-white font-bold" *ngIf="playlist">{{playlist.name}}</h1>
+                    <p class="text-white text-lg">Dono: <b>{{playlist.owner.display_name}}</b></p>
+                    <div>
+                        <p class="infos">
+                            Descrição: {{playlist.description}}
+                        </p>
+                        <p class="infos">Total de Músicas : {{playlist.tracks.total}}</p>
+                    </div>
+                    <a *ngIf="playlist" [href]="playlist.uri" class="uppercase bg-[#34d399] rounded-full py-4 font-main mt-5 text-center text-black w-[280px]">Acessar playlist no Spotify</a>
+    
+                </div>
             </div>
+            <div class="divider"></div>
         </div>
-        
-        
-     </section>
+    </section>
 
-     <section class="w-full flex flex-col gap-5 justify-center items-center">
-        <h1 class=" text-4xl font-DM text-white text-center">Músicas</h1>
+    <section class="w-full flex flex-col gap-5 justify-center items-center">
+        <h1 class="text-4xl font-DM text-white text-center font-bold pb-6">Músicas</h1>
 
-        <div class="flex gap-5"> 
+        <div class="flex gap-5">
             <p-button severity="warn" *ngIf="selectedTracks.length > 0 && ownerMe" (onClick)="deleteTracks()">Remover Selecionados <mat-icon>delete</mat-icon> </p-button>
 
-            <p-button *ngIf="ownerMe" (onClick)="showDialog()">Adicionar Novas Músicas <mat-icon>add</mat-icon></p-button>
-            <p-dialog styleClass="bg-#050605 !important" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
-                
+            <p-button class="pb-6" *ngIf="ownerMe" (onClick)="showDialog()">Adicionar Novas Músicas <mat-icon>add</mat-icon></p-button>
+            <p-dialog styleClass="bg-#050605 !important" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+
                 <h1 class="text-3xl font-DM text-white p-4 text-center">Músicas</h1>
                 <p class="text-white text-center"> Pesquise qualquer música do Spotify por nome, autor ou letra</p>
                 <div class="flex justify-center items-center p-10 gap-5">
                     <form [formGroup]="this.Form" class="w-full flex justify-center items-center p-10 gap-5">
-                        <input formControlName="search" class="font-DM  bg-white rounded-full py-4 pl-6 w-2/4 placeholder:text-black text-black " type="text" name="" id="" placeholder="Pesquisar músicas...">
+                        <input formControlName="search" class="font-DM bg-white rounded-full py-4 pl-6 w-2/4 placeholder:text-black text-black " type="text" name="" id="" placeholder="Pesquisar músicas...">
                         <p-button label="Pesquisar" severity="success" icon="pi pi-check" [loading]="loading" (onClick)="search()" />
                     </form>
-                    
+
                 </div>
                 <div class="flex flex justify-center items-center mb-10">
                     <p-button styleClass="flex text-center justify-center" *ngIf="tracksSearchedSelected.length > 0" (onClick)="addTracks()">Adicionar os Selecionados <mat-icon>add</mat-icon></p-button>
@@ -46,86 +49,78 @@
                 <p-table class="dark-theme" [(selection)]="tracksSearchedSelected" [paginator]="true" [rows]="10" responsiveLayout="scroll" [value]="tracksSearched" [tableStyle]="{ 'max-width': '50rem' }">
                     <ng-template pTemplate="header">
                         <tr>
-                          <th>Capa</th>
-                          <th pSortableColumn="track.name">Nome da Música <p-sortIcon field="track.name"></p-sortIcon></th>
-                          <th pSortableColumn="track.artists">Artistas <p-sortIcon field="track.artists"></p-sortIcon></th>
-                          <th pSortableColumn="track.album.name">Álbum <p-sortIcon field="track.album.name"></p-sortIcon></th>
-                          <th pSortableColumn="track.duration_ms">Duração<p-sortIcon field="track.duration_ms"></p-sortIcon></th>
-                          <th>Ação</th>
+                            <th>Capa</th>
+                            <th pSortableColumn="track.name">Nome da Música <p-sortIcon field="track.name"></p-sortIcon></th>
+                            <th pSortableColumn="track.artists">Artistas <p-sortIcon field="track.artists"></p-sortIcon></th>
+                            <th pSortableColumn="track.album.name">Álbum <p-sortIcon field="track.album.name"></p-sortIcon></th>
+                            <th pSortableColumn="track.duration_ms">Duração<p-sortIcon field="track.duration_ms"></p-sortIcon></th>
+                            <th>Ação</th>
                         </tr>
-                      </ng-template>
-                      
-                      <ng-template pTemplate="body" let-track>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-track>
                         <tr>
-                          <td>
-                            <img [src]="track.album.images[0].url" alt="">
-                          </td>
-                          <td>{{ track.name }}</td>
-                          <td>
-                            <span *ngFor="let artist of track.artists; let last = last">
-                              {{ artist.name }}{{ last ? '' : ', ' }}
-                            </span>
-                          </td>
-                          <td>{{ track.album.name }}</td>
-                          <td>{{(track.duration_ms) | formatMs }}</td>
-                          <td>
-                            <p-tableCheckbox [value]="track"></p-tableCheckbox>
-                          </td>
+                            <td>
+                                <img [src]="track.album.images[0].url" alt="">
+                            </td>
+                            <td>{{ track.name }}</td>
+                            <td>
+                                <span *ngFor="let artist of track.artists; let last = last">
+                                    {{ artist.name }}{{ last ? '' : ', ' }}
+                                </span>
+                            </td>
+                            <td>{{ track.album.name }}</td>
+                            <td>{{(track.duration_ms) | formatMs }}</td>
+                            <td>
+                                <p-tableCheckbox [value]="track"></p-tableCheckbox>
+                            </td>
                         </tr>
-                      </ng-template>
+                    </ng-template>
                 </p-table>
-               
+
             </p-dialog>
 
-            
         </div>
-        
 
-
-
-        <p-table class="dark-theme" [(selection)]="selectedTracks" [paginator]="true" [rows]="10" responsiveLayout="scroll" [value]="tracks" [tableStyle]="{ 'max-width': '50rem' }">
+        <p-table class="dark-theme mb-30 mr-[150px] ml-[150px]" [(selection)]="selectedTracks" [paginator]="true" [rows]="10" responsiveLayout="scroll" [value]="tracks" [tableStyle]="{ 'width': '100%', 'table-layout': 'fixed' }">
             <ng-template pTemplate="header">
                 <tr>
-                  <th>Capa</th>
-                  <th pSortableColumn="track.name">Música <p-sortIcon field="track.name"></p-sortIcon></th>
-                  <th pSortableColumn="track.artists">Artistas <p-sortIcon field="track.artists"></p-sortIcon></th>
-                  <th pSortableColumn="track.album.name">Álbum <p-sortIcon field="track.album.name"></p-sortIcon></th>
-                  <th pSortableColumn="track.added_at">Adicionado em  <p-sortIcon field="track.added_at"></p-sortIcon></th>
-                  <th pSortableColumn="track.duration_ms">Duração<p-sortIcon field="track.duration_ms"></p-sortIcon></th>
-                  <th *ngIf="ownerMe">Ação</th>
+                    <th>Capa</th>
+                    <th pSortableColumn="track.name">Música <p-sortIcon field="track.name"></p-sortIcon></th>
+                    <th pSortableColumn="track.artists">Artistas <p-sortIcon field="track.artists"></p-sortIcon></th>
+                    <th pSortableColumn="track.album.name">Álbum <p-sortIcon field="track.album.name"></p-sortIcon></th>
+                    <th pSortableColumn="track.added_at">Adicionado em  <p-sortIcon field="track.added_at"></p-sortIcon></th>
+                    <th pSortableColumn="track.duration_ms">Duração<p-sortIcon field="track.duration_ms"></p-sortIcon></th>
+                    <th *ngIf="ownerMe">Ação</th>
                 </tr>
-              </ng-template>
-              
-              <ng-template pTemplate="body" let-track>
+            </ng-template>
+        
+            <ng-template pTemplate="body" let-track>
                 <tr>
-                  
-                  <td>
-                    <img [src]="track.track.album.images[0].url" alt="">
-                  </td>
-
-                  <td>
-                     
-                    {{ track.track.name }}
-                  
-                  </td>
-                  <td>
-                    <span *ngFor="let artist of track.track.artists; let last = last">
-                      {{ artist.name }}{{ last ? '' : ', ' }}
-                    </span>
-                  </td>
-                  <td>{{ track.track.album.name }}</td>
-                  <td>{{track.added_at | date}}</td>
-                  <td>{{(track.track.duration_ms) | formatMs }}</td>
-                  <td *ngIf="ownerMe">
-                    <p-tableCheckbox [value]="track"></p-tableCheckbox>
-                  </td>
+                    <td style="width: 150px; text-align: center;"> <!-- Define a largura fixa para a célula da imagem -->
+                        <img [src]="track.track.album.images[0].url" alt="" style="max-width: 130px; max-height: 130px;"> <!-- Limita o tamanho da imagem -->
+                    </td>
+        
+                    <td>
+                        {{ track.track.name }}
+                    </td>
+                    <td>
+                        <span *ngFor="let artist of track.track.artists; let last = last">
+                            {{ artist.name }}{{ last ? '' : ', ' }}
+                        </span>
+                    </td>
+                    <td>{{ track.track.album.name }}</td>
+                    <td>{{track.added_at | date}}</td>
+                    <td>{{(track.track.duration_ms) | formatMs }}</td>
+                    <td *ngIf="ownerMe">
+                        <p-tableCheckbox [value]="track"></p-tableCheckbox>
+                    </td>
                 </tr>
-              </ng-template>
+            </ng-template>
         </p-table>
-       
-     </section>
+        
+        
 
+    </section>
 
-
- 
- </main>
+</main>
