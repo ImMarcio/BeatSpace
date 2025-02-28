@@ -27,8 +27,10 @@ import { ToastModule } from 'primeng/toast';
 export class FavoritasComponent implements OnInit {
 
     isOpen = false
+    isOpenCreate = false
     playlists : Playlist[] = []
-    Form : FormGroup
+    Form : FormGroup;
+    FormCreate!: FormGroup;
     playlistIdSelected : any;
     userId : any;
     selectedFile : any;
@@ -59,6 +61,18 @@ export class FavoritasComponent implements OnInit {
     get public(){
       return this.Form!.get("public")?.value;
     }
+    
+    set description(value: string) {
+      this.Form!.get("description")?.setValue(value);
+    }
+    
+    set name(value: string) {
+      this.Form!.get("name")?.setValue(value);
+    }
+    
+    set public(value: boolean) {
+      this.Form!.get("public")?.setValue(value);
+    }
 
     toggleDropdown(playlist : Playlist) {
       this.isOpen = !this.isOpen;
@@ -68,6 +82,13 @@ export class FavoritasComponent implements OnInit {
         description : playlist.description,
         public : playlist.public,
       })
+  }
+
+  toggleDropdownCreate(){
+    this.isOpenCreate = !this.isOpenCreate;
+    this.name = ""
+    this.public = false
+    this.description = ""
   }
 
 
@@ -138,6 +159,64 @@ export class FavoritasComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Preencha todos os campos obrigatórios!' });
   
     }
+  }
+
+
+
+  create(){
+ 
+
+    if(this.Form?.valid){
+      this.loading = true;
+      this.spotifyService.createPlaylist(this.userId,{name : this.name , description : this.description, public : this.public}).subscribe({
+        next : (playlist)=>{
+            this.spotifyService.addCoverImage(playlist.id,this.selectedFile).subscribe({
+              next : ()=>{
+              },
+              error : ()=>{
+                this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Ocorreu um erro! Tente novamente mais tarde' });
+                this.loading = false;
+                this.Form.reset();
+              },
+              complete : ()=>{
+               
+              } 
+            })
+        },
+        error : ()=>{
+          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Ocorreu um erro! Tente novamente mais tarde' });
+          this.loading = false;
+          this.Form.reset();
+        },
+        complete : ()=>{
+          this.Form.reset();
+          this.loading = false;
+          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Playlist criada com sucesso!' })
+          this.isOpenCreate = !this.isOpenCreate;
+         
+
+          this.spotifyService.getCurrentUserPlaylists().subscribe({
+            next : (response)=>{
+            this.playlists = response.items;
+            },
+            error: (error)=>{
+              console.log(error)
+            },
+            complete : ()=>{
+              setTimeout(() => this.cd.detectChanges(), 100);
+            }
+        })
+        
+          this.cd.detectChanges();
+        }
+
+      })
+    }
+    else{
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Preencha todos os campos obrigatórios!' });
+  
+    }
+  
   }
 
 }
