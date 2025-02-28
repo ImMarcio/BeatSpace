@@ -18,7 +18,7 @@
     <div class="flex flex-wrap gap-5 mt-10 justify-evenly mr-16 ml-16">
        <div *ngFor="let album of albuns">
          <a [routerLink]="['/home/album',album.id]">
-            <div class=" rounded-xl w-[380px]   text-center p-4 cards max-w-xl justify-between">
+            <div class=" rounded-xl w-[380px]   text-center p-4 cards max-w-xl justify-between hover:scale-105 transition">
                <div class="flex flex-col space-x-2 align-center mt-8">
                <img  [src]="album.images[0].url" class=" object-cover rounded-lg shadow-lg ">
                <h3 class="mt-4 text-sm font-medium font-DM text-left text-white">{{album.name}}</h3>
