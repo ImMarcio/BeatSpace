@@ -19,6 +19,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { User } from '../../../../../shared/models/User';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DateISOPipe } from "../../../../../shared/pipes/date-iso.pipe";
+import { HistoryService } from '../../../../../shared/services/history.service';
 
 
 export interface ComentarioDAO{
@@ -52,7 +53,7 @@ export class AlbumComponent implements OnInit {
 
 constructor(private cd : ChangeDetectorRef , 
   private spotifyService : SpotifyService, private comentarioService : ComentarioService, private messageService : MessageService,
-  private activatedRoute : ActivatedRoute
+  private activatedRoute : ActivatedRoute,private historyService:HistoryService
 ){
   this.albumId = this.activatedRoute.snapshot.paramMap.get("id")?.toString();
   this.user = (JSON.parse(localStorage.getItem("current_user") ?? "") as User)
@@ -121,6 +122,7 @@ OnSubmit(){
         this.spotifyService.addSavedAlbuns({ids : [this.albumId!]}).subscribe({
           next : ()=>{
             this.isOpen = false;
+            this.logAction("Clique no botão salvar album",`Album ${this.album?.name} salvo nos favoritos`)
           }
          })
       }
@@ -134,6 +136,7 @@ OnSubmit(){
       this.meuFormulario.reset()
       this.isOpen= false;
       this.loading = false;
+      this.logAction("Clique no botão adicionar comentário","Comentário adicionado")
       this.ngOnInit()
       this.cd.detectChanges();
 
@@ -145,6 +148,15 @@ OnSubmit(){
    this.loading = false;
  }
  
+}
+
+
+logAction(action:string, details:string) {
+  const username = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).display_name
+
+  this.historyService.saveAction(this.user.id, username, action, details).subscribe(response => {
+    console.log('Ação registrada:', response);
+  });
 }
 
 
