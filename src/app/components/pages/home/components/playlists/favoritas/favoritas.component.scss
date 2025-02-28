@@ -39,3 +39,28 @@
 .custom-dialog .p-dialog-mask {
     background-color: rgba(0, 0, 0, 0.5); /* Opacidade ajustada conforme necessário */
 }
+
+:host ::ng-deep .p-button {
+    text-align: center;
+    padding: 16px;
+    width: 100%;
+}
+
+.text-color {
+    color: #34d399;
+}
+
+.opicional {
+    color: #888;
+    font-weight: normal;
+}
+
+:host ::ng-deep  .p-overlay-mask {
+    background: rgb(0 0 0 / 8%);
+}
+
+:host ::ng-deep .p-fileupload-choose-button {
+    padding: 5px;
+    padding-right: 8px;
+    text-align: center;
+}

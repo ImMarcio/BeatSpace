@@ -1,6 +1,14 @@
 <p-toast></p-toast>
 
-<div class="flex flex-wrap gap-5 mt-10 justify-evenly mr-16 ml-16">
+<!-- só vai aparecer para o usuário logado -->
+<div class="flex flex-col items-center mt-5">
+    <a class="uppercase bg-[#34d399] rounded-full py-4 font-main mt-5 text-center text-black w-[280px] cursor-pointer hover:bg-[#2eb382]">
+        CRIAR NOVA PLAYLIST
+    </a>
+</div>
+
+<div class="flex flex-wrap gap-5 mt-4 mb-30 justify-evenly mr-16 ml-16">
+
     <div *ngFor="let playlist of playlists">
         <div class="rounded-xl w-[350px] text-center p-4 cards max-w-xl justify-between">
             
@@ -34,49 +42,75 @@
                         </button>
 
                         <p-dialog 
-                        styleClass="bg-#050605 !important px-6 pb-6" 
-                        [modal]="true" 
-                        [(visible)]="isOpen" 
-                        [style]="{ width: '50rem' }" 
-                        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-                            <div class="flex flex-wrap gap-5 justify-evenly mr-16 ml-16 flex flex-col items-center justify-center">
+                            styleClass="bg-#050605 !important px-6 pb-6" 
+                            [modal]="true" 
+                            [(visible)]="isOpen" 
+                            [style]="{ width: '50rem' }" 
+                            [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+                            <div class="flex flex-wrap gap-5 justify-start ml-6 mr-6 flex flex-col items-start">
+                                <div class="flex flex-col items-center w-full">
+                                    <h1 class="text-4xl text-center text-white font-DM font-bold mb-4">Alterar Playlist</h1>
+                                </div>
 
-                                <h1 class="text-4xl text-center text-white font-DM font-bold">Alterar Playlist</h1>
-
-                                <form [formGroup]="Form!">
-                                    <div class="flex flex-row items-center gap-2">
-                                        <label for="username" class="text-white text-lg font-bold">Nome da Playlist *</label>
-                                        <input pInputText placeholder="Nome" aria-describedby="username-help" formControlName="name">
-                                        <!-- <small id="username-help">Insira o nome da sua playlist.</small> -->
+                                <form class="w-full flex flex-col" [formGroup]="Form!">
+                                    
+                                    <!-- Nome da Playlist -->
+                                    <div class="flex flex-row items-center gap-3 w-full">
+                                        <label for="username" class="text-white text-lg font-bold text-left" style="white-space: nowrap;">Nome da Playlist <span class="text-color">*</span></label>
+                                        <input class="rounded-2xl p-inputtext w-full bg-transparent placeholder:text-white text-white border border-gray-500 focus:border-green-400 focus:ring-1 focus:ring-green-400" 
+                                            pInputText placeholder="Nome" aria-describedby="username-help" formControlName="name">
                                     </div>
 
-                                    <div class="flex flex-row items-center gap-2">
-                                        <label for="username" class="text-white text-lg font-bold">Descrição (Opcional)</label>
-                                        <p-iftalabel>
-                                            <textarea pTextarea id="description" formControlName="description" rows="5" cols="30" style="resize: none"></textarea>
-                                            <!-- <label for="description">Descrição *</label> -->
+                                    <!-- Descrição -->
+                                    <div class="flex flex-row items-center gap-3 w-full mt-5">
+                                        <label for="description" class="text-white text-lg font-bold text-left" style="white-space: nowrap;">Descrição <span class="opicional">(Opcional)</span></label>
+                                        <p-iftalabel class="w-full">
+                                            <textarea 
+                                                class="font-DM rounded-2xl py-4 px-6 w-full bg-transparent placeholder:text-white text-white border border-gray-500 focus:border-green-400 focus:ring-1 focus:ring-green-400 resize-none" 
+                                                pTextarea id="description" formControlName="description" rows="5" cols="30" style="resize: none"></textarea>
+                                            <!-- <label for="description" class="text-white text-lg">Descrição *</label> -->
                                         </p-iftalabel>
                                     </div>
 
-                                    <div class="flex flex-row items-center gap-4 mt-10">
-                                        <label for="username" class="text-white text-lg font-bold">Imagem de capa (Opcional)</label>
-                                        <p-fileupload mode="basic" chooseLabel="Selecione um arquivo" chooseIcon="pi pi-upload"
-                                                    accept="image/*" maxFileSize="262144" 
-                                                    [showUploadButton]="true" [showCancelButton]="true" 
-                                                    (onSelect)="onFileSelect($event)">
+                                    <!-- Imagem de Capa -->
+                                    <div class="flex flex-row items-center gap-3 w-full mt-5">
+                                        <label for="image" class="text-white text-lg font-bold text-left" style="white-space: nowrap;">Imagem de capa <span class="opicional">(Opcional)</span></label>
+                                        <p-fileupload 
+                                            mode="basic" 
+                                            chooseLabel="Selecione um arquivo" 
+                                            chooseIcon="pi pi-upload"
+                                            accept="image/*" 
+                                            maxFileSize="262144" 
+                                            [showUploadButton]="true" 
+                                            [showCancelButton]="true" 
+                                            (onSelect)="onFileSelect($event)">
                                         </p-fileupload>
                                     </div>
 
-                                    <div class="flex flex-row items-center gap-2 mt-5">
-                                        <label class="text-white text-lg font-bold">Tipo da Playlist *</label>
-                                        <p-selectbutton class="w-[150px]" [options]="stateOptions" formControlName="public" 
-                                                        optionLabel="label" optionValue="value">
+                                    <!-- Tipo da Playlist -->
+                                    <div class="flex flex-row items-center gap-3 w-full mt-5">
+                                        <label class="text-white text-lg font-bold text-left" style="white-space: nowrap;">Tipo da Playlist <span class="text-color">*</span></label>
+                                        <p-selectbutton 
+                                            class="w-full" 
+                                            [options]="stateOptions" 
+                                            formControlName="public" 
+                                            optionLabel="label" 
+                                            optionValue="value">
                                         </p-selectbutton>
                                     </div>
 
+                                    <!-- Botão de Enviar -->
                                     <div class="flex justify-center items-center mt-10">
-                                        <p-button label="Alterar Playlist" severity="success" icon="pi pi-check" 
-                                                [loading]="loading" (onClick)="updatePlaylist()">
+                                        <p-button 
+                                            class="w-full text-black" 
+                                            label="Alterar Playlist" 
+                                            severity="success" 
+                                            icon="pi pi-check" 
+                                            [loading]="loading" 
+                                            [style]="{ 'background-color': '#34d399', 'border-color': '#2bb381' , 'color': 'black',
+                                                'padding' : '16px', 'border-radius' : '500px'
+                                            }" 
+                                            (onClick)="updatePlaylist()">
                                         </p-button>
                                     </div>
                                 </form>
