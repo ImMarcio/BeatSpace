@@ -28,16 +28,20 @@ p {
 }
 
 .spotify-btn {
-        background-color: #34d399;
-        color: black;
-        border: none;
-        padding: 20px 40px;
-        border-radius: 50px;
-        font-family: "DM Sans", serif;
-        font-size: 15px;
-        letter-spacing: 2px;
-        cursor: pointer;
-        margin-right: 20px;
+    background-color: #34d399;
+    color: black;
+    border: none;
+    padding: 20px 40px;
+    border-radius: 50px;
+    font-family: "DM Sans", serif;
+    font-size: 15px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.spotify-btn:hover {
+    background-color: #2eb382;
 }
 
 .ver-planos-btn {
@@ -51,4 +55,8 @@ p {
     letter-spacing: 2px;
     cursor: pointer;
     margin-right: 20px;
+}
+
+.ver-planos-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
 }
