@@ -141,7 +141,7 @@
                         {{ resenha.liked ? 'thumb_up' : 'thumb_up_off_alt' }}
                       </mat-icon>
                         <span class="text-white">{{resenha.totalLikes}}</span>
-                        <p-button (onClick)="toggleCommentModal()">Responder</p-button>
+                        <p-button (onClick)="toggleCommentModal(resenha.id)">Responder</p-button>
                         <div class="w-50" *ngIf="resenha.comentarios.length > 0">
                             <p-button (onClick)="toggleComments()"> <mat-icon>keyboard_arrow_down</mat-icon>
                                 Ver {{resenha.comentarios.length}} resposta(s)</p-button>
@@ -195,7 +195,7 @@
                             
             
                                 <div class="flex flex-row justify-end w-full mt-3">
-                                    <p-button (onClick)="addComentario(resenha.id)" [loading]="loadingcomment" class="w-full">Enviar</p-button>
+                                    <p-button (onClick)="addComentario()" [loading]="loadingcomment" class="w-full">Enviar</p-button>
                                 </div>
                             </form>
                         </div>

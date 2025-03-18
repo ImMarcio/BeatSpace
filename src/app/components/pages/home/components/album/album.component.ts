@@ -33,7 +33,7 @@ export interface ComentarioDAO{
   selector: 'app-album',
   standalone : true,
   imports: [CommonModule, ToastModule, ButtonModule, ProgressSpinnerModule, ReactiveFormsModule, MatIconModule, ReactiveFormsModule, InputTextModule, DialogModule, IftaLabelModule,ButtonModule,
-    FloatLabelModule, RatingModule, DatePickerModule, MatIconModule, CheckboxModule, FormsModule, DateISOPipe,ChartModule],
+    FloatLabelModule, RatingModule, DatePickerModule, MatIconModule, CheckboxModule, FormsModule, DateISOPipe,ChartModule,FormsModule],
   providers: [MessageService],
   templateUrl: './album.component.html',
   styleUrl: './album.component.scss'
@@ -46,6 +46,7 @@ export class AlbumComponent implements OnInit {
     showSpinner:boolean = false;
     album? : Album;
     albumId? : string;
+    resenhaSelected? : number;
     musicaSelecionada? : {id:string,image:string,alt:string,title:String,feedback:string}
     meuFormulario = new FormGroup({
       texto: new FormControl('', [Validators.required]),
@@ -80,7 +81,9 @@ toggleComments(){
 
 }
 
-  toggleCommentModal(){
+  toggleCommentModal(resenha_id : number){
+    console.log(resenha_id)
+    this.resenhaSelected = resenha_id;
     this.commentModal = !this.commentModal
   }
 
@@ -92,10 +95,10 @@ toggleComments(){
     this.liked = !this.liked;
   }
 
-  addComentario(resenhaId  : number){
+  addComentario(){
     this.loading = true;
     if(this.formularioComentario.valid){
-      const comentario = {texto : this.comentario , autor : this.user.id,userimg : this.user.images[1].url, username : this.user.display_name, data : new Date().toISOString(), resenhaId : resenhaId }
+      const comentario = {texto : this.comentario , autor : this.user.id,userimg : this.user.images[1].url, username : this.user.display_name, data : new Date().toISOString(), resenhaId : this.resenhaSelected! }
       this.comentarioService.Add(comentario).subscribe({
         next : ()=>{
           this.formularioComentario.reset();
