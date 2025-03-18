@@ -133,7 +133,21 @@ b {
 
 .eu-escutei {
     margin-top: -5px;
+
+
 }
+
+
+mat-icon {
+    cursor: pointer;
+    font-size: 25px;
+    transition: color 0.1s ease-in-out;
+    color : white
+  }
+  
+  .liked {
+    color: #34d399; /* Cor do like ativo */
+  }
 
 .margin {
     width: calc(100% - 300px);

@@ -26,6 +26,7 @@
     "@primeng/themes": "^19.0.5",
     "@tailwindcss/postcss": "^4.0.0",
     "beat-space": "file:",
+    "chart.js": "^4.4.8",
     "postcss": "^8.5.1",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.5",
