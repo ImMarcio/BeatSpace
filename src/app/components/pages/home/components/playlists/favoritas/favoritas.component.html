@@ -10,8 +10,17 @@
 
 </div>
 
+<!-- 
+<ul *ngIf="actions.length > 0; else emptyState">
+    <li *ngFor="let action of actions" class="p-2 border-b border-gray-300">
+      <strong>{{ action.action }}</strong> - {{ action.details }} <br>
+      <small class="text-gray-600">{{ action.timestamp | date:'dd/MM/yyyy HH:mm' }}</small>
+    </li>
+  </ul>
 
-
+  <ng-template #emptyState>
+    <p class="text-gray-500">Nenhuma ação registrada.</p>
+  </ng-template> -->
 
 <div class="flex flex-wrap gap-5 mt-4 mb-30 justify-evenly mr-16 ml-16">
 

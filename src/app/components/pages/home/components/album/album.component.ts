@@ -24,6 +24,7 @@ import { ChartModule } from 'primeng/chart';
 import {ResenhaResponse, ResenhaService } from '../../../../../shared/services/resenha.service';
 import { Like, LikeService } from '../../../../../shared/services/like.service';
 
+import { HistoryService } from '../../../../../shared/services/history.service';
 
 
 export interface ComentarioDAO{
@@ -69,7 +70,7 @@ export class AlbumComponent implements OnInit {
 
 constructor(private cd : ChangeDetectorRef , 
   private spotifyService : SpotifyService, private likeService : LikeService ,private comentarioService : ComentarioService,private resenhaService : ResenhaService , private messageService : MessageService,
-  private activatedRoute : ActivatedRoute
+  private activatedRoute : ActivatedRoute,private historyService:HistoryService
 ){
   this.albumId = this.activatedRoute.snapshot.paramMap.get("id")?.toString();
   this.user = (JSON.parse(localStorage.getItem("current_user") ?? "") as User)
@@ -291,6 +292,7 @@ OnSubmit(){
         this.spotifyService.addSavedAlbuns({ids : [this.albumId!]}).subscribe({
           next : ()=>{
             this.isOpen = false;
+            this.logAction("Clique no botão salvar album",`Album ${this.album?.name} salvo nos favoritos`)
           }
          })
       }
@@ -304,6 +306,7 @@ OnSubmit(){
       this.meuFormulario.reset()
       this.isOpen= false;
       this.loading = false;
+      this.logAction("Clique no botão adicionar comentário","Comentário adicionado")
       this.ngOnInit()
       this.cd.detectChanges();
 
@@ -315,6 +318,15 @@ OnSubmit(){
    this.loading = false;
  }
  
+}
+
+
+logAction(action:string, details:string) {
+  const username = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).display_name
+
+  this.historyService.saveAction(this.user.id, username, action, details).subscribe(response => {
+    console.log('Ação registrada:', response);
+  });
 }
 
 
