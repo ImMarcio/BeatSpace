@@ -15,6 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TextareaModule } from 'primeng/textarea';
 import { ToastModule } from 'primeng/toast';
+import { HistoryService } from '../../../../../../shared/services/history.service';
 
 @Component({
   selector: 'app-favoritas',
@@ -34,14 +35,20 @@ export class FavoritasComponent implements OnInit {
     playlistIdSelected : any;
     userId : any;
     selectedFile : any;
+    playlistCurrent:any;
     stateOptions: any[] = [
       { label: 'Público', value: true },
       { label: 'Privado', value: false }
     ];
     loading : boolean = false;
     ownMe : boolean = false;
-  
-    constructor(private spotifyService :SpotifyService,private cd : ChangeDetectorRef, private messageService : MessageService, private fb : FormBuilder){
+    actions: any[] = [];
+    constructor(
+        private spotifyService :SpotifyService,
+        private cd : ChangeDetectorRef,
+        private messageService : MessageService,
+        private fb : FormBuilder,
+        private historyService:HistoryService){
       this.Form = fb.group({
         name : ['',],
         description : ['',],
@@ -112,6 +119,8 @@ export class FavoritasComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.loadUserActions()
+
     this.spotifyService.getCurrentUserPlaylists().subscribe({
       next : (response)=>{
       this.playlists = response.items;
@@ -150,6 +159,8 @@ export class FavoritasComponent implements OnInit {
         complete : ()=>{
           this.loading = false;
           this.isOpen = false;
+          this.logAction(`Clique no botão Atualizar Playlist`,`Playlist ${this.name} alterada com sucesso`)
+         
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Playlist alterada com sucesso!' })
           this.cd.detectChanges();
         }
@@ -170,6 +181,7 @@ export class FavoritasComponent implements OnInit {
       this.loading = true;
       this.spotifyService.createPlaylist(this.userId,{name : this.name , description : this.description, public : this.public}).subscribe({
         next : (playlist)=>{
+          this.playlistCurrent = playlist;
             this.spotifyService.addCoverImage(playlist.id,this.selectedFile).subscribe({
               next : ()=>{
               },
@@ -179,7 +191,6 @@ export class FavoritasComponent implements OnInit {
                 this.Form.reset();
               },
               complete : ()=>{
-               
               } 
             })
         },
@@ -193,8 +204,8 @@ export class FavoritasComponent implements OnInit {
           this.loading = false;
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Playlist criada com sucesso!' })
           this.isOpenCreate = !this.isOpenCreate;
-         
-
+          this.logAction(`Clique no botão Criar Playlist`,`Playlist: ${this.playlistCurrent.name} criada com sucesso`)
+          
           this.spotifyService.getCurrentUserPlaylists().subscribe({
             next : (response)=>{
             this.playlists = response.items;
@@ -217,6 +228,26 @@ export class FavoritasComponent implements OnInit {
   
     }
   
+  }
+
+
+  loadUserActions() {
+    this.historyService.getUserHistory(this.userId).subscribe(
+      (data) => {
+        this.actions = data;
+      },
+      (error) => {
+        console.error('Erro ao buscar histórico de ações:', error);
+      }
+    );
+  }
+
+  logAction(action:string, details:string) {
+    const username = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).display_name
+
+    this.historyService.saveAction(this.userId, username, action, details).subscribe(response => {
+      console.log('Ação registrada:', response);
+    });
   }
 
 }

@@ -1,5 +1,5 @@
 export interface User{
-    country: string;
+  country: string;
   display_name: string;
   email: string;
   explicit_content: {

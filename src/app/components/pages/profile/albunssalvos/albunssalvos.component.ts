@@ -1,10 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../../../../shared/services/spotify.service';
-import { Album } from '../../../../shared/models/Album';
+import { HistoryService } from '../../../../shared/services/history.service';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DateISOPipe } from "../../../../shared/pipes/date-iso.pipe";
 import {MatIconModule} from '@angular/material/icon'
+import { User } from '../../../../shared/models/User';
 
 @Component({
   selector: 'app-albunssalvos',
@@ -15,9 +17,9 @@ import {MatIconModule} from '@angular/material/icon'
 export class AlbunssalvosComponent implements OnInit {
 
 albuns : any[] = []
-
-constructor( private spotifyService  :SpotifyService, private cd  :ChangeDetectorRef){
-
+userId : any;
+constructor( private spotifyService  :SpotifyService, private cd  :ChangeDetectorRef, private historyService:HistoryService){
+ this.userId = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).id
 }
 
 ngOnInit(): void {
@@ -47,6 +49,7 @@ ngOnInit(): void {
           }
         })
         console.log('Álbuns removidos com sucesso', response);
+        this.logAction("Clicou no botão remover album",`Album ${this.albuns} removido com sucesso!`)
         // Trate a resposta da API, exiba uma mensagem de sucesso, etc.
       },
       error => {
@@ -55,6 +58,17 @@ ngOnInit(): void {
       }
     );
   }
+
+  
+
+  logAction(action:string, details:string) {
+    const username = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).display_name
+
+    this.historyService.saveAction(this.userId, username, action, details).subscribe(response => {
+      console.log('Ação registrada:', response);
+    });
+  }
+
 
 
 }
