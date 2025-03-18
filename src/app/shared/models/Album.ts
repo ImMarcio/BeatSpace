@@ -31,4 +31,9 @@ export interface Album {
     total_tracks: number;
     type: string;
     uri: string;
+    averagenota? : number 
+}
+
+export interface Albuns {
+    albums : Album[]
 }

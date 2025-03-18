@@ -80,3 +80,42 @@ nav {
     flex-wrap: wrap;
     justify-content: space-between;
 }
+
+
+
+
+
+
+.cards{
+    background-color: rgba(255, 255, 255, 0.10);
+    border-radius: 50px;
+}
+
+.cards:hover{
+    background-color: #34d399;
+}
+
+.paragrafo{
+    font-size: 15px;
+    justify-content: start;
+}
+
+.font-DM{
+    font-family: "DM Sans", serif;
+    color: white;
+}
+
+ng:host .p-carrousel  .p-carousel-indicator-button-highlight{
+    background-color: red !important;
+}
+
+.div-carrossel {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

@@ -17,6 +17,7 @@ import { AddplaylistComponent } from './components/pages/home/components/playlis
 import { TopartistasComponent } from './components/pages/profile/topartistas/topartistas.component';
 import { TopmusicasComponent } from './components/pages/profile/topmusicas/topmusicas.component';
 import { AlbunssalvosComponent } from './components/pages/profile/albunssalvos/albunssalvos.component';
+import { RankingComponent } from './components/pages/home/components/ranking/ranking.component';
 
 export const routes: Routes = [
 
@@ -33,6 +34,7 @@ export const routes: Routes = [
                 {path : "add",component : AddplaylistComponent}
             ]},
             {path : "playlist/:id", component : PlaylistComponent},
+            {path : "rankings",component : RankingComponent}
           ]
     },
     { path: 'profile', component: ProfileComponent,children : [

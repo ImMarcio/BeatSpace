@@ -4,9 +4,9 @@ import { map, Observable } from 'rxjs';
 import { ResponseTracks, Track } from '../models/Track';
 import { TopArtistsResponse } from '../models/Artist';
 import { User } from '../models/User';
-import { Albums, ResponseSearchAlbum } from '../models/ResponseSearchAlbum';
+import { ResponseSearchAlbum } from '../models/ResponseSearchAlbum';
 import { ResponseSearchTrack } from '../models/ResponseSearchTrack';
-import { Album } from '../models/Album';
+import { Album, Albuns } from '../models/Album';
 import { Playlist, PlaylistsResponse } from '../models/Playlist';
 
 
@@ -46,7 +46,11 @@ export class SpotifyService {
   }
  
 
- 
+ getSeveralAlbuns(ids : string[]) : Observable<Albuns>{
+    const data = ids.join(",");
+    const params = new HttpParams().append("ids",data);
+    return this.http.get<Albuns>(this.server_url + "/albuns/several",{params})
+ }
 
   getToken(code: string): Observable<any> {
     return this.http.post(`http://localhost:8081/api/spotify/token`, { code });

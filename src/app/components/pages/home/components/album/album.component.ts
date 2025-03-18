@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { ChangeDetectorRef, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { SpotifyService } from '../../../../../shared/services/spotify.service';
-import { Comentario, ComentarioService } from '../../../../../shared/services/comentario.service';
+import {ComentarioService } from '../../../../../shared/services/comentario.service';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -19,6 +19,11 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { User } from '../../../../../shared/models/User';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DateISOPipe } from "../../../../../shared/pipes/date-iso.pipe";
+import { Chart } from 'chart.js';
+import { ChartModule } from 'primeng/chart';
+import {ResenhaResponse, ResenhaService } from '../../../../../shared/services/resenha.service';
+import { Like, LikeService } from '../../../../../shared/services/like.service';
+
 
 
 export interface ComentarioDAO{
@@ -27,14 +32,15 @@ export interface ComentarioDAO{
 @Component({
   selector: 'app-album',
   standalone : true,
-  imports: [CommonModule, ToastModule, ButtonModule, ProgressSpinnerModule, ReactiveFormsModule, MatIconModule, ReactiveFormsModule, InputTextModule, DialogModule, IftaLabelModule,
-    FloatLabelModule, RatingModule, DatePickerModule, MatIconModule, CheckboxModule, FormsModule, DateISOPipe],
+  imports: [CommonModule, ToastModule, ButtonModule, ProgressSpinnerModule, ReactiveFormsModule, MatIconModule, ReactiveFormsModule, InputTextModule, DialogModule, IftaLabelModule,ButtonModule,
+    FloatLabelModule, RatingModule, DatePickerModule, MatIconModule, CheckboxModule, FormsModule, DateISOPipe,ChartModule],
   providers: [MessageService],
   templateUrl: './album.component.html',
   styleUrl: './album.component.scss'
 })
 export class AlbumComponent implements OnInit {
     salvar : boolean = false;
+    platformId = inject(PLATFORM_ID);
     loading :boolean = false;
     isOpen : boolean = false;
     showSpinner:boolean = false;
@@ -46,22 +52,107 @@ export class AlbumComponent implements OnInit {
       nota : new FormControl(0,[Validators.required]),
       data : new FormControl(new Date(),[Validators.required])
     });
-    comentarios : Comentario[] = []
+    formularioComentario = new FormGroup({
+      text : new FormControl('',[Validators.required])
+    })
+    resenhas : ResenhaResponse[] = []
     user : User;
+    average : number = 0;
+    basicData: any;
+    basicOptions: any;
+    liked = false; // Estado do like
+    commentModal : boolean = false;
+    loadingcomment : boolean = false;
+
+ 
   
 
 constructor(private cd : ChangeDetectorRef , 
-  private spotifyService : SpotifyService, private comentarioService : ComentarioService, private messageService : MessageService,
+  private spotifyService : SpotifyService, private likeService : LikeService ,private comentarioService : ComentarioService,private resenhaService : ResenhaService , private messageService : MessageService,
   private activatedRoute : ActivatedRoute
 ){
   this.albumId = this.activatedRoute.snapshot.paramMap.get("id")?.toString();
   this.user = (JSON.parse(localStorage.getItem("current_user") ?? "") as User)
 }
 
-toggleDropdown() {
+
+toggleComments(){
+
+}
+
+  toggleCommentModal(){
+    this.commentModal = !this.commentModal
+  }
+
+  toggleDropdown() {
       this.isOpen = !this.isOpen;
   }
 
+  toggleLike() {
+    this.liked = !this.liked;
+  }
+
+  addComentario(resenhaId  : number){
+    this.loading = true;
+    if(this.formularioComentario.valid){
+      const comentario = {texto : this.comentario , autor : this.user.id,userimg : this.user.images[1].url, username : this.user.display_name, data : new Date().toISOString(), resenhaId : resenhaId }
+      this.comentarioService.Add(comentario).subscribe({
+        next : ()=>{
+          this.formularioComentario.reset();
+        },
+        complete : ()=>{
+          this.messageService.add({ severity: 'success', summary: 'successo', detail: 'Comentário adicionado com sucesso!' });
+          this.loadingcomment = false;
+          this.commentModal = false;
+          this.ngOnInit();
+          this.cd.detectChanges();
+        }
+      })
+    }
+    else{
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Preencha os campos obrigatórios' });
+      this.loadingcomment = false;
+    }
+  }
+
+  addLikeOrUnlike(resenhaId : number, liked : boolean){
+    if(liked){
+        this.likeService.unlike(resenhaId, this.user.id).subscribe({
+          next : ()=>{
+            this.liked = !this.liked;
+            const resenha_selected = this.resenhas.find(x=>resenhaId === x.id)
+           if(resenha_selected){
+            resenha_selected.totalLikes--
+           }
+          },
+          complete : ()=>{
+            this.ngOnInit()
+            this.cd.detectChanges();
+          }
+        })
+    }
+    else{
+      const like : Like= {resenhaId : resenhaId , userId : this.user.id}
+    this.likeService.addLike(like).subscribe({
+      next : ()=>{
+        this.liked = !this.liked;
+        const resenha_selected = this.resenhas.find(x=>resenhaId === x.id)
+       if(resenha_selected){
+        resenha_selected.totalLikes++
+       }
+      },
+      complete : ()=>{
+        this.ngOnInit()
+        this.cd.detectChanges();
+      }
+    })
+    }
+    
+  }
+
+  get comentario() : string{
+    return this.formularioComentario.get("text")!.value ?? ""
+  }
 
   get data(){
     return this.meuFormulario.get("data")?.value
@@ -78,10 +169,80 @@ toggleDropdown() {
   }
 
 
+  initChart(){
+    
+    var data: Record<string, number> = {
+      "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, 
+      "6": 0, "7": 0, "8": 0, "9": 0, "10": 0
+    }
+    const notas = this.resenhas.map(x=>x.nota);
+    notas.forEach(nota=>{
+      const key = nota.toString();
+      if (data[key] !== undefined) {
+        data[key]++;
+      }
+    })
+
+    const arr :number[] = [data["1"],data["2"],data["3"],data["4"],data["5"],data["6"],data["7"],data["8"],data["9"],data["10"]]
+
+
+    if (isPlatformBrowser(this.platformId)) {
+      const documentStyle = getComputedStyle(document.documentElement);
+      const textColor = documentStyle.getPropertyValue('--p-text-color');
+      const textColorSecondary = documentStyle.getPropertyValue('--p-text-muted-color');
+      const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color');
+
+      this.basicData = {
+          labels: ["1", '2', '3', '4','5','6','7','8','9','10'],
+          datasets: [
+              {
+                  label: 'Avaliações',
+                  data: arr,
+                  backgroundColor: [
+                      '#34d399',
+                      '#34d399',
+                      '#34d399',
+                      '#34d399',
+                  ],
+                  borderColor: ['#34d399', '#34d399', '#34d399', '#34d399','#34d399','#34d399','#34d399','#34d399','#34d399','#34d399'],
+                  borderWidth: 1,
+              },
+          ],
+      };
+
+      this.basicOptions = {
+          plugins: {
+              legend: {
+                  labels: {
+                      color: textColor,
+                  },
+              },
+          },
+          scales: {
+              x: {
+                  ticks: {
+                  },
+                  grid: {
+                  },
+              },
+              y: {
+                  beginAtZero: true,
+                  ticks: {
+                  },
+                  grid: {
+                  },
+              },
+          },
+      };
+      this.cd.markForCheck()
+  }
+  }
+
+
+
 
 ngOnInit(): void {
 
-console.log(this.data?.toISOString())
 
   if(this.albumId){
     this.spotifyService.getAlbum(this.albumId).subscribe({
@@ -97,16 +258,25 @@ console.log(this.data?.toISOString())
     })
   }
 
-  this.comentarioService.GetByAlbumOrPlaylistId(this.albumId!).subscribe({
-    next : (comentarios)=>{
-      console.log(comentarios)
-      this.comentarios = comentarios;
+  this.resenhaService.GetByAlbumOrPlaylistId(this.albumId!).subscribe({
+    next : (resenhas)=>{
+      console.log(resenhas)
+      this.resenhas = resenhas;
+      this.resenhaService.GetAverageGradeById(this.albumId!).subscribe({
+        next : (average)=>{
+          this.average = average;
+        },
+        error : ()=>{
+          this.cd.detectChanges();
+        }
+      })
     },
     error : ()=>{
 
     },
     complete : ()=>{
       this.cd.detectChanges();
+      this.initChart()
     }
   })
   
@@ -115,7 +285,7 @@ console.log(this.data?.toISOString())
 OnSubmit(){
   this.loading = true;
  if(this.meuFormulario.valid){
-   this.comentarioService.Add({userimg : this.user.images[1].url, username : this.user.display_name ,texto:this.texto!,autor : this.user.id, data : this.data!.toISOString() , nota : (this.nota! as number), parentId : this.albumId!}).subscribe({
+   this.resenhaService.Add({userimg : this.user.images[1].url, username : this.user.display_name ,texto:this.texto!,autor : this.user.id, data : this.data!.toISOString() , nota : (this.nota! as number), parentId : this.albumId!}).subscribe({
      next :()=>{
       if(this.salvar){
         this.spotifyService.addSavedAlbuns({ids : [this.albumId!]}).subscribe({

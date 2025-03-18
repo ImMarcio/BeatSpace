@@ -3,8 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 
-export interface Comentario {
-  texto:string,autor:string, data : string, nota : number , parentId : string , userimg :string , username : string
+export interface ComentarioRequest {
+  texto:string,autor:string, data : string, resenhaId : number, userimg :string , username : string
+}
+
+export interface ComentarioResponse{
+  id:number , texto:string,autor:string, data : string, userimg :string , username : string
 }
 
 @Injectable({
@@ -16,16 +20,9 @@ export class ComentarioService {
 
   constructor(private http : HttpClient) { }
 
-  Add(comentario : Comentario):Observable<any>{
-      return this.http.post(this.base_url,comentario)
+  Add(comentario : ComentarioRequest):Observable<any>{
+      return this.http.post(this.base_url + "/add",comentario)
     }
 
-    GetAll(): Observable<{texto:string,autor:string}[]>{
-      return this.http.get<{texto:string,autor:string}[]>(this.base_url)
-    }
-
-    GetByAlbumOrPlaylistId(id:string) : Observable<Comentario[]>{
-      return this.http.get<Comentario[]>(this.base_url + "/parent/" + id)
-    }
-
+  
 }

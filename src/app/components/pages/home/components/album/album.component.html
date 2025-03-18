@@ -3,25 +3,52 @@
 <main class="flex flex-col justify-center items-center space-y-8 mb-10">
 
     <section class="pt-10 w-full">
-        <div class="musica">
-            <div class="musica-infos">
-                <img class="rounded-xl w-70 h-70" [src]="album!.images[0].url" alt="">
-                <div class="flex flex-col justify-between pl-10">
-                    <h1 class="text-4xl font-DM text-white">{{album?.name}}</h1>
-                    <p class="text-white text-lg">Artista: <b>{{album!.artists[0].name}}</b></p>
-                    <div>
-                        <p class="infos">Tipo de Álbum: {{album?.album_type}}</p>
-                        <p class="infos">Data de Lançamento: {{album!.release_date | dateISO}}</p>
-                        <p class="infos">Músicas Totais: {{album?.total_tracks}}</p>
+        <div class="musica flex flex-row justify-between ">
+            
+            <div class="musica-info flex flex-row">
+                <img *ngIf="album" class="rounded-xl w-70 h-70" [src]="album.images[0].url" alt="">
+                <div class="flex flex-row justify-between">
+                    <div class="flex flex-col justify-between pl-10">
+                        <h1 class="text-4xl font-DM text-white">{{album?.name}}</h1>
+                        <p *ngIf="album" class="text-white text-lg">Artista: <b>{{album.artists[0].name}}</b></p>
+                        <div>
+                            <p class="infos">Tipo de Álbum: {{album?.album_type}}</p>
+                            <p *ngIf="album" class="infos">Data de Lançamento: {{album.release_date | dateISO}}</p>
+                            <p class="infos">Músicas Totais: {{album?.total_tracks}}</p>
+                        </div>
+                        <a [href]="album?.uri" class="uppercase bg-[#34d399] rounded-full py-4 font-main mt-5 text-center text-black w-70 hover:bg-[#2eb382]">Acessar álbum no Spotify</a>
                     </div>
-                    <a [href]="album?.uri" class="uppercase bg-[#34d399] rounded-full py-4 font-main mt-5 text-center text-black w-70 hover:bg-[#2eb382]">Acessar álbum no Spotify</a>
+                    
                 </div>
+               
             </div>
-            <div class="divider"></div>
+            <div class="w-70 flex flex-col items-center justify-center gap-4">
+                    
+                <div class="text-white text-center text-2xl ">Nota</div>
+                <div class="flex flex-row w-100 items-center justify-center gap-2">
+                    <div class="w-full bg-white h-0.5 w-70"></div> 
+                    <div class="text-white w-30 text-sm">{{resenhas.length}} avaliações</div>
+                </div>
+                <div class="flex flex-row w-100 items-center justify-center gap-2">
+                    <div class="text-white p-4 text-3xl text-center">{{average.toFixed(2)}}</div>
+                    <p-rating [(ngModel)]="average" [disabled]="true" [stars]="10" />
+                </div>
+                
+            <p-chart type="bar" [data]="basicData" [options]="basicOptions" />
+              
+
+            </div>
+
+
+
+
+           
+            
         </div>
+        <div class="divider"></div>
     </section>
 
-    <p-button  class="mt-5 add-comentario" (onClick)="toggleDropdown()">Adicionar Comentário <mat-icon>add</mat-icon></p-button>
+    <p-button  class="mt-5 add-comentario" (onClick)="toggleDropdown()">Adicionar sua Resenha <mat-icon>add</mat-icon></p-button>
     <p-dialog 
     styleClass="bg-#050605 !important px-6 pb-6 " 
     [modal]="true" 
@@ -37,7 +64,7 @@
                 <form [formGroup]="meuFormulario" class="flex flex-col gap-4">
 
                     <div class="flex flex-row gap-4">
-                        <img [src]="album!.images[1].url" class="w-36 rounded-xl">
+                        <img *ngIf="album" [src]="album.images[1].url" class="w-36 rounded-xl">
                         <div class="flex flex-col justify-between py-5">
                             <h1 class="text-white text-2xl titulo"> {{album?.name}}</h1>
                             <div class="flex gap-3">
@@ -65,7 +92,7 @@
                             style="outline: none;"
                             [maxlength]="250">
                         </textarea>
-                        <label for="description" class="text-white text-lg">Adicione seu comentário...</label>
+                        <label for="description" class="text-white text-lg">Adicione sua resenha...</label>
                     </p-floatLabel>
 
                     <div class="w-full">
@@ -87,26 +114,96 @@
     </p-dialog>
 
     <div class="margin">
-        <h1 class="text-3xl mb-3">COMENTÁRIOS RECENTES</h1>
+        <h1 class="text-3xl mb-3">RESENHAS RECENTES</h1>
         <div class="divider-up"></div>
     </div>
 
-    <p *ngIf="comentarios.length === 0" class="text-white mt-20 mb-50 titulo">Nenhum comentário registrado para este álbum</p>
+    <p *ngIf="resenhas.length === 0" class="text-white mt-20 mb-50 titulo">Nenhuma resenha registrado para este álbum</p>
 
-    <section class="w-full margin mb-25" *ngIf="comentarios && comentarios.length > 0">
-        <div class="flex flex-col gap-2" *ngFor="let comentario of comentarios; let last = last">
+    <section class="w-full margin mb-25" *ngIf="resenhas && resenhas.length > 0">
+        <div class="flex flex-col gap-5" *ngFor="let resenha of resenhas; let last = last">
             <div class="flex flex-row items-center gap-4">
-                <img class="w-20 h-20 borda" [src]="comentario.userimg" alt="" style="border-radius: 50%;">
+                <img class="w-20 h-20 borda" [src]="resenha.userimg" alt="" style="border-radius: 50%;">
                 <div class="flex flex-col justify-between ml-3 h-20">
                     <div class="flex flex-row gap-2">
-                        <p class="text-md text-cinza">Comentário feito por <b class="titulo">{{ comentario.username }}</b></p>
-                        <p-rating [(ngModel)]="comentario.nota" [disabled]="true" [stars]="10" />
+                        <p class="text-md text-cinza">Resenha feita por <b class="titulo">{{ resenha.username }}</b></p>
+                        <p-rating [(ngModel)]="resenha.nota" [disabled]="true" [stars]="10" />
                     </div>
                     <p class="text-white text-lg">
-                        {{ comentario.texto }}
+                        {{ resenha.texto }}
                     </p>
-                    <div class="text-xs text-cinza">{{ comentario.data | date }}</div>
+                    <div class="flex flex-row items-center justify-start gap-5 p-5">
+                        <div class="text-xs text-cinza">{{ resenha.data | date }}</div>
+                        <mat-icon 
+                        [ngClass]="{ 'liked': resenha.liked }"
+                        (click)="addLikeOrUnlike(resenha.id, resenha.liked)"
+                      >
+                        {{ resenha.liked ? 'thumb_up' : 'thumb_up_off_alt' }}
+                      </mat-icon>
+                        <span class="text-white">{{resenha.totalLikes}}</span>
+                        <p-button (onClick)="toggleCommentModal()">Responder</p-button>
+                        <div class="w-50" *ngIf="resenha.comentarios.length > 0">
+                            <p-button (onClick)="toggleComments()"> <mat-icon>keyboard_arrow_down</mat-icon>
+                                Ver {{resenha.comentarios.length}} resposta(s)</p-button>
+                        </div>
+                    </div>
+
+                    <div *ngIf="true">
+                        <div class="flex flex-col gap-5" *ngFor="let comentario of resenha.comentarios">
+                                <div class="flex flex-row items-center gap-4">
+                                    <img class="w-20 h-20 borda" [src]="comentario.userimg" alt="" style="border-radius: 50%;">
+                                    <div class="flex flex-col justify-between ml-3 h-20">
+                                        <div class="flex flex-row gap-2">
+                                            <p class="text-md text-cinza">Resenha feita por <b class="titulo">{{ comentario.username }}</b></p>
+                                        </div>
+                                    </div>
+                                    <p class="text-white text-lg">
+                                        {{ comentario.texto }}
+                                    </p>
+                                </div>
+                        </div>
+                    </div>
+                   
+
+                    <p-dialog 
+                    styleClass="bg-#050605 !important px-6 pb-6 " 
+                    [modal]="true" 
+                    [(visible)]="commentModal" 
+                    [style]="{ width: '50rem' }" 
+                    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+                                    
+                    <div class="flex flex-col gap-5">
+
+                        <h1 class="text-white text-4xl text-center eu-escutei">Responder</h1>
+            
+                        <div class="flex flex-col gap-10">
+                            <form [formGroup]="formularioComentario" class="flex flex-col gap-4">
+            
+                                <p-floatLabel class="w-full flex flex-col items-start gap-2 mt-5">
+                                    <textarea 
+                                        formControlName="text" 
+                                        pTextarea  
+                                        rows="6" 
+                                        cols="45" 
+                                        class="font-DM rounded-2xl py-4 px-6 w-full bg-transparent placeholder:text-white text-white border border-gray-500 focus:border-green-400 focus:ring-1 focus:ring-green-400 resize-none"
+                                        style="outline: none;"
+                                        [maxlength]="250">
+                                    </textarea>
+                                    <label for="description" class="text-white text-lg">Adicione seu comentário...</label>
+                                </p-floatLabel>
+            
+                            
+            
+                                <div class="flex flex-row justify-end w-full mt-3">
+                                    <p-button (onClick)="addComentario(resenha.id)" [loading]="loadingcomment" class="w-full">Enviar</p-button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    </p-dialog>
+                   
                 </div>
+                
             </div>
             <div class="divider-up my-5" *ngIf="!last"></div>
         </div>

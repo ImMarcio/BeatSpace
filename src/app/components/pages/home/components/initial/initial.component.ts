@@ -4,14 +4,18 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SpotifyService } from '../../../../../shared/services/spotify.service';
 import { Album } from '../../../../../shared/models/Album';
-import { CarouselModule } from 'primeng/carousel';
+import { Carousel, CarouselModule } from 'primeng/carousel';
 import { Track } from '../../../../../shared/models/Track';
 import { User } from '../../../../../shared/models/User';
 import { Router } from '@angular/router';
+import { ResenhaResponse, ResenhaService } from '../../../../../shared/services/resenha.service';
+import { RatingModule } from 'primeng/rating';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-initial',
-  imports: [CommonModule,RouterModule,CarouselModule],
+  imports: [CommonModule,RouterModule,CarouselModule,CarouselModule, RatingModule,ReactiveFormsModule,FormsModule,MatIconModule],
   templateUrl: './initial.component.html',
   styleUrl: './initial.component.scss'
 })
@@ -21,7 +25,9 @@ export class InitialComponent implements OnInit {
 
   albuns : Album[] = []
 
-  constructor(private router: Router, private spotifyService : SpotifyService, private cd : ChangeDetectorRef){}
+  resenhas : ResenhaResponse[] = []
+
+  constructor(private router: Router, private spotifyService : SpotifyService, private cd : ChangeDetectorRef, private resenhaService : ResenhaService){}
 
   items = [
     { id:"1", image: '../../../../assets/BK-Icarus.jpeg', alt: 'Imagem 2', title: 'Icarus',feedback:"Seria ótimo se houvesse mais atividades interativas, como desafios musicais mensais, para engajar ainda mais os membros e estimular a criatividade" },
@@ -47,6 +53,8 @@ export class InitialComponent implements OnInit {
         this.cd.detectChanges();
       }
     })
+
+
     this.spotifyService.getAlbumReleases().subscribe({
       next:(response)=>{
           this.albuns = response.albums.items;
@@ -59,6 +67,15 @@ export class InitialComponent implements OnInit {
       }
     }
   )
+
+  this.resenhaService.GetMostLiked().subscribe({
+    next : (resenhas)=>{
+      this.resenhas = resenhas;
+    },
+    complete : ()=>{
+      this.cd.detectChanges();
+    }
+  })
 
   
   }
