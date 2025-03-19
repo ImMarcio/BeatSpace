@@ -1,7 +1,7 @@
 
 <ul *ngIf="actions.length > 0; else emptyState">
     <li *ngFor="let action of actions" class="p-2  border-gray-300">
-      <strong>{{ action.action }}</strong> - {{ action.details }} <br>
+      <strong class="text-[#34d399]">{{ action.action }}</strong> - {{ action.details }} <br>
       <small class="text-gray-600">{{ action.timestamp | date:'dd/MM/yyyy HH:mm' }}</small>
     </li>
   </ul>
