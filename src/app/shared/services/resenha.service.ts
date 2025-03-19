@@ -30,6 +30,9 @@ export class ResenhaService {
      GetAll(): Observable<{texto:string,autor:string}[]>{
        return this.http.get<{texto:string,autor:string}[]>(this.base_url)
      }
+     GetDataAll(): Observable<ResenhaResponse[]>{
+      return this.http.get<ResenhaResponse[]>(this.base_url)
+    }
  
      GetByAlbumOrPlaylistId(id:string) : Observable<ResenhaResponse[]>{
        return this.http.get<ResenhaResponse[]>(this.base_url + "/parent/" + id)

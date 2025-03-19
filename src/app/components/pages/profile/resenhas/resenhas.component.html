@@ -1,0 +1,29 @@
+<h1 class="text-3xl font-bold text-center py-10 px-6">Minhas resenhas </h1>
+<div class="flex flex-col space-y-8 justify-between ml-3 h-auto ">
+  <div class="flex flex-row space-x-4 " *ngFor="let resenha of resenhas">
+      <div>
+          <img class="w-20 h-20 borda" [src]="resenha.userimg" alt="" style="border-radius: 50%;">
+      </div>
+      <div class="flex flex-col">
+          <div class="flex flex-row gap-2">
+              <p class="text-md text-[#888]">Resenha feita por <b class="titulo text-[#34d399]">{{ resenha.username }}</b></p>
+              <p-rating [(ngModel)]="resenha.nota" [disabled]="true" [stars]="10" />
+          </div>
+          <p class="text-white text-lg">
+              {{ resenha.texto }}
+          </p>
+          <div class="flex flex-row items-center justify-start gap-5">
+              <div class="text-xs text-[#888]">{{ resenha.data | date }}</div>
+              <div class="flex flex-row justify-center items-center" >
+                <mat-icon [ngStyle]="{ fontSize: '1rem', display: 'flex', alignItems: 'center' }">thumb_up</mat-icon>
+                <p class="text-sm">{{resenha.totalLikes}} Curtidas</p>
+              </div>
+             
+          </div>
+      </div>
+  </div>  
+
+
+
+
+</div>

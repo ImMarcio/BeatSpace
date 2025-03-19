@@ -33,7 +33,8 @@ export interface ComentarioDAO{
 @Component({
     selector: 'app-album',
     standalone : true,
-    imports: [CommonModule, ToastModule, ButtonModule, ProgressSpinnerModule, ReactiveFormsModule, MatIconModule, ReactiveFormsModule, InputTextModule, DialogModule, IftaLabelModule,ButtonModule,
+    imports: [CommonModule, ToastModule, ButtonModule, ProgressSpinnerModule, ReactiveFormsModule, MatIconModule,
+         ReactiveFormsModule, InputTextModule, DialogModule, IftaLabelModule,ButtonModule,
         FloatLabelModule, RatingModule, DatePickerModule, MatIconModule, CheckboxModule, FormsModule, DateISOPipe,ChartModule,FormsModule],
     providers: [MessageService],
     templateUrl: './album.component.html',
@@ -72,7 +73,8 @@ export class AlbumComponent implements OnInit {
 
 
     constructor(private cd : ChangeDetectorRef , 
-        private spotifyService : SpotifyService, private likeService : LikeService ,private comentarioService : ComentarioService,private resenhaService : ResenhaService , private messageService : MessageService,
+        private spotifyService : SpotifyService, private likeService : LikeService ,
+        private comentarioService : ComentarioService,private resenhaService : ResenhaService , private messageService : MessageService,
         private activatedRoute : ActivatedRoute,private historyService:HistoryService
     ){
         this.albumId = this.activatedRoute.snapshot.paramMap.get("id")?.toString();
