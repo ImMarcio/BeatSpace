@@ -60,6 +60,7 @@ export class AlbumComponent implements OnInit {
         text : new FormControl('',[Validators.required])
     })
     resenhas : ResenhaResponse[] = []
+    resenhasMostLiked : ResenhaResponse [] = []
     user : User;
     average : number = 0;
     basicData: any;
@@ -290,6 +291,15 @@ export class AlbumComponent implements OnInit {
                 this.initChart()
             }
         })
+
+        this.resenhaService.GetMostLiked().subscribe({
+            next : (resenhasMostLiked)=>{
+              this.resenhasMostLiked = resenhasMostLiked;
+            },
+            complete : ()=>{
+              this.cd.detectChanges();
+            }
+          })
     }
 
     OnSubmit(){
