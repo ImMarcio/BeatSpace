@@ -246,7 +246,7 @@
                                 <mat-icon 
                                     class="text-white"
                                     [ngClass]="{ 'liked': resenha.liked }"
-                                    (click)="addLikeOrUnlike(resenha.id, resenha.liked)">
+                                    (click)="addLikeOrUnlike(resenha.id, resenha.liked);">
                                     {{ resenha.liked ? 'thumb_up' : 'thumb_up_off_alt' }}
                                 </mat-icon>
                                 <span class="text-white">{{resenha.totalLikes}}</span>

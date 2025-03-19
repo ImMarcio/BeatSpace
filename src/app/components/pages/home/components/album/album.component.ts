@@ -25,6 +25,7 @@ import {ResenhaResponse, ResenhaService } from '../../../../../shared/services/r
 import { Like, LikeService } from '../../../../../shared/services/like.service';
 
 import { HistoryService } from '../../../../../shared/services/history.service';
+import { EmailService } from '../../../../../shared/services/email.service';
 
 
 export interface ComentarioDAO{
@@ -41,6 +42,7 @@ export interface ComentarioDAO{
     styleUrl: './album.component.scss'
 })
 export class AlbumComponent implements OnInit {
+
 
     salvar : boolean = false;
     platformId = inject(PLATFORM_ID);
@@ -70,12 +72,14 @@ export class AlbumComponent implements OnInit {
     commentModal : boolean = false;
     loadingcomment : boolean = false;
     mostrarTodas: boolean = false;
+    to: string = '';
+    currentComent: string = '';
 
 
     constructor(private cd : ChangeDetectorRef , 
         private spotifyService : SpotifyService, private likeService : LikeService ,
         private comentarioService : ComentarioService,private resenhaService : ResenhaService , private messageService : MessageService,
-        private activatedRoute : ActivatedRoute,private historyService:HistoryService
+        private activatedRoute : ActivatedRoute,private historyService:HistoryService, private emailService: EmailService
     ){
         this.albumId = this.activatedRoute.snapshot.paramMap.get("id")?.toString();
         this.user = (JSON.parse(localStorage.getItem("current_user") ?? "") as User)
@@ -114,19 +118,35 @@ export class AlbumComponent implements OnInit {
         this.mostrarTodas = !this.mostrarTodas;
     }
 
+    sendEmail(email:string, subject:string , text:string) {
+
+        this.emailService.sendEmail(email, subject, text).subscribe(
+          response => {
+            alert('E-mail enviado com sucesso!');
+          }
+        );
+     }
+
+
+
     addComentario(){
         this.loading = true;
         if(this.formularioComentario.valid){
             const comentario = {texto : this.comentario , autor : this.user.id,userimg : this.user.images[1].url, username : this.user.display_name, data : new Date().toISOString(), resenhaId : this.resenhaSelected! }
+            this.currentComent = this.comentario;
             this.comentarioService.Add(comentario).subscribe({
                 next : ()=>{
                     this.formularioComentario.reset();
+                   
                 },
                 complete : ()=>{
                     this.messageService.add({ severity: 'success', summary: 'successo', detail: 'Comentário adicionado com sucesso!' });
                     this.loadingcomment = false;
                     this.commentModal = false;
                     this.ngOnInit();
+                    const resenha_owner = this.resenhas.find(x=>this.resenhaSelected! === x.id)
+                    console.log(this.comentario)
+                    this.sendEmail(resenha_owner!.email, "BeatSpace - Atualização",`${this.user.display_name} comentou ${ this.currentComent} na sua resenha no album ${this.album?.name}`)
                     this.cd.detectChanges();
                 }
             })
@@ -160,14 +180,17 @@ export class AlbumComponent implements OnInit {
             next : ()=>{
                 this.liked = !this.liked;
                 const resenha_selected = this.resenhas.find(x=>resenhaId === x.id)
+                console.log(resenha_selected)
             if(resenha_selected){
                 resenha_selected.totalLikes++
+                this.sendEmail(resenha_selected.email, "BeatSpace - Atualização",`${this.user.display_name} curtiu sua resenha no album ${this.album?.name}`)
+
             }
+            
             },
             complete : ()=>{
                 this.ngOnInit()
                 this.logAction(`${this.user.display_name} `,`curtiu uma resenha no album ${this.album?.name}`)
-
                 this.cd.detectChanges();
             }
         })
@@ -313,7 +336,7 @@ export class AlbumComponent implements OnInit {
         this.loading = true;
 
         if(this.meuFormulario.valid){
-            this.resenhaService.Add({userimg : this.user.images[1].url, username : this.user.display_name ,texto:this.texto!,autor : this.user.id, data : this.data!.toISOString() , nota : (this.nota! as number), parentId : this.albumId!}).subscribe({
+            this.resenhaService.Add({userimg : this.user.images[1].url, username : this.user.display_name ,texto:this.texto!,autor : this.user.id, email: this.user.email, data : this.data!.toISOString() , nota : (this.nota! as number), parentId : this.albumId!}).subscribe({
                 next :()=>{
                     if(this.salvar){
                         this.spotifyService.addSavedAlbuns({ids : [this.albumId!]}).subscribe({

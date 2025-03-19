@@ -5,11 +5,11 @@ import { Like } from './like.service';
 import { ComentarioResponse } from './comentario.service';
 
 export interface ResenhaRequest {
-texto:string,autor:string, data : string, nota : number , parentId : string , userimg :string , username : string,
+texto:string,autor:string,email:string, data : string, nota : number , parentId : string , userimg :string , username : string,
 }
 
 export interface ResenhaResponse {
-  id:number, texto:string,autor:string, data : string, nota : number , parentId : string , userimg :string , username : string, totalLikes: number, comentarios : ComentarioResponse[], liked : boolean
+  id:number, texto:string,autor:string,email:string, data : string, nota : number , parentId : string , userimg :string , username : string, totalLikes: number, comentarios : ComentarioResponse[], liked : boolean
  }
  
 
