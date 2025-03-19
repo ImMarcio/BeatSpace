@@ -54,7 +54,7 @@ export class AlbumComponent implements OnInit {
     meuFormulario = new FormGroup({
         texto: new FormControl('', [Validators.required]),
         nota : new FormControl(0,[Validators.required]),
-        data : new FormControl(new Date(),[Validators.required])
+        data : new FormControl(new Date())
     });
     formularioComentario = new FormGroup({
         text : new FormControl('',[Validators.required])
