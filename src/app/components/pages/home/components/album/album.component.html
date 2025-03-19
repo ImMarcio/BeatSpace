@@ -315,7 +315,7 @@
         </div>
     
         <!-- Botão Ver mais / Ver menos -->
-        <div class="text-center mt-4 flex flex-col items-center">
+        <div class="text-center mt-4 flex flex-col items-center" *ngIf="resenhas.length >= 4">
             <button class="text-[#34d399] text-lg underline" (click)="toggleResenhas()" [ngStyle]="{ display: 'flex' }">
                 <p>{{ mostrarTodas ? 'Ver menos' : 'Ver mais' }}</p>
                 <mat-icon [ngStyle]="{ color: '#34d399' }">{{ mostrarTodas ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>

@@ -294,7 +294,9 @@ export class AlbumComponent implements OnInit {
 
         this.resenhaService.GetMostLiked().subscribe({
             next : (resenhasMostLiked)=>{
-              this.resenhasMostLiked = resenhasMostLiked;
+                this.resenhasMostLiked = resenhasMostLiked
+                .filter(resenha => resenha.parentId === this.albumId) // Filtra pelo albumId
+    
             },
             complete : ()=>{
               this.cd.detectChanges();
