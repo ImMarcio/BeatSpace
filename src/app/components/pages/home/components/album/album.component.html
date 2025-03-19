@@ -135,36 +135,46 @@
     <section class="w-full margin mb-25" *ngIf="resenhas && resenhas.length > 0">
         <div class="flex flex-col gap-5" *ngFor="let resenha of resenhasRevertidas; let last = last">
             <div class="flex flex-row items-center gap-4 mb-10">
-                <img class="w-20 h-20 borda" [src]="resenha.userimg" alt="" style="border-radius: 50%;">
-                <div class="flex flex-col justify-between ml-3 h-20">
-                    <div class="flex flex-row gap-2">
-                        <p class="text-md text-cinza">Resenha feita por <b class="titulo">{{ resenha.username }}</b></p>
-                        <p-rating [(ngModel)]="resenha.nota" [disabled]="true" [stars]="10" />
-                    </div>
-                    <p class="text-white text-lg">
-                        {{ resenha.texto }}
-                    </p>
-                    <div class="flex flex-row items-center justify-start gap-5">
-                        <div class="text-xs text-cinza">{{ resenha.data | date }}</div>
-                        <mat-icon 
-                        class="text-white"
-                        [ngClass]="{ 'liked': resenha.liked }"
-                        (click)="addLikeOrUnlike(resenha.id, resenha.liked)">
-                            {{ resenha.liked ? 'thumb_up' : 'thumb_up_off_alt' }}
-                        </mat-icon>
-                        <span class="text-white">{{resenha.totalLikes}}</span>
-                        <a class="cursor-pointer btn-responder" (click)="toggleCommentModal(resenha.id)">Responder</a>
-                        <div class="w-50" *ngIf="resenha.comentarios.length > 0">
-                            <a class="cursor-pointer btn-responder flex flex-row gap-2" (click)="toggleComments(resenha.id)">
-                                <mat-icon class="text-black">keyboard_arrow_down</mat-icon>
-                                <p>Ver {{resenha.comentarios.length}} resposta(s)</p>
-                            </a>
+                <div class="flex flex-col justify-between ml-3 h-auto ">
+                    <div class="flex flex-row space-x-4">
+                        <div>
+                            <img class="w-20 h-20 borda" [src]="resenha.userimg" alt="" style="border-radius: 50%;">
                         </div>
-                    </div>
-    
+                        <div class="flex flex-col">
+                            <div class="flex flex-row gap-2">
+                                <p class="text-md text-cinza">Resenha feita por <b class="titulo">{{ resenha.username }}</b></p>
+                                <p-rating [(ngModel)]="resenha.nota" [disabled]="true" [stars]="10" />
+                            </div>
+                            <p class="text-white text-lg">
+                                {{ resenha.texto }}
+                            </p>
+                            <div class="flex flex-row items-center justify-start gap-5">
+                                <div class="text-xs text-cinza">{{ resenha.data | date }}</div>
+                                <mat-icon 
+                                class="text-white"
+                                [ngClass]="{ 'liked': resenha.liked }"
+                                (click)="addLikeOrUnlike(resenha.id, resenha.liked)">
+                                    {{ resenha.liked ? 'thumb_up' : 'thumb_up_off_alt' }}
+                                </mat-icon>
+                                <span class="text-white">{{resenha.totalLikes}}</span>
+                                <a class="cursor-pointer btn-responder" (click)="toggleCommentModal(resenha.id)">Responder</a>
+                                <div class="w-50" *ngIf="resenha.comentarios.length > 0">
+                                    <a class="cursor-pointer btn-responder flex flex-row gap-2" (click)="toggleComments(resenha.id)">
+                                        <mat-icon class="text-black">keyboard_arrow_down</mat-icon>
+                                        <p>Ver {{resenha.comentarios.length}} resposta(s)</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>  
+
+
+
                     <!-- Alteração para abrir apenas se o ID da resenha for igual ao ID selecionado -->
-                    <div *ngIf="selectedResenhaId === resenha.id" class="w-full block flex-none">
-                        <div class="flex flex-col gap-5 mt-4" *ngFor="let comentario of resenha.comentarios">
+                    <div *ngIf="selectedResenhaId === resenha.id" class="w-full block flex-none ">
+                        <div class="flex flex-col gap-5 mt-4 ml-16" *ngFor="let comentario of resenha.comentarios">
                             <div class="flex flex-row items-center gap-4">
                                 <img class="w-20 h-20 borda" [src]="comentario.userimg" alt="" style="border-radius: 50%;">
                                 <div>
