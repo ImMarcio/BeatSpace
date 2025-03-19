@@ -1,34 +1,36 @@
 <div class="flex flex-col justify-center items-center gap-5 p-10">
-    <h1 class="text-white text-3xl text-center">
+    <h1 class="text-3xl font-DM text-white p-4 text-center font-bold">
         Rankings - Mais bem avaliados
     </h1>
 
 
     <div *ngIf="albuns.length === 0">
-        <h1 class="text-white text-2xl text-center titulo">
+        <h1 class="text-white text-2xl text-center titulo mt-20">
             Não temos rankings para mostrar!
         </h1>
     </div>
 
-    <div  class="block">
+    <div class="w-[60%] ranking block p-4 rounded-lg shadow-lg mb-30">
         <ul class="space-y-4">
-        <li class="flex  items-center" *ngFor="let album of albuns; let i = index">
-            <p class=" min-h-8 min-w-8  w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-full border-2 border-black text-xs lg:text-sm bg-gray-200 font-bold text-black" [ngClass]="{'bg-green-500': i<3}">
-            {{i + 1}}
-          </p>
-          <div class="ml-4 flex items-center">
-            <a [routerLink]="['/home/albuns/',album.id]">
-               <img [src]="album.images[0].url"  
-                alt=""  
-                class="w-10 h-10 lg:w-12 lg:h-12 ml-2 mr-4">
-            </a>
-            <div class="flex flex-col"> 
-                 <h2 class="text-md lg:text-base font-bold text-white">{{ album.name }} </h2>
-                 <h2 class="text-md lg:text-base font-bold text-white"> Nota Média : {{ album.averagenota?.toFixed(2) }} </h2>
-            </div>     
-        </div>
-      </li>
-      </ul>
+          <li class="li-ranking flex items-center p-3 rounded-lg shadow-sm hover:shadow-lg transition-shadow" *ngFor="let album of albuns; let i = index">
+            <p class="min-h-8 min-w-8 w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-full text-xs lg:text-sm font-bold text-[#34d399] border-2 border-[#34d399]" [ngClass]="{'background': i<3}">
+              {{i + 1}}
+            </p>
+            <div class="ml-4 flex items-center">
+              <a [routerLink]="['/home/albuns/', album.id]">
+                <img [src]="album.images[0].url"
+                  alt="{{ album.name }}"
+                  class="w-10 h-10 lg:w-12 lg:h-12 ml-2 mr-4 rounded-md shadow-sm hover:scale-105 transition-transform">
+              </a>
+              <div class="flex flex-col">
+                <h2 class="text-md lg:text-base font-bold text-[#34d399]">{{ album.name }}</h2>
+                <h2 class="text-md lg:text-base font-semibold text-[#888]">Nota Média: <span class="text-white">{{ album.averagenota?.toFixed(2)}}</span></h2>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
+      
+      
 
 </div>

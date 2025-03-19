@@ -1,9 +1,35 @@
 <main class=" flex flex-col justify-center items-center space-y-8 mb-10">
    
    <section>
-      <h1>Bem-vindo de volta, <a class="redirecionar-perfil" (click)="goToProfile()" *ngIf="user">{{user.display_name}}</a>. Aqui está o que temos ouvido…</h1>
-      <h2>Esta página inicial será personalizada à medida que você <span class="text-white">seguir membros ativos</span> no BeatSpace.</h2>
+      <h1>Bem-vindo de volta, <a class="redirecionar-perfil text-[#34d399]" (click)="goToProfile()" *ngIf="user">{{user.display_name}}</a>. Aqui está o que temos ouvido…</h1>
+      <h2>Esta página inicial será personalizada à medida que você <span class="text-[#34d399]">seguir membros ativos</span> no BeatSpace.</h2>
    </section>
+
+   <section class="pt-8 w-full">
+      <nav>
+         <h1>RESENHAS FAVORITAS DOS USUÁRIOS</h1>
+         <div class="divider2"></div>
+      </nav>
+   </section>
+
+   <p-carousel [value]="resenhas" [numVisible]="3" [numScroll]="1" [circular]="true"  class="">
+      <ng-template pTemplate="resenha" let-resenha>
+          <div class="div-carrossel  text-center p-5 cards max-w-xl h-56 justify-between ">
+              <p class="paragrafo text-left font-DM ">{{ resenha.texto }}</p>
+              <p-rating [(ngModel)]="resenha.nota" [disabled]="true" [stars]="10" />
+              <div class="profile flex flex-row space-x-2 align-center mt-8 ">
+                  <img [src]="resenha.userimg"  class=" w-10 h-10 object-cover rounded-full shadow-lg ">
+                  <h3 class="text-md font-semibold font-DM">{{ resenha.username }}</h3>
+                  <p class="text-sm font-semibold text-green "> {{resenha.data | date}}</p>
+              </div>
+              <div class="flex justify-center items-center gap-2 text-white">
+               <mat-icon>thumb_up</mat-icon>
+               {{resenha.totalLikes}}
+              </div>
+          </div>
+      </ng-template>
+  </p-carousel>
+
 
    <section class="pt-8 w-full">
       <nav>
@@ -24,7 +50,7 @@
       </div>
    </section>
 
-<div *ngIf="resenhas.length > 0">
+<!-- <div *ngIf="resenhas.length > 0">
    <section class="pt-8 w-full">
       <nav>
          <h1>RESENHAS FAVORITAS DOS USUÁRIOS</h1>
@@ -50,7 +76,7 @@
       </ng-template>
   </p-carousel>
     
-</div>
+</div> -->
 
 
   
