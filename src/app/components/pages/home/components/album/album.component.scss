@@ -137,17 +137,20 @@ b {
 
 }
 
-
 mat-icon {
     cursor: pointer;
     font-size: 25px;
     transition: color 0.1s ease-in-out;
-    color : white
-  }
-  
-  .liked {
-    color: #34d399; /* Cor do like ativo */
-  }
+    color : white;
+}
+
+mat-icon.text-black {
+    color: black !important;
+}
+
+.liked {
+    color: #34d399 !important; /* Cor do like ativo */
+}
 
 .margin {
     width: calc(100% - 300px);
@@ -161,4 +164,28 @@ mat-icon {
 
 .borda {
     border: 2px solid #34d399;
+}
+
+.btn-responder {
+    color: black;
+    background-color: #34d399;
+    padding: 2px 15px 2px 15px;
+    border-radius: 200px;
+}
+
+.resenha-container {
+    display: block;
+    min-height: 100px; /* Defina um valor mínimo para evitar que o contêiner encolha */
+}
+  
+.comentarios-abertos {
+    display: block; /* Garante que os comentários ocupem espaço */
+}
+
+.avaliation {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.grafic {
+    background: rgba(255, 255, 255, 0.1);
 }

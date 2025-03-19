@@ -14,9 +14,9 @@
     <div class="flex">
         <div class="flex flex-col justify-center mr-4">
             <p id="nome" class="text-white" *ngIf="user"  >{{user.display_name}}</p>
-            <div class="flex flex-row items-center justify-center gap-4">
+            <div class="flex flex-row items-center justify-center items-end gap-4">
                 <button (click)="goToProfile()">
-                    <p id="perfil" class=" font-DM">Acessar Perfil</p>
+                    <p id="perfil" class="text-end font-DM">Acessar Perfil</p>
                 </button>
             </div>
         </div>

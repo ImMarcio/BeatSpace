@@ -3,8 +3,7 @@
 <main class="flex flex-col justify-center items-center space-y-8 mb-10">
 
     <section class="pt-10 w-full">
-        <div class="musica flex flex-row justify-between ">
-            
+        <div class="musica justify-between ">
             <div class="musica-info flex flex-row">
                 <img *ngIf="album" class="rounded-xl w-70 h-70" [src]="album.images[0].url" alt="">
                 <div class="flex flex-row justify-between">
@@ -18,37 +17,13 @@
                         </div>
                         <a [href]="album?.uri" class="uppercase bg-[#34d399] rounded-full py-4 font-main mt-5 text-center text-black w-70 hover:bg-[#2eb382]">Acessar álbum no Spotify</a>
                     </div>
-                    
                 </div>
-               
             </div>
-            <div class="w-70 flex flex-col items-center justify-center gap-4">
-                    
-                <div class="text-white text-center text-2xl ">Nota</div>
-                <div class="flex flex-row w-100 items-center justify-center gap-2">
-                    <div class="w-full bg-white h-0.5 w-70"></div> 
-                    <div class="text-white w-30 text-sm">{{resenhas.length}} avaliações</div>
-                </div>
-                <div class="flex flex-row w-100 items-center justify-center gap-2">
-                    <div class="text-white p-4 text-3xl text-center">{{average.toFixed(2)}}</div>
-                    <p-rating [(ngModel)]="average" [disabled]="true" [stars]="10" />
-                </div>
-                
-            <p-chart type="bar" [data]="basicData" [options]="basicOptions" />
-              
-
-            </div>
-
-
-
-
-           
-            
+            <div class="divider"></div>
         </div>
-        <div class="divider"></div>
     </section>
 
-    <p-button  class="mt-5 add-comentario" (onClick)="toggleDropdown()">Adicionar sua Resenha <mat-icon>add</mat-icon></p-button>
+    <p-button  class="mt-5 add-comentario" (onClick)="toggleDropdown()">Adicionar sua Resenha <mat-icon class="text-black">add</mat-icon></p-button>
     <p-dialog 
     styleClass="bg-#050605 !important px-6 pb-6 " 
     [modal]="true" 
@@ -65,7 +40,7 @@
 
                     <div class="flex flex-row gap-4">
                         <img *ngIf="album" [src]="album.images[1].url" class="w-36 rounded-xl">
-                        <div class="flex flex-col justify-between py-5">
+                        <div class="flex flex-col justify-between py-3">
                             <h1 class="text-white text-2xl titulo"> {{album?.name}}</h1>
                             <div class="flex gap-3">
                                 <span class="text-white">Nota</span>
@@ -113,6 +88,43 @@
         </div>
     </p-dialog>
 
+    <section class="w-full flex flex-col items-center">
+        <div class="margin">
+            <div class="flex flex-row justify-between items-end">
+                <h1 class="text-3xl mb-3">AVALIAÇÕES</h1>
+                <p class="mb-3 infos text-sm">{{resenhas.length}} avaliações feitas</p>
+            </div>
+            <div class="divider-up"></div>
+        </div>
+
+        <div class="avaliation w-full max-w-2xl mx-auto flex flex-col items-center justify-center gap-6 p-4 rounded-lg shadow-lg my-10">
+            <!-- Exibição da média -->
+            <div class="flex flex-row w-full items-center justify-center gap-4">
+                <p class="text-2xl font-bold">Nota</p>
+                <div class="text-white p-4 text-4xl font-semibold text-center bg-[#34d399] rounded-lg shadow-md text-black">
+                    {{ average.toFixed(2) }}
+                </div>
+                
+                <p-rating [(ngModel)]="average" [disabled]="true" [stars]="10" class="text-yellow-400" />
+            </div>
+        
+            <!-- Gráfico de barras -->
+            <div class="grafic w-full p-6 rounded-xl shadow-xl">
+                <p-chart type="bar" [data]="basicData" [options]="basicOptions" class="rounded-xl" />
+            </div>
+        </div>
+        
+    </section>
+    
+    <section class="w-full flex flex-col items-center">
+        <div class="margin">
+            <h1 class="text-3xl mb-3">RESENHAS POPULARES</h1>
+            <div class="divider-up"></div>
+        </div>
+
+        <p class="text-white mt-20 mb-20 titulo">Nenhuma resenha registrado para este álbum</p>
+    </section>
+
     <div class="margin">
         <h1 class="text-3xl mb-3">RESENHAS RECENTES</h1>
         <div class="divider-up"></div>
@@ -121,8 +133,8 @@
     <p *ngIf="resenhas.length === 0" class="text-white mt-20 mb-50 titulo">Nenhuma resenha registrado para este álbum</p>
 
     <section class="w-full margin mb-25" *ngIf="resenhas && resenhas.length > 0">
-        <div class="flex flex-col gap-5" *ngFor="let resenha of resenhas; let last = last">
-            <div class="flex flex-row items-center gap-4">
+        <div class="flex flex-col gap-5" *ngFor="let resenha of resenhasRevertidas; let last = last">
+            <div class="flex flex-row items-center gap-4 mb-10">
                 <img class="w-20 h-20 borda" [src]="resenha.userimg" alt="" style="border-radius: 50%;">
                 <div class="flex flex-col justify-between ml-3 h-20">
                     <div class="flex flex-row gap-2">
@@ -132,38 +144,42 @@
                     <p class="text-white text-lg">
                         {{ resenha.texto }}
                     </p>
-                    <div class="flex flex-row items-center justify-start gap-5 p-5">
+                    <div class="flex flex-row items-center justify-start gap-5">
                         <div class="text-xs text-cinza">{{ resenha.data | date }}</div>
                         <mat-icon 
+                        class="text-white"
                         [ngClass]="{ 'liked': resenha.liked }"
-                        (click)="addLikeOrUnlike(resenha.id, resenha.liked)"
-                      >
-                        {{ resenha.liked ? 'thumb_up' : 'thumb_up_off_alt' }}
-                      </mat-icon>
+                        (click)="addLikeOrUnlike(resenha.id, resenha.liked)">
+                            {{ resenha.liked ? 'thumb_up' : 'thumb_up_off_alt' }}
+                        </mat-icon>
                         <span class="text-white">{{resenha.totalLikes}}</span>
-                        <p-button (onClick)="toggleCommentModal(resenha.id)">Responder</p-button>
+                        <a class="cursor-pointer btn-responder" (click)="toggleCommentModal(resenha.id)">Responder</a>
                         <div class="w-50" *ngIf="resenha.comentarios.length > 0">
-                            <p-button (onClick)="toggleComments()"> <mat-icon>keyboard_arrow_down</mat-icon>
-                                Ver {{resenha.comentarios.length}} resposta(s)</p-button>
+                            <a class="cursor-pointer btn-responder flex flex-row gap-2" (click)="toggleComments(resenha.id)">
+                                <mat-icon class="text-black">keyboard_arrow_down</mat-icon>
+                                <p>Ver {{resenha.comentarios.length}} resposta(s)</p>
+                            </a>
                         </div>
                     </div>
-
-                    <div *ngIf="true">
-                        <div class="flex flex-col gap-5" *ngFor="let comentario of resenha.comentarios">
-                                <div class="flex flex-row items-center gap-4">
-                                    <img class="w-20 h-20 borda" [src]="comentario.userimg" alt="" style="border-radius: 50%;">
-                                    <div class="flex flex-col justify-between ml-3 h-20">
+    
+                    <!-- Alteração para abrir apenas se o ID da resenha for igual ao ID selecionado -->
+                    <div *ngIf="selectedResenhaId === resenha.id" class="w-full block flex-none">
+                        <div class="flex flex-col gap-5 mt-4" *ngFor="let comentario of resenha.comentarios">
+                            <div class="flex flex-row items-center gap-4">
+                                <img class="w-20 h-20 borda" [src]="comentario.userimg" alt="" style="border-radius: 50%;">
+                                <div>
+                                    <div class="flex flex-col justify-between ml-3">
                                         <div class="flex flex-row gap-2">
-                                            <p class="text-md text-cinza">Resenha feita por <b class="titulo">{{ comentario.username }}</b></p>
+                                            <p class="text-md text-cinza">Comentário feito por <b class="titulo">{{ comentario.username }}</b></p>
                                         </div>
                                     </div>
-                                    <p class="text-white text-lg">
+                                    <p class="text-white text-lg ml-3">
                                         {{ comentario.texto }}
                                     </p>
                                 </div>
+                            </div>
                         </div>
                     </div>
-                   
 
                     <p-dialog 
                     styleClass="bg-#050605 !important px-6 pb-6 " 
@@ -205,7 +221,6 @@
                 </div>
                 
             </div>
-            <div class="divider-up my-5" *ngIf="!last"></div>
         </div>
     </section>    
  
