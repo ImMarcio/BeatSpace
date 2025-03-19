@@ -1,94 +1,77 @@
 <main class=" flex flex-col justify-center items-center space-y-8 mb-10">
-   
-   <section>
-      <h1>Bem-vindo de volta, <a class="redirecionar-perfil text-[#34d399]" (click)="goToProfile()" *ngIf="user">{{user.display_name}}</a>. Aqui está o que temos ouvido…</h1>
-      <h2>Esta página inicial será personalizada à medida que você <span class="text-[#34d399]">seguir membros ativos</span> no BeatSpace.</h2>
-   </section>
-
-   <section class="pt-8 w-full">
-      <nav>
-         <h1>RESENHAS FAVORITAS DOS USUÁRIOS</h1>
-         <div class="divider2"></div>
-      </nav>
-   </section>
-
-   <p-carousel [value]="resenhas" [numVisible]="3" [numScroll]="1" [circular]="true"  class="max-w-full">
-      <ng-template pTemplate="resenha" let-resenha class="max-w-10">
-          <div class="div-carrossel  text-center p-10 cards max-w-xl h-56 justify-between ">
-              <p class="paragrafo text-left font-DM ">{{ resenha.texto }}</p>
-              <div class="profile flex flex-row space-x-2 align-center mt-8 ">
-                  <img [src]="resenha.userimg"  class=" w-10 h-10 object-cover rounded-full shadow-lg ">
-                  <div class="flex flex-row items-center space-x-4">
-                     <div class="flex flex-col justify-start items-start">
-                        <h3 class="text-md font-semibold font-DM">{{ resenha.username }}</h3>
-                        <p class="text-sm font-semibold text-green "> {{resenha.data | date}}</p>
-                     </div>
-                     <div class="flex flex-col justify-center items-start gap-2 text-white">
-                        <div>
-                           <mat-icon>thumb_up</mat-icon>
-                           {{resenha.totalLikes}}
-                        </div>
-                        <div>
-                           <p-rating [(ngModel)]="resenha.nota" [disabled]="true" [stars]="10" />
-                        </div>
-                     </div>
-                  </div>
-                  
-              </div>
-             
-          </div>
-      </ng-template>
-  </p-carousel>
-
-
-   <section class="pt-8 w-full">
-      <nav>
-         <h1>LANÇAMENTOS RECENTES - ÁLBUNS</h1>
-         <div class="divider2"></div>
-      </nav>
-   </section>
-
-   <section class="lancamentos gap-6">
-      <div class="gap-6" *ngFor="let album of albuns ">
-         <a [routerLink]="['/home/album', album.id]">
-            <img class=" w-56" [src]="album.images[0].url" alt="{{ album.name }}">
-            <h3 class="mt-3 text-lg font-semibold text-center text-white truncate w-56 pt-3">
-               {{ album.name }}
-            </h3>
-            <p class="text-sm text-center pb-5">{{ album.artists[0].name }}</p>
-         </a>
-      </div>
-   </section>
-
-<!-- <div *ngIf="resenhas.length > 0">
-   <section class="pt-8 w-full">
-      <nav>
-         <h1>RESENHAS FAVORITAS DOS USUÁRIOS</h1>
-         <div class="divider2"></div>
-      </nav>
-   </section>
-
-   <p-carousel [value]="resenhas" [numVisible]="3" [numScroll]="1" [circular]="true"  class="">
-      <ng-template pTemplate="resenha" let-resenha>
-          <div class="div-carrossel  text-center p-5 cards max-w-xl h-56 justify-between ">
-              <p class="paragrafo text-left font-DM ">{{ resenha.texto }}</p>
-              <p-rating [(ngModel)]="resenha.nota" [disabled]="true" [stars]="10" />
-              <div class="profile flex flex-row space-x-2 align-center mt-8 ">
-                  <img [src]="resenha.userimg"  class=" w-10 h-10 object-cover rounded-full shadow-lg ">
-                  <h3 class="text-md font-semibold font-DM">{{ resenha.username }}</h3>
-                  <p class="text-sm font-semibold text-green "> {{resenha.data | date}}</p>
-              </div>
-              <div class="flex justify-center items-center gap-2 text-white">
-               <mat-icon>thumb_up</mat-icon>
-               {{resenha.totalLikes}}
-              </div>
-          </div>
-      </ng-template>
-  </p-carousel>
     
-</div> -->
+    <section>
+        <h1>
+            Bem-vindo de volta, 
+            <a class="redirecionar-perfil text-[#34d399]" (click)="goToProfile()" *ngIf="user">
+                {{user.display_name}}
+            </a>. Aqui está o que temos ouvido…
+        </h1>
+        <h2>
+            Esta página inicial será personalizada à medida que você 
+            <span class="text-[#34d399]">seguir membros ativos</span> no BeatSpace.
+        </h2>
+    </section>
 
+    <section class="pt-8 w-full">
+        <nav>
+            <h1>RESENHAS FAVORITAS DOS USUÁRIOS</h1>
+            <div class="divider2"></div>
+        </nav>
+    </section>
 
-  
-   
+    <p-carousel [value]="resenhas" [numVisible]="3" [numScroll]="1" [circular]="true" class="max-w-full">
+        <ng-template pTemplate="resenha" let-resenha class="max-w-10">
+            <div class="div-carrossel text-center p-10 cards max-w-xl justify-between min-h-[292px]">
+                <div class="profile space-x-2 flex flex-row gap-3 !items-start">
+                    <img [src]="resenha.userimg" class="w-16 h-16 object-cover rounded-full shadow-lg">
+                    <div class="space-x-4">
+                        <div class="flex flex-col justify-start items-start">
+                            <h3 class="text-md font-DM !text-[#888] mb-3 text-sm">
+                                Resenha feita por <b class="!text-[#34d399]">{{ resenha.username }}</b>
+                            </h3>
+                            <div>
+                                <p-rating [(ngModel)]="resenha.nota" [disabled]="true" [stars]="10" />
+                            </div>
+                            <p class="paragrafo text-left font-DM !text-xl mt-3 mb-2">
+                                {{ resenha.texto.length > 70 && !resenha.expandido ? (resenha.texto | slice:0:70) + '...' : resenha.texto }}
+                            </p>
+                            <button 
+                                *ngIf="resenha.texto.length > 70" 
+                                class="text-[#34d399] text-sm underline"
+                                (click)="resenha.expandido = !resenha.expandido">
+                                {{ resenha.expandido ? 'Ver menos' : 'Ver mais' }}
+                            </button>
+                            <div class="flex flex-row items-center mt-3">
+                                <mat-icon [ngStyle]="{ fontSize: '1rem', display: 'flex', alignItems: 'center' }">thumb_up</mat-icon>
+                                <p class="text-sm">{{resenha.totalLikes}} Curtidas</p>
+                            </div>
+                            <p class="text-sm !text-[#888] mt-3">Resenha feita em {{resenha.data | dateISO}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-carousel>
+    
+
+    <section class="w-full">
+        <nav>
+            <h1>LANÇAMENTOS RECENTES - ÁLBUNS</h1>
+            <div class="divider2"></div>
+        </nav>
+    </section>
+
+    <section class="lancamentos gap-6 mb-30">
+        <div class="gap-6" *ngFor="let album of albuns.slice(0,18)">
+            <a [routerLink]="['/home/album', album.id]">
+                <img class="w-56" [src]="album.images[0].url" alt="{{ album.name }}">
+                <h3 class="mt-3 text-lg font-semibold text-center text-white truncate w-56 pt-3">
+                    {{ album.name }}
+                </h3>
+                <p class="text-sm text-center pb-5">{{ album.artists[0].name }}</p>
+            </a>
+        </div>
+    </section>    
+
 </main>

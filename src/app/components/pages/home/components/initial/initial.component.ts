@@ -12,10 +12,11 @@ import { ResenhaResponse, ResenhaService } from '../../../../../shared/services/
 import { RatingModule } from 'primeng/rating';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { DateISOPipe } from "../../../../../shared/pipes/date-iso.pipe";
 
 @Component({
   selector: 'app-initial',
-  imports: [CommonModule,RouterModule,CarouselModule,CarouselModule, RatingModule,ReactiveFormsModule,FormsModule,MatIconModule],
+  imports: [CommonModule, RouterModule, CarouselModule, CarouselModule, RatingModule, ReactiveFormsModule, FormsModule, MatIconModule, DateISOPipe],
   templateUrl: './initial.component.html',
   styleUrl: './initial.component.scss'
 })

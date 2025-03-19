@@ -132,9 +132,9 @@
 
     <p *ngIf="resenhas.length === 0" class="text-white mt-20 mb-50 titulo">Nenhuma resenha registrado para este álbum</p>
 
-    <section class="w-full margin mb-25" *ngIf="resenhas && resenhas.length > 0">
-        <div class="flex flex-col gap-5" *ngFor="let resenha of resenhasRevertidas; let last = last">
-            <div class="flex flex-row items-center gap-4 mb-10">
+    <section class="w-full margin mb-10" *ngIf="resenhas && resenhas.length > 0">
+        <div class="flex flex-col gap-5" *ngFor="let resenha of (mostrarTodas ? resenhasRevertidas : resenhasRevertidas.slice(0, 3)); let last = last">
+            <div class="flex flex-row items-center gap-4 mb-8">
                 <div class="flex flex-col justify-between ml-3 h-auto ">
                     <div class="flex flex-row space-x-4">
                         <div>
@@ -151,9 +151,9 @@
                             <div class="flex flex-row items-center justify-start gap-5">
                                 <div class="text-xs text-cinza">{{ resenha.data | date }}</div>
                                 <mat-icon 
-                                class="text-white"
-                                [ngClass]="{ 'liked': resenha.liked }"
-                                (click)="addLikeOrUnlike(resenha.id, resenha.liked)">
+                                    class="text-white"
+                                    [ngClass]="{ 'liked': resenha.liked }"
+                                    (click)="addLikeOrUnlike(resenha.id, resenha.liked)">
                                     {{ resenha.liked ? 'thumb_up' : 'thumb_up_off_alt' }}
                                 </mat-icon>
                                 <span class="text-white">{{resenha.totalLikes}}</span>
@@ -166,15 +166,11 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>  
-
-
-
-                    <!-- Alteração para abrir apenas se o ID da resenha for igual ao ID selecionado -->
+    
+                    <!-- Comentários da Resenha -->
                     <div *ngIf="selectedResenhaId === resenha.id" class="w-full block flex-none ">
-                        <div class="flex flex-col gap-5 mt-4 ml-16" *ngFor="let comentario of resenha.comentarios">
+                        <div class="flex flex-col gap-5 mt-4 ml-22" *ngFor="let comentario of resenha.comentarios">
                             <div class="flex flex-row items-center gap-4">
                                 <img class="w-20 h-20 borda" [src]="comentario.userimg" alt="" style="border-radius: 50%;">
                                 <div>
@@ -190,47 +186,47 @@
                             </div>
                         </div>
                     </div>
-
+    
+                    <!-- Modal de Comentário -->
                     <p-dialog 
-                    styleClass="bg-#050605 !important px-6 pb-6 " 
-                    [modal]="true" 
-                    [(visible)]="commentModal" 
-                    [style]="{ width: '50rem' }" 
-                    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-                                    
-                    <div class="flex flex-col gap-5">
-
-                        <h1 class="text-white text-4xl text-center eu-escutei">Responder</h1>
-            
-                        <div class="flex flex-col gap-10">
-                            <form [formGroup]="formularioComentario" class="flex flex-col gap-4">
-            
-                                <p-floatLabel class="w-full flex flex-col items-start gap-2 mt-5">
-                                    <textarea 
-                                        formControlName="text" 
-                                        pTextarea  
-                                        rows="6" 
-                                        cols="45" 
-                                        class="font-DM rounded-2xl py-4 px-6 w-full bg-transparent placeholder:text-white text-white border border-gray-500 focus:border-green-400 focus:ring-1 focus:ring-green-400 resize-none"
-                                        style="outline: none;"
-                                        [maxlength]="250">
-                                    </textarea>
-                                    <label for="description" class="text-white text-lg">Adicione seu comentário...</label>
-                                </p-floatLabel>
-            
-                            
-            
-                                <div class="flex flex-row justify-end w-full mt-3">
-                                    <p-button (onClick)="addComentario()" [loading]="loadingcomment" class="w-full">Enviar</p-button>
-                                </div>
-                            </form>
+                        styleClass="bg-#050605 !important px-6 pb-6" 
+                        [modal]="true" 
+                        [(visible)]="commentModal" 
+                        [style]="{ width: '50rem' }" 
+                        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+                        <div class="flex flex-col gap-5">
+                            <h1 class="text-white text-4xl text-center eu-escutei">Responder</h1>
+                            <div class="flex flex-col gap-10">
+                                <form [formGroup]="formularioComentario" class="flex flex-col gap-4">
+                                    <p-floatLabel class="w-full flex flex-col items-start gap-2 mt-5">
+                                        <textarea 
+                                            formControlName="text" 
+                                            pTextarea  
+                                            rows="6" 
+                                            cols="45" 
+                                            class="font-DM rounded-2xl py-4 px-6 w-full bg-transparent placeholder:text-white text-white border border-gray-500 focus:border-green-400 focus:ring-1 focus:ring-green-400 resize-none"
+                                            style="outline: none;"
+                                            [maxlength]="250">
+                                        </textarea>
+                                        <label for="description" class="text-white text-lg">Adicione seu comentário...</label>
+                                    </p-floatLabel>
+                                    <div class="flex flex-row justify-end w-full mt-3">
+                                        <p-button (onClick)="addComentario()" [loading]="loadingcomment" class="w-full">Enviar</p-button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </div>
                     </p-dialog>
-                   
                 </div>
-                
             </div>
+        </div>
+    
+        <!-- Botão Ver mais / Ver menos -->
+        <div class="text-center mt-4 flex flex-col items-center">
+            <button class="text-[#34d399] text-lg underline" (click)="toggleResenhas()" [ngStyle]="{ display: 'flex' }">
+                <p>{{ mostrarTodas ? 'Ver menos' : 'Ver mais' }}</p>
+                <mat-icon [ngStyle]="{ color: '#34d399' }">{{ mostrarTodas ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+            </button>
         </div>
     </section>    
  

@@ -67,6 +67,7 @@ export class AlbumComponent implements OnInit {
     liked = false; // Estado do like
     commentModal : boolean = false;
     loadingcomment : boolean = false;
+    mostrarTodas: boolean = false;
 
 
     constructor(private cd : ChangeDetectorRef , 
@@ -104,6 +105,10 @@ export class AlbumComponent implements OnInit {
 
     toggleLike() {
         this.liked = !this.liked;
+    }
+
+    toggleResenhas() {
+        this.mostrarTodas = !this.mostrarTodas;
     }
 
     addComentario(){
