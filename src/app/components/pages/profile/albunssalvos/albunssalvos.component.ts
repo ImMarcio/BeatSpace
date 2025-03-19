@@ -17,9 +17,12 @@ import { User } from '../../../../shared/models/User';
 export class AlbunssalvosComponent implements OnInit {
 
 albuns : any[] = []
+albumSelected: any;
 userId : any;
+user : User;
 constructor( private spotifyService  :SpotifyService, private cd  :ChangeDetectorRef, private historyService:HistoryService){
  this.userId = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).id
+ this.user = (JSON.parse(localStorage.getItem("current_user") ?? "") as User)
 }
 
 ngOnInit(): void {
@@ -33,6 +36,11 @@ ngOnInit(): void {
       }
     })
 }
+
+  getSelectedAlbum(album:any){
+    this.albumSelected = album;
+    console.log(this.albumSelected.name)
+  }
 
   // Exemplo de chamada da função
   onRemoveAlbums(ids: string[]) {
@@ -49,7 +57,7 @@ ngOnInit(): void {
           }
         })
         console.log('Álbuns removidos com sucesso', response);
-        this.logAction("Clicou no botão remover album",`Album ${this.albuns} removido com sucesso!`)
+        this.logAction(`${this.user.display_name} `,`removeu o album ${this.albumSelected.name} dos salvos `)
         // Trate a resposta da API, exiba uma mensagem de sucesso, etc.
       },
       error => {

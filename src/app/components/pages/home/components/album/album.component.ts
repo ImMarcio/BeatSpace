@@ -147,6 +147,7 @@ export class AlbumComponent implements OnInit {
                 },
                 complete : ()=>{
                     this.ngOnInit()
+                    this.logAction(`${this.user.display_name} `,`descurtiu uma resenha no album ${this.album?.name}`)
                     this.cd.detectChanges();
                 }
             })
@@ -163,6 +164,8 @@ export class AlbumComponent implements OnInit {
             },
             complete : ()=>{
                 this.ngOnInit()
+                this.logAction(`${this.user.display_name} `,`curtiu uma resenha no album ${this.album?.name}`)
+
                 this.cd.detectChanges();
             }
         })
@@ -314,7 +317,7 @@ export class AlbumComponent implements OnInit {
                         this.spotifyService.addSavedAlbuns({ids : [this.albumId!]}).subscribe({
                             next : ()=>{
                                 this.isOpen = false;
-                                this.logAction("Clique no botão salvar album",`Album ${this.album?.name} salvo nos favoritos`)
+                                this.logAction(`${this.user.display_name} `,`Album ${this.album?.name} salvo nos favoritos`)
                             }
                         })
                     }
@@ -328,7 +331,7 @@ export class AlbumComponent implements OnInit {
                     this.meuFormulario.reset()
                     this.isOpen= false;
                     this.loading = false;
-                    this.logAction("Clique no botão adicionar comentário","Comentário adicionado")
+                    this.logAction(` ${this.user.display_name} `,` adicionou uma resenha no album ${this.album?.name}`)
                     this.ngOnInit()
                     this.cd.detectChanges();
                 }

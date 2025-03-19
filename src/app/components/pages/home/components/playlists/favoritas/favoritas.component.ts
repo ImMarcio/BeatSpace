@@ -34,6 +34,7 @@ export class FavoritasComponent implements OnInit {
     FormCreate!: FormGroup;
     playlistIdSelected : any;
     userId : any;
+    user : User;
     selectedFile : any;
     playlistCurrent:any;
     stateOptions: any[] = [
@@ -55,6 +56,7 @@ export class FavoritasComponent implements OnInit {
         public : [false,],
       })
       this.userId = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).id
+      this.user = (JSON.parse(localStorage.getItem("current_user") ?? "") as User)
     }
 
     get description(){
@@ -159,7 +161,7 @@ export class FavoritasComponent implements OnInit {
         complete : ()=>{
           this.loading = false;
           this.isOpen = false;
-          this.logAction(`Clique no botão Atualizar Playlist`,`Playlist ${this.name} alterada com sucesso`)
+          this.logAction(`${this.user.display_name} `,`alterrou a playlist ${this.name}`)
          
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Playlist alterada com sucesso!' })
           this.cd.detectChanges();
@@ -204,7 +206,8 @@ export class FavoritasComponent implements OnInit {
           this.loading = false;
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Playlist criada com sucesso!' })
           this.isOpenCreate = !this.isOpenCreate;
-          this.logAction(`Clique no botão Criar Playlist`,`Playlist: ${this.playlistCurrent.name} criada com sucesso`)
+          this.logAction(`${this.user.display_name} `,`criou a playlist ${this.name}`)
+
           
           this.spotifyService.getCurrentUserPlaylists().subscribe({
             next : (response)=>{
