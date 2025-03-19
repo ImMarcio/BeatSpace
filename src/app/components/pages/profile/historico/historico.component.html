@@ -12,7 +12,7 @@
 <p-dialog [(visible)]="mostrarPopup" [modal]="true" [closable]="false" [style]="{ width: '25rem' }">
     <h2 class="text-lg font-bold text-center mb-4">Certeza que deseja deletar o seu histórico?</h2>
     <div class="flex justify-center gap-4 my-4">
-        <button class="bg-[#34d399] text-black px-6 py-2 rounded-lg cursor-pointer" (click)="deletarHistorico()">Sim</button>
+        <button class="bg-[#34d399] text-black px-6 py-2 rounded-lg cursor-pointer" (click)="deleteAllActions()">Sim</button>
         <button class="bg-transparent border-2 border-[#34d399] text-[#34d399] px-6 py-2 rounded-lg cursor-pointer" (click)="mostrarPopup = false">Cancelar</button>
     </div>
 </p-dialog>

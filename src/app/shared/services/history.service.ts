@@ -27,5 +27,9 @@ constructor(private http: HttpClient) { }
     console.log(actionId)
     return this.http.delete<void>(`${this.apiUrl}/${userId}/${actionId}`);
   }
+  // Excluir todas as ações do usuário
+  deleteAllUserActions(userId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${userId}`);
+  }
 
 }

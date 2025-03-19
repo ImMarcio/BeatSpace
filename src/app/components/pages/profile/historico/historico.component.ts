@@ -25,10 +25,10 @@ export class HistoricoComponent implements OnInit {
       this.mostrarPopup = true;
   }
 
-  deletarHistorico() {
-      console.log("Histórico deletado!"); // Aqui vai a lógica para deletar
-      this.mostrarPopup = false;
-  }
+  // deletarHistorico() {
+  //     console.log("Histórico deletado!"); // Aqui vai a lógica para deletar
+      
+  // }
 
   ngOnInit() {
     this.loadUserActions()
@@ -61,5 +61,12 @@ export class HistoricoComponent implements OnInit {
     })
   }
 
+  deleteAllActions(){
+    this.historyService.deleteAllUserActions(this.userId).subscribe(Response => {
+      console.log("Todas Ações removidas")
+      this.mostrarPopup = false;
+      this.loadUserActions()
+    })
+  }
 
 }
