@@ -1,8 +1,18 @@
 
 <ul *ngIf="actions.length > 0; else emptyState">
-    <li *ngFor="let action of actions" class="p-2  border-gray-300">
-      <strong class="text-[#34d399]">{{ action.action }}</strong> - {{ action.details }} <br>
-      <small class="text-gray-600">{{ action.timestamp | date:'dd/MM/yyyy HH:mm' }}</small>
+    <li *ngFor="let action of actions" class="p-2  border-gray-300 flex flex-col">
+      <div class=" flex flex-row space-x-4">
+        <p class="text-[#34d399]">{{ action.action }} </p>
+        <p>{{ action.details }} </p>
+        <button (click)="deletarRegistro(action.id)">
+          <mat-icon class="bg-red-500">
+            delete
+          </mat-icon>
+        </button>
+      </div>
+      <div>
+       <small class="text-gray-600">{{ action.timestamp | date:'dd/MM/yyyy HH:mm' }}</small>
+      </div>
     </li>
   </ul>
 

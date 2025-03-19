@@ -7,8 +7,6 @@
                 <mat-icon class="text-white">remove_circle</mat-icon>
             </button>              
 
-            <button class="bg-blue-500  m-8 p-4" (click)="getSelectedAlbum(album.album)" > Testando</button>
-
             <a [routerLink]="['/home/album', album.album.id]" 
                 class="w-full flex flex-col items-center justify-between h-full">
                 <img [src]="album.album.images[0].url" 

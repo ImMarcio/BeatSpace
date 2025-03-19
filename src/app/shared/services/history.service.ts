@@ -22,4 +22,10 @@ constructor(private http: HttpClient) { }
   getUserHistory(userId: string): Observable<UserAction[]> {
     return this.http.get<UserAction[]>(`${this.apiUrl}/${userId}`);
   }
+  // Excluir comentário
+  deleteUserAction(userId: string, actionId: number): Observable<void> {
+    console.log(actionId)
+    return this.http.delete<void>(`${this.apiUrl}/${userId}/${actionId}`);
+  }
+
 }
