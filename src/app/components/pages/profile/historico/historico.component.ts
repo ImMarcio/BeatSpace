@@ -3,19 +3,31 @@ import { HistoryService } from '../../../../shared/services/history.service';
 import { User } from '../../../../shared/models/User';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-historico',
   templateUrl: './historico.component.html',
   styleUrls: ['./historico.component.css'],
-  imports: [CommonModule,MatIconModule ]
+  imports: [CommonModule, MatIconModule, ButtonModule, DialogModule ]
 })
 export class HistoricoComponent implements OnInit {
   userId : any;
   actions: any[] = [];
+  mostrarPopup: boolean = false;
 
   constructor(private historyService:HistoryService) {  
     this.userId = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).id
+  }
+
+  confirmarExclusao() {
+      this.mostrarPopup = true;
+  }
+
+  deletarHistorico() {
+      console.log("Histórico deletado!"); // Aqui vai a lógica para deletar
+      this.mostrarPopup = false;
   }
 
   ngOnInit() {

@@ -1,21 +1,43 @@
 
+<div class="w-full flex flex-col items-center">
+    <button class="mt-5 flex flex-row !bg-[#34d399] p-[16px] px-[100px] cursor-pointer" 
+        [ngStyle]="{borderRadius: '100px'}" 
+        (click)="confirmarExclusao()">
+        <p class="text-black">Deletar histórico </p>
+        <mat-icon [ngStyle]="{color: 'black'}">delete</mat-icon>
+    </button>
+</div>
+
+<!-- Pop-up de confirmação -->
+<p-dialog [(visible)]="mostrarPopup" [modal]="true" [closable]="false" [style]="{ width: '25rem' }">
+    <h2 class="text-lg font-bold text-center mb-4">Certeza que deseja deletar o seu histórico?</h2>
+    <div class="flex justify-center gap-4 my-4">
+        <button class="bg-[#34d399] text-black px-6 py-2 rounded-lg cursor-pointer" (click)="deletarHistorico()">Sim</button>
+        <button class="bg-transparent border-2 border-[#34d399] text-[#34d399] px-6 py-2 rounded-lg cursor-pointer" (click)="mostrarPopup = false">Cancelar</button>
+    </div>
+</p-dialog>
+
+
 <ul *ngIf="actions.length > 0; else emptyState">
     <li *ngFor="let action of actions" class="p-2  border-gray-300 flex flex-col">
-      <div class=" flex flex-row space-x-4">
-        <p class="text-[#34d399]">{{ action.action }} </p>
-        <p>{{ action.details }} </p>
-        <button (click)="deletarRegistro(action.id)">
-          <mat-icon class="bg-red-500">
-            delete
-          </mat-icon>
-        </button>
-      </div>
-      <div>
-       <small class="text-gray-600">{{ action.timestamp | date:'dd/MM/yyyy HH:mm' }}</small>
-      </div>
+        <div class="flex flex-row justify-between">
+            <div>
+                <div class=" flex flex-row space-x-4">
+                    <p class="text-[#34d399]">{{ action.action }} </p>
+                    <p>{{ action.details }} </p>
+                </div>
+                <div>
+                    <small class="text-gray-600">{{ action.timestamp | date:'dd/MM/yyyy HH:mm' }}</small>
+                </div>
+            </div> 
+            <button (click)="deletarRegistro(action.id)" class="flex flex-row items-center h-[35px] p-1 px-2 border-2 border-[#34d399] rounded-xl">
+                <p class="text-[#34d399]">Deletar ação </p>
+                <mat-icon [ngStyle]="{color: '#34d399'}">delete</mat-icon>
+            </button>
+        </div>
     </li>
-  </ul>
+</ul>
 
-  <ng-template #emptyState>
+<ng-template #emptyState>
     <p class="text-gray-500">Nenhuma ação registrada.</p>
-  </ng-template>
+</ng-template>
