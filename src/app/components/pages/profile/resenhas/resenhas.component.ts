@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { LikeService } from '../../../../shared/services/like.service';
 import { ComentarioService } from '../../../../shared/services/comentario.service';
 import { ResenhaResponse, ResenhaService } from '../../../../shared/services/resenha.service';
@@ -15,32 +15,22 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [CommonModule,RatingModule,FormsModule,MatIconModule]
 })
 export class ResenhasComponent implements OnInit {
-  resenhas : any[] = []
+
+  @Input() userId : string = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).id
+  resenhas : ResenhaResponse[] = []
   user : User;
   constructor( private likeService : LikeService ,private comentarioService : ComentarioService,private resenhaService : ResenhaService,private cd : ChangeDetectorRef ) {
     this.user = (JSON.parse(localStorage.getItem("current_user") ?? "") as User)
    }
 
   ngOnInit() {
-    this.resenhaService.GetAll().subscribe({
-      next : (resenhas ) => {
-       
+    
+    this.resenhaService.GetByUser(this.userId).subscribe({
+      next : (resenhas)=>{
+        this.resenhas = resenhas;
       }
     })
-
-
-    this.resenhaService.GetDataAll().subscribe({
-      next : (resenhasCurrent)=>{
-          this.resenhas = resenhasCurrent
-          .filter(resenha => resenha.autor === this.user.id) // Filtra pelo albumId
-
-      },
-      complete : ()=>{
-        console.log("aq")
-        console.log(this.resenhas[0])
-        this.cd.detectChanges();
-      }
-    })
+  
 
   }
 

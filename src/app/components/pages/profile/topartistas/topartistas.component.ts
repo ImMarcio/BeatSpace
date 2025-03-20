@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { NavbarLogadoComponent } from '../../../navbar-logado/navbar-logado.component';
 import { Track} from '../../../../shared/models/Track';
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrl: './topartistas.component.scss'
 })
 export class TopartistasComponent implements OnInit {
-
+@Input() userId : string = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).id
 artists : Artist[] = []
 user ? : User
 

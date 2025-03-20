@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HistoryService } from '../../../../shared/services/history.service';
 import { User } from '../../../../shared/models/User';
 import { CommonModule } from '@angular/common';
@@ -13,12 +13,13 @@ import { DialogModule } from 'primeng/dialog';
   imports: [CommonModule, MatIconModule, ButtonModule, DialogModule ]
 })
 export class HistoricoComponent implements OnInit {
-  userId : any;
+  @Input() userId : string = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).id
+  user : User;
   actions: any[] = [];
   mostrarPopup: boolean = false;
 
   constructor(private historyService:HistoryService) {  
-    this.userId = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).id
+    this.user = (JSON.parse(localStorage.getItem("current_user") ?? "") as User)
   }
 
   confirmarExclusao() {

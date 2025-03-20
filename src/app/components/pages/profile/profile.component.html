@@ -39,7 +39,8 @@
             </div>
             <div class="divider-down"></div>
             <div>
-                <p class="profile-followers-text">{{user?.country}}</p>
+                <p class="profile-followers-text" *ngIf="user!.country">{{user?.country}}</p>
+                <p class="profile-followers-text" *ngIf="!(user!.country)">Desconhecido</p>
                 <p class="text-xs">Nacionalidade</p>
             </div>
         </div>
@@ -59,7 +60,7 @@
             <p-tab value="1">Top Músicas</p-tab>
             <p-tab value="2">Álbuns Salvos</p-tab>
             <p-tab value="3">Playlists</p-tab>
-            <p-tab value="4">Resenhas</p-tab>
+            <p-tab value="4">Minhas Resenhas</p-tab>
             <p-tab value="5">Histórico de Atividades</p-tab>
 
         </p-tablist>

@@ -3,6 +3,11 @@
         Rankings - Mais bem avaliados
     </h1>
 
+    <div class="card flex justify-center">
+      <p-select [options]="genres" [(ngModel)]="genreselected" optionLabel="name" placeholder="Selecione o Gênero" class="w-full md:w-56" (onChange)="changeGenre()" />
+  </div>
+  
+
 
     <div *ngIf="albuns.length === 0">
         <h1 class="text-white text-2xl text-center titulo mt-20">
@@ -19,7 +24,7 @@
             <div class="ml-4 flex items-center">
               <a [routerLink]="['/home/albuns/', album.id]">
                 <img [src]="album.images[0].url"
-                  alt="{{ album.name }}"
+                 
                   class="w-10 h-10 lg:w-12 lg:h-12 ml-2 mr-4 rounded-md shadow-sm hover:scale-105 transition-transform">
               </a>
               <div class="flex flex-col">

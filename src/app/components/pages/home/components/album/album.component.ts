@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 import { Album } from '../../../../../shared/models/Album';
 import { MatIconModule } from '@angular/material/icon';
 import { InputTextModule } from 'primeng/inputtext';
@@ -25,6 +25,7 @@ import {ResenhaResponse, ResenhaService } from '../../../../../shared/services/r
 import { Like, LikeService } from '../../../../../shared/services/like.service';
 
 import { HistoryService } from '../../../../../shared/services/history.service';
+import { Artist } from '../../../../../shared/models/Artist';
 
 
 export interface ComentarioDAO{
@@ -35,7 +36,7 @@ export interface ComentarioDAO{
     standalone : true,
     imports: [CommonModule, ToastModule, ButtonModule, ProgressSpinnerModule, ReactiveFormsModule, MatIconModule,
          ReactiveFormsModule, InputTextModule, DialogModule, IftaLabelModule,ButtonModule,
-        FloatLabelModule, RatingModule, DatePickerModule, MatIconModule, CheckboxModule, FormsModule, DateISOPipe,ChartModule,FormsModule],
+        FloatLabelModule, RatingModule, DatePickerModule, MatIconModule, CheckboxModule, FormsModule, DateISOPipe,ChartModule,FormsModule,RouterModule],
     providers: [MessageService],
     templateUrl: './album.component.html',
     styleUrl: './album.component.scss'
@@ -70,6 +71,7 @@ export class AlbumComponent implements OnInit {
     commentModal : boolean = false;
     loadingcomment : boolean = false;
     mostrarTodas: boolean = false;
+    artist? : Artist;
 
 
     constructor(private cd : ChangeDetectorRef , 
@@ -144,7 +146,7 @@ export class AlbumComponent implements OnInit {
                     this.liked = !this.liked;
                     const resenha_selected = this.resenhas.find(x=>resenhaId === x.id)
                 if(resenha_selected){
-                    resenha_selected.totalLikes--
+                    resenha_selected.likes.length--
                 }
                 },
                 complete : ()=>{
@@ -156,21 +158,21 @@ export class AlbumComponent implements OnInit {
         }
         else{
             const like : Like= {resenhaId : resenhaId , userId : this.user.id}
-        this.likeService.addLike(like).subscribe({
-            next : ()=>{
-                this.liked = !this.liked;
-                const resenha_selected = this.resenhas.find(x=>resenhaId === x.id)
-            if(resenha_selected){
-                resenha_selected.totalLikes++
-            }
-            },
-            complete : ()=>{
-                this.ngOnInit()
-                this.logAction(`${this.user.display_name} `,`curtiu uma resenha no album ${this.album?.name}`)
+            this.likeService.addLike(like).subscribe({
+                next : ()=>{
+                    this.liked = !this.liked;
+                    const resenha_selected = this.resenhas.find(x=>resenhaId === x.id)
+                if(resenha_selected){
+                    resenha_selected.likes.length++
+                }
+                },
+                complete : ()=>{
+                    this.ngOnInit()
+                    this.logAction(`${this.user.display_name} `,`curtiu uma resenha no album ${this.album?.name}`)
 
-                this.cd.detectChanges();
-            }
-        })
+                    this.cd.detectChanges();
+                }
+            })
         }
     }
 
@@ -264,7 +266,15 @@ export class AlbumComponent implements OnInit {
         if(this.albumId){
             this.spotifyService.getAlbum(this.albumId).subscribe({
                 next : (album)=>{
+                    console.log(album)
                     this.album = album;
+                    this.spotifyService.getArtist(album.artists[0].id).subscribe({
+                      next : (artist)=>{
+                        this.artist = artist;
+                      },
+                    
+                    })
+                    
                 },
                 error : (error)=>{
                     console.log(error)
@@ -275,10 +285,17 @@ export class AlbumComponent implements OnInit {
             })
         }
 
+
+
         this.resenhaService.GetByAlbumOrPlaylistId(this.albumId!).subscribe({
             next : (resenhas)=>{
-                console.log(resenhas)
-                this.resenhas = resenhas;
+                this.resenhas = resenhas.map(x=>{
+                  return {
+                    ...x,
+                    liked : x.likes.filter(x=>x.userId === this.user.id).length > 0
+                  }
+                });
+                this.resenhasMostLiked = [...this.resenhas].filter(z=>z.likes.length>0).sort((a,b)=> b.likes.length - a.likes.length).slice(0,3)
                 this.resenhaService.GetAverageGradeById(this.albumId!).subscribe({
                     next : (average)=>{
                         this.average = average;
@@ -297,23 +314,14 @@ export class AlbumComponent implements OnInit {
             }
         })
 
-        this.resenhaService.GetMostLiked().subscribe({
-            next : (resenhasMostLiked)=>{
-                this.resenhasMostLiked = resenhasMostLiked
-                .filter(resenha => resenha.parentId === this.albumId) // Filtra pelo albumId
-    
-            },
-            complete : ()=>{
-              this.cd.detectChanges();
-            }
-          })
+      
     }
 
     OnSubmit(){
         this.loading = true;
 
         if(this.meuFormulario.valid){
-            this.resenhaService.Add({userimg : this.user.images[1].url, username : this.user.display_name ,texto:this.texto!,autor : this.user.id, data : this.data!.toISOString() , nota : (this.nota! as number), parentId : this.albumId!}).subscribe({
+            this.resenhaService.Add({userimg : this.user.images[1].url, username : this.user.display_name ,texto:this.texto!,autor : this.user.id, data : this.data!.toISOString() , nota : (this.nota! as number), parentId : this.albumId!, genre : this.artist?.genres[0] ?? "pop"}).subscribe({
                 next :()=>{
                     if(this.salvar){
                         this.spotifyService.addSavedAlbuns({ids : [this.albumId!]}).subscribe({
