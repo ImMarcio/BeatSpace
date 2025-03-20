@@ -1,0 +1,63 @@
+<p-toast></p-toast>
+
+<main class="space-y-4">
+    <!-- <nav class="flex flex-row  justify-between px-16 mt-8">
+        <div class="flex flex-row items-center">
+            <button (click)="goToHome()" class="text-2xl font-main button-voltar">
+                ← Voltar
+            </button>
+        </div>    
+    </nav> -->
+    <section class="profile mt-5">
+        <div class="flex">
+            <img [src]="user!.images[0].url" class="profile-img">
+            <div class="profile-infos">
+                <h1 class="ml-10 m-5">{{user?.display_name}}</h1>
+                <button class="profile-btn m-2">
+                    <a id="acessar-perfil-spotify" [href]="user?.uri">Acessar perfil no sportify</a>
+                </button>
+                <button class="profile-btn m-2" (click)="followUser()" *ngIf="!followed">
+                    Seguir
+                </button>
+                <button class="profile-btn m-2 disabled flex flex-row items-center" (click)="unfollowUser()" *ngIf="followed">
+                    Seguindo <mat-icon>check_circle</mat-icon>
+                </button>
+                                 
+            </div>
+        </div>
+        <div class="profile-followers">
+            <div>
+                <p class="profile-followers-text">{{user?.followers?.total}}</p>
+                <p class="text-xs">Seguidores</p>
+            </div>
+            <div class="divider-down"></div>
+            <div>
+                <p class="profile-followers-text" *ngIf="user!.country">{{user?.country}}</p>
+                <p class="profile-followers-text" *ngIf="!(user!.country)">Desconhecido</p>
+
+                <p class="text-xs">Nacionalidade</p>
+            </div>
+        </div>
+    </section>
+
+
+    <p-tabs value="0">
+        <p-tablist>
+            <p-tab value="0">Playlists</p-tab>
+            <p-tab value="1">Resenhas</p-tab>
+
+        </p-tablist>
+        <p-tabpanels>
+           
+            <p-tabpanel value="0">
+                <app-favoritas [userId] ="userId"></app-favoritas>
+            </p-tabpanel>
+            <p-tabpanel value="1">
+                <app-resenhas [userId]="userId"></app-resenhas>
+            </p-tabpanel>
+            
+        </p-tabpanels>
+    </p-tabs>
+
+
+    </main>

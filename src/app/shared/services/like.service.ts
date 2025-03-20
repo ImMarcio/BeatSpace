@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 export interface Like{
   resenhaId : number,
-  userId : string
+  userId : string,
 }
 
 @Injectable({

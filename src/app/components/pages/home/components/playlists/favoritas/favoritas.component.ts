@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -33,7 +33,7 @@ export class FavoritasComponent implements OnInit {
     Form : FormGroup;
     FormCreate!: FormGroup;
     playlistIdSelected : any;
-    userId : any;
+   @Input() userId : string = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).id ;
     user : User;
     selectedFile : any;
     playlistCurrent:any;
@@ -55,7 +55,6 @@ export class FavoritasComponent implements OnInit {
         description : ['',],
         public : [false,],
       })
-      this.userId = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).id
       this.user = (JSON.parse(localStorage.getItem("current_user") ?? "") as User)
     }
 
@@ -121,19 +120,36 @@ export class FavoritasComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.loadUserActions()
 
-    this.spotifyService.getCurrentUserPlaylists().subscribe({
-      next : (response)=>{
-      this.playlists = response.items;
-      },
-      error: (error)=>{
-        console.log(error)
-      },
-      complete : ()=>{
-        this.cd.detectChanges;
-      }
-  })
+    if(this.userId !== this.user.id){
+      this.spotifyService.getUserPlaylist(this.userId).subscribe({
+        next : (response)=>{
+        this.playlists = response.items;
+        },
+        error: (error)=>{
+          console.log(error)
+        },
+        complete : ()=>{
+          this.cd.detectChanges;
+        }
+    })
+    }
+    else{
+      this.loadUserActions()
+
+      this.spotifyService.getCurrentUserPlaylists().subscribe({
+        next : (response)=>{
+        this.playlists = response.items;
+        },
+        error: (error)=>{
+          console.log(error)
+        },
+        complete : ()=>{
+          this.cd.detectChanges;
+        }
+    })
+    }
+   
   }
 
   updatePlaylist(){

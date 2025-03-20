@@ -1,4 +1,8 @@
-<h1 class="text-3xl font-bold text-center py-10 px-6">Minhas resenhas </h1>
+
+
+<h1 class="text-3xl font-bold text-center py-10 px-6" *ngIf="this.userId !== this.user.id">Resenhas do usuário </h1>
+
+<h1 class="text-3xl font-bold text-center py-10 px-6" *ngIf="this.userId === this.user.id">Minhas resenhas </h1>
 <div class="flex flex-col space-y-8 justify-between ml-3 h-auto ">
   <div class="flex flex-row space-x-4 " *ngFor="let resenha of resenhas">
       <div>
@@ -16,7 +20,7 @@
               <div class="text-xs text-[#888]">{{ resenha.data | date }}</div>
               <div class="flex flex-row justify-center items-center" >
                 <mat-icon [ngStyle]="{ fontSize: '1rem', display: 'flex', alignItems: 'center' }">thumb_up</mat-icon>
-                <p class="text-sm">{{resenha.totalLikes}} Curtidas</p>
+                <p class="text-sm">{{resenha.likes.length}} Curtidas</p>
               </div>
              
           </div>

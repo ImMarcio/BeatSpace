@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ResponseTracks, Track } from '../models/Track';
-import { TopArtistsResponse } from '../models/Artist';
+import { Artist, TopArtistsResponse } from '../models/Artist';
 import { User } from '../models/User';
 import { ResponseSearchAlbum } from '../models/ResponseSearchAlbum';
 import { ResponseSearchTrack } from '../models/ResponseSearchTrack';
@@ -30,7 +30,28 @@ export class SpotifyService {
   constructor(private http : HttpClient) { }
 
 
+  getArtist(id:string) : Observable<Artist>{
+    return this.http.get<Artist>(this.server_url + "/artist/" + id)
 
+  }
+
+  unfollowUser(request : {ids : string[]}) : Observable<any>{
+    const options = {
+      body: request,  // Passando o corpo da requisição
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    	return this.http.delete<any>(this.server_url + "/unfollow",options);
+  }
+
+  isFollowing(id : string) : Observable<boolean[]>{
+    return this.http.get<boolean[]>(this.server_url + "/isFollowed/" + id)
+  }
+
+  followUser(request : {ids : string[]}) : Observable<any>{
+    return this.http.put<any>(this.server_url + "/user/following/user", request)
+  }
 
   addSavedAlbuns(request : {ids : string[]}) : Observable<any>{
     return this.http.put<any>(this.server_url + "/albuns/add" , request)
@@ -104,6 +125,9 @@ export class SpotifyService {
     return this.http.get<User>('http://localhost:8081/api/spotify/user/me')
   }
 
+  getUser(userId : string) : Observable<User> {
+    return this.http.get<User>(this.server_url + '/user/' + userId)
+  }
 
   getAlbumReleases():Observable<any>{
     return this.http.get("http://localhost:8081/api/spotify/albuns/new-releases")
@@ -147,6 +171,10 @@ export class SpotifyService {
     return this.http.get<PlaylistsResponse>("http://localhost:8081/api/spotify/user/me/playlists")
   }
 
+
+  getUserPlaylist(userId : string) : Observable<PlaylistsResponse>{
+    return this.http.get<PlaylistsResponse>(this.server_url + "/user/playlists/" + userId)
+  }
 
   getAlbum(id:string):Observable<Album>{
     return this.http.get<Album>(`http://localhost:8081/api/spotify/albums/${id}`)

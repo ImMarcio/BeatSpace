@@ -3,7 +3,7 @@
 <!-- só vai aparecer para o usuário logado -->
 <div class="flex flex-col items-center mt-5">
     
-    <button (click)="toggleDropdownCreate()" 
+    <button (click)="toggleDropdownCreate()"  *ngIf="this.userId === this.user.id"
     class="uppercase bg-[#34d399] rounded-full py-4 font-main mt-5 text-center text-black w-[280px] cursor-pointer hover:bg-[#2eb382]">
     CRIAR NOVA PLAYLIST
 </button>
@@ -21,10 +21,14 @@
   <ng-template #emptyState>
     <p class="text-gray-500">Nenhuma ação registrada.</p>
   </ng-template> -->
+  <div class="flex flex-wrap gap-5 mt-4 mb-30 justify-evenly mr-16 ml-16" *ngIf="!(playlists.length > 0)">
+        <h3 class="text-center text-md text-[#34d399] ">Nenhuma playlist encontrada associada a este usuário.</h3>    
+</div>
 
-<div class="flex flex-wrap gap-5 mt-4 mb-30 justify-evenly mr-16 ml-16">
 
-    <div *ngFor="let playlist of playlists">
+<div class="flex flex-wrap gap-5 mt-4 mb-30 justify-evenly mr-16 ml-16" *ngIf="playlists.length > 0">
+
+    <div *ngFor="let playlist of playlists" >
         <div class="rounded-xl w-[350px] text-center p-4 cards max-w-xl justify-between">
             
             <div class="flex flex-col space-x-2 align-center mt-8">

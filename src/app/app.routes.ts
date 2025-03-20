@@ -18,6 +18,7 @@ import { TopartistasComponent } from './components/pages/profile/topartistas/top
 import { TopmusicasComponent } from './components/pages/profile/topmusicas/topmusicas.component';
 import { AlbunssalvosComponent } from './components/pages/profile/albunssalvos/albunssalvos.component';
 import { RankingComponent } from './components/pages/home/components/ranking/ranking.component';
+import { UserComponent } from './components/pages/user/user.component';
 
 export const routes: Routes = [
 
@@ -34,13 +35,17 @@ export const routes: Routes = [
                 {path : "add",component : AddplaylistComponent}
             ]},
             {path : "playlist/:id", component : PlaylistComponent},
-            {path : "rankings",component : RankingComponent}
+            {path : "rankings",component : RankingComponent},
+            {
+                path : 'user/:id' , component : UserComponent
+            }
+        
           ]
     },
     { path: 'profile', component: ProfileComponent,children : [
         {path : "", component : TopartistasComponent},
         {path : "top-musicas", component : TopmusicasComponent},
         {path : "albuns-salvos", component : AlbunssalvosComponent }
-    ] }
-
+    ] },
+   
 ];

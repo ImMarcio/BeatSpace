@@ -1,0 +1,155 @@
+* {
+    color: white;
+}
+
+.profile {
+    display: flex;
+    flex-direction: row;
+    margin-left: 200px;
+    margin-right: 200px;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.profile-img {
+    width: 150px;
+    border-radius: 50%;
+}
+
+.profile-infos {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile-btn {
+    background-color: #34d399;
+    color: black;
+    padding: 6px 12px 6px 12px;
+    border-radius: 200px;
+    cursor: pointer;
+}
+
+#acessar-perfil-spotify {
+    color: black;
+}
+
+.profile-btn:hover {
+    background-color: #2eb382;
+}
+
+.profile-followers {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-followers-text {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.profile-menu-div {
+    display: flex;
+    padding: 12px;
+    align-items: center;
+}
+
+.profile-menu-div:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.10);
+    width: 250px;
+    border-radius: 5px;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+mat-icon {
+    font-size: 20px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.divider-down {
+    width: 1px;
+    height: 50px;
+    background-color: #444;
+    margin: 0 20px;
+}
+
+.divider-up {
+    height: 1px;
+    width: 100%;
+    background-color: #444;
+}
+
+// .section-artists{
+//     background-color: rgba(255, 255, 255, 0.10);
+// }
+
+nav {
+    margin: 50px 180px 50px 180px;
+    background-color: #050605;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+}
+
+li {
+    padding: 15px 30px 15px 30px;
+    color: #999;
+}
+
+li:hover {
+    background-color: rgba(255, 255, 255, 0.10);;
+    cursor: pointer;
+}
+
+:host ::ng-deep p-tabs {
+    display: flex;
+    flex-direction: column;
+    background-color: #050605;
+    margin: 50px 180px;
+    border: none;
+}
+
+:host ::ng-deep p-tablist {
+    display: flex;
+    flex-direction: row;
+    border-bottom: none;
+}
+
+:host ::ng-deep .p-tablist-tab-list {
+    background-color: #050605;
+}
+
+:host ::ng-deep .p-tabpanels {
+    background-color: #050605;
+}
+
+:host ::ng-deep p-tab {
+    padding: 15px 30px;
+    color: #999;
+    cursor: pointer;
+    background-color: #050605;
+}
+
+:host ::ng-deep p-tab:hover {
+    background-color: rgba(255, 255, 255, 0.10);
+}

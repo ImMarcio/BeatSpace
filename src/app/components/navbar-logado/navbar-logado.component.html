@@ -18,6 +18,8 @@
                 <button (click)="goToProfile()">
                     <p id="perfil" class="text-end font-DM">Acessar Perfil</p>
                 </button>
+                <a [href]="paymentUrl" class="text-[#34d399] font-DM hover:underline pointer">Seja Premium</a>
+
             </div>
         </div>
         <img [src]="user.images[1].url" *ngIf="user" class="user-img" />

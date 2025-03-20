@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { SpotifyService } from '../../../../shared/services/spotify.service';
 import { HistoryService } from '../../../../shared/services/history.service';
 
@@ -15,11 +15,10 @@ import { User } from '../../../../shared/models/User';
   styleUrl: './albunssalvos.component.scss'
 })
 export class AlbunssalvosComponent implements OnInit {
-
-albuns : any[] = []
-albumSelected: any;
-userId : any;
-user : User;
+  @Input() userId : string = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).id
+  albuns : any[] = []
+  albumSelected: any;
+  user : User;
 constructor( private spotifyService  :SpotifyService, private cd  :ChangeDetectorRef, private historyService:HistoryService){
  this.userId = (JSON.parse(localStorage.getItem("current_user") ?? "") as User).id
  this.user = (JSON.parse(localStorage.getItem("current_user") ?? "") as User)

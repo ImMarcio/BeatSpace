@@ -28,7 +28,10 @@
                     <div class="space-x-4">
                         <div class="flex flex-col justify-start items-start">
                             <h3 class="text-md font-DM !text-[#888] mb-3 text-sm">
-                                Resenha feita por <b class="!text-[#34d399]">{{ resenha.username }}</b>
+                                Resenha feita por <b class="!text-[#34d399] underline p-2">
+                                    <a [routerLink]="['/profile']"  *ngIf="resenha.autor === user!.id" >{{resenha.username}}</a>
+                                    <a [routerLink]="['user', resenha.autor]" *ngIf="resenha.autor !== user!.id">{{resenha.username}}</a>
+                                </b>
                             </h3>
                             <div>
                                 <p-rating [(ngModel)]="resenha.nota" [disabled]="true" [stars]="10" />
@@ -43,8 +46,8 @@
                                 {{ resenha.expandido ? 'Ver menos' : 'Ver mais' }}
                             </button>
                             <div class="flex flex-row items-center mt-3">
-                                <mat-icon [ngStyle]="{ fontSize: '1rem', display: 'flex', alignItems: 'center' }">thumb_up</mat-icon>
-                                <p class="text-sm">{{resenha.totalLikes}} Curtidas</p>
+                                <mat-icon [ngStyle]="{ fontSize: '1rem', display: 'flex', alignItems: 'center',color : '#34d399' }">thumb_up</mat-icon>
+                                <p class="text-sm text-[#34d399]">{{resenha.likes.length}} Curtida(s)</p>
                             </div>
                             <p class="text-sm !text-[#888] mt-3">Resenha feita em {{resenha.data | dateISO}}</p>
                         </div>
@@ -63,7 +66,7 @@
     </section>
 
     <section class="lancamentos gap-6 mb-30">
-        <div class="gap-6" *ngFor="let album of albuns.slice(0,18)">
+        <div class="gap-6" *ngFor="let album of albuns">
             <a [routerLink]="['/home/album', album.id]">
                 <img class="w-56" [src]="album.images[0].url" alt="{{ album.name }}">
                 <h3 class="mt-3 text-lg font-semibold text-center text-white truncate w-56 pt-3">

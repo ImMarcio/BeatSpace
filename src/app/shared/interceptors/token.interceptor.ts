@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { SpotifyService } from '../services/spotify.service';
 import { inject } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { TokenService } from '../services/token.service';
 import { Router } from '@angular/router';
@@ -8,6 +9,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const token = localStorage.getItem("token");
   const spotifyService = inject(SpotifyService);
   const router = inject(Router)
+  const snackBar = inject(MatSnackBar)
   
   // Flag para controlar o estado de busca de token
   let isTokenBeingFetched = false;
@@ -27,11 +29,18 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
     });
     return next(tokenReq).pipe(
       catchError((err: any) => {
+        if (err.status === 0) {
+          // Backend está offline ou sem resposta
+          snackBar.open('Erro: O servidor está fora do ar. Tente novamente mais tarde.', 'Fechar', {
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+        }
         if (err instanceof HttpErrorResponse) {
           if (
             !(!req.url.includes("/spotify") || req.url.includes("/api/spotify/token") || req.url.includes('api/spotify/refresh-token')) && // <- this will avoid an infinite loop when the accessToken expires.
             err.status === 401) {
-              return handleUnauthorizedError(req,next,JSON.parse(token),spotifyService,router)
+              return handleUnauthorizedError(req,next,JSON.parse(token),spotifyService,router,snackBar)
           }
         }
         return throwError(() => err);
@@ -59,7 +68,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req); // Caso não tenha código ou token, continua sem fazer nada
 };
 
-function handleUnauthorizedError(req: HttpRequest<any>, next: HttpHandlerFn, token: any, spotifyService:SpotifyService, router : Router){
+function handleUnauthorizedError(req: HttpRequest<any>, next: HttpHandlerFn, token: any, spotifyService:SpotifyService, router : Router, snackBar: MatSnackBar){
    return spotifyService.getRefreshToken(token.refresh_token).pipe(
       switchMap((token: any)=>{
         localStorage.setItem("token",token);
@@ -69,6 +78,13 @@ function handleUnauthorizedError(req: HttpRequest<any>, next: HttpHandlerFn, tok
         return next(req);
     }),
     catchError((err) => {
+      if (err.status === 0) {
+        // Backend está offline ou sem resposta
+        snackBar.open('Erro: O servidor está fora do ar. Tente novamente mais tarde.', 'Fechar', {
+          duration: 5000,
+          panelClass: ['error-snackbar']
+        });
+      }
       if (err.status == '403' || err.status === '401') {
         router.navigate(['login']);
         localStorage.removeItem("token")
